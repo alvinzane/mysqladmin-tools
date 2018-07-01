@@ -28,8 +28,8 @@ thread_stack = 192K
 key_buffer_size = 32M
 bulk_insert_buffer_size = 64M
 skip-name-resolve = 1
-lower_case_table_names = 1
 transaction_isolation = READ-COMMITTED
+#lower_case_table_names = 1         #todo 8.0出错
 #event_scheduler = ON
 #read_only = 1
 
@@ -49,7 +49,8 @@ thread_cache_size = 100
 max_heap_table_size = 128M
 
 ###### select ####################
-query_cache_type = 0
+#todo 8.0出错
+#query_cache_type = 0
 
 ###### myisam ####################
 myisam_sort_buffer_size = 128M
@@ -86,7 +87,7 @@ log_error_verbosity=3
 gtid_mode = on
 enforce_gtid_consistency = 1
 
-###### repl #####################
+###### replication #####################
 sync_binlog = 0
 binlog_format = ROW
 binlog_checksum = NONE
@@ -98,6 +99,18 @@ log_slave_updates = 1
 skip_slave_start = 1
 log-bin = {{ mysql_portdir }}/logs/mysql-bin
 expire_logs_days = 10
+
+relay_log_purge = 1
+relay_log_recovery = 1
+relay-log=relay-bin
+relay-log-index=relay-bin.index
+log_slave_updates
+
+##### semi replication #####################
+#rpl_semi_sync_master_enabled = 1
+#rpl_semi_sync_master_wait_point = AFTER_SYNC       #AFTER_SYNC|AFTER_COMMIT
+#rpl_semi_sync_master_timeout = 1000                # 1 second 无响应转成异步
+#rpl_semi_sync_slave_enabled = 1
 
 [mysqldump]
 quick

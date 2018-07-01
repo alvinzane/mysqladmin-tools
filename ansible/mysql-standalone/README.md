@@ -3,7 +3,7 @@
 ### MySQL 全局默认配置文件,不建议更改:
     # ansible/common/mysql/defaults/main.yml
 
-    # MySQL 二进制包目录
+    # MySQL 二进制包目录,MySQL的二进制包需要手动下载到此目录
     software_files_path: "/vagrant/downloads"
     # MySQL 安装目录
     software_install_path: "/usr/local"

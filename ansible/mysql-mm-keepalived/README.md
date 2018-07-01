@@ -14,7 +14,7 @@
 
 ## 启动mysql:
 
-	ansible all -i hosts -m shell -a "/data/mysql/start_mysql.sh 3309"
+	ansible all -i hosts -m shell -a "/data/mysql/start_mysql.sh 3306"
 
 ## 检查Slave Status:
 

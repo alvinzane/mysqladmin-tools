@@ -7,5 +7,4 @@
     - var/main.yml
 
   roles:
-    - { role: mysql , mysql_port: 3306 }
     - { role: mysql , mysql_port: 3307 }

@@ -1,6 +1,4 @@
 ---
-#  roles入口
-
 - import_tasks: install_mysql_dependents.yml
 
 #  检查MySQL文件是否已安装后,二进制包安装MySQL
@@ -12,7 +10,7 @@
   - import_tasks: install_mysql.yml
   when: not mysql_install_result.stat.exists
 
-# 检查MySQL data目录是否已存在,并初始化目录&服务&密码
+# 检查MySQL实例子目录是否已存在,并初始化目录&服务&密码
 - name: MySQL Datadir Stat | Check if MySQL Datadir is already exists.
   stat: path={{ mysql_portdir }}
   register: mysql_datadir_result
@@ -20,6 +18,6 @@
   - import_tasks: init_mysql.yml
   - import_tasks: init_service.yml
   - import_tasks: sleep.yml
-  - import_tasks: init_pwd.yml
+  - import_tasks: init_pwd_plugin.yml
   when: not mysql_datadir_result.stat.exists
 
