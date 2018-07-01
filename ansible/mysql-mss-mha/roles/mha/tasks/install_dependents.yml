@@ -1,0 +1,45 @@
+---
+- name: perl-CPAN
+  yum:
+    name: perl-CPAN
+    state: present
+
+- name: perl-DBD-MySQL
+  yum:
+    name: perl-DBD-MySQL
+    state: present
+
+- name: perl-Config-Tiny
+  yum:
+    name: perl-Config-Tiny
+    state: present
+
+- name: perl-Log-Dispatch
+  yum:
+    name: perl-Log-Dispatch
+    state: present
+
+- name: perl-Log-Dispatch
+  yum:
+    name: perl-Log-Dispatch
+    state: present
+
+- name: perl-Parallel-ForkManager
+  yum:
+    name: perl-Parallel-ForkManager
+    state: present
+
+- name: perl-Log-Dispatch
+  yum:
+    name: perl-Log-Dispatch
+    state: present
+
+- name: perl-Time-HiRes
+  yum:
+    name: perl-Time-HiRes
+    state: present
+
+- name: perl-ExtUtils-MakeMaker
+  yum:
+    name: perl-Time-HiRes
+    state: present

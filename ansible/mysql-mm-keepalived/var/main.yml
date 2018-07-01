@@ -1,0 +1,13 @@
+mysql_repl_user: repl
+mysql_repl_password: repl@1234
+
+keepalived_vip: 192.168.20.200
+keepalived_vr_id: 82
+
+monitor_user: monitor
+monitor_pwd: monitor@1234
+
+mysql_port: 3306
+mysql_password: aaaaaa
+
+interface: enp0s8

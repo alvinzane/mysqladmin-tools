@@ -1,0 +1,14 @@
+---
+ - name: Install Linux tools that performance, measurements and etc..
+   yum: name={{ item }} state=present
+   with_items:
+    - "dstat"
+    - "sysstat"
+    - "iotop"
+    - "iftop"
+    - "iproute"
+    - "bind-utils"
+    - "nload"
+    - "inotify-tools"
+    - "strace"
+    - "perf"

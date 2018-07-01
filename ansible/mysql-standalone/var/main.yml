@@ -1,0 +1,4 @@
+# MySQL 实例端口
+mysql_port: 3306
+# root 密码
+mysql_password: aaaaaa

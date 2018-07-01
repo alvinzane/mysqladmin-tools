@@ -1,0 +1,12 @@
+---
+- name: Install MySQL Master
+  hosts: mysql-servers
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  roles:
+    - selinux
+    - mysql
+    - slave

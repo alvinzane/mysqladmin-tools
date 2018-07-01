@@ -1,0 +1,9 @@
+---
+# 配置从库
+- block:
+  - import_tasks: init_master.yml
+  when: master is defined
+
+- block:
+  - import_tasks: init_slave.yml
+  when:  slave is defined

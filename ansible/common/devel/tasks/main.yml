@@ -1,0 +1,16 @@
+---
+ - name: Install dev requirements
+   yum: name={{ item }} state=present
+   with_items:
+    - "git"
+    - "gcc"
+    - "gcc-c++"
+    - "make"
+    - "automake"
+    - "pkgconfig"
+#    - "libtool"
+#    - "libyaml-devel"
+#    - "zlib-devel"
+#    - "openssl-devel"
+#    - "libxslt-devel"
+#    - "libaio-devel"

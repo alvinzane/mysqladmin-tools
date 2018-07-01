@@ -1,0 +1,13 @@
+---
+- name: Install Stat | Check if percona-release is already installed.
+  command: "rpm -q percona-release"
+  register: percona_release_installed
+  failed_when: no
+- name: Install percona-release
+  command: "yum -y install http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm"
+  when: percona_release_installed.rc == 1
+
+- name: Install percona-toolkit
+  yum: name={{ item }} state=present
+  with_items:
+    - "percona-toolkit"

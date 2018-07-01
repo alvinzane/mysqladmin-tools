@@ -1,0 +1,21 @@
+---
+ #  mkdir /data/mysql/3307/{data,logs,tmp}
+ - name: Initialize | Create MySQL Directory.
+   file: path={{ item }} state=directory owner=mysql group=mysql
+   with_items:
+     - "{{ mysql_portdir }}/data"
+     - "{{ mysql_portdir }}/logs"
+     - "{{ mysql_portdir }}/tmp"
+
+ # 配置文件
+ - name: Initialize | Create MySQL configuration file.
+   template: src=my.cnf.j2 dest={{ mysql_portdir }}/my.cnf owner=mysql group=mysql
+
+ - name: Initialize | MySQL initialize db.
+   shell: "{{ mysql_basedir }}/bin/mysqld --user=mysql --basedir={{ mysql_basedir }} --datadir={{ mysql_datadir }} --initialize-insecure"
+
+ - name: Initialize | MySQL Directory owner.
+   file: path={{ mysql_portdir }} recurse=yes owner=mysql group=mysql
+
+ - name: Initialize | Create MySQL start shell.
+   template: src=start_mysql.sh dest={{ mysql_datahome }}/start_mysql.sh mode=755

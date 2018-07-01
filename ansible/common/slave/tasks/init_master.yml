@@ -1,0 +1,13 @@
+---
+- name: Transfer create user sql to remote host
+  template:
+    src: ../templates/mysql_master_create_replication_user.sql
+    dest: /tmp/mysql_master_create_replication_user.sql
+
+- name: create replication user on master
+  shell: mysql -hlocalhost -uroot -p{{ mysql_password }} -S {{ mysql_sock }} < /tmp/mysql_master_create_replication_user.sql
+
+- name: clear temp file tmp/master_slaves.sql
+  file:
+    dest: tmp/mysql_master_create_replication_user.sql
+    state: absent

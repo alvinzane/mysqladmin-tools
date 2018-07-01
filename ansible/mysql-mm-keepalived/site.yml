@@ -1,0 +1,24 @@
+---
+# MySQL Master-Master + Keepalived 安装
+- name: Install MySQL and configure the Master-Master
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  roles:
+    - epel
+    - selinux
+    - mysql
+    - slave
+
+- name: Install keepalived
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  roles:
+    - keepalived

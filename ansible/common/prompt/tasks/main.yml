@@ -1,0 +1,14 @@
+---
+- name: Adding my prompt to /etc/profile
+  blockinfile:
+    dest: /etc/profile
+    marker: '### {mark} Adding my prompt ###'
+    block: |
+      my_ps1()
+      {
+          Date=$(date +%F)
+          Time=$(date +%H:%M:%S)
+
+          PS1="\\n\[\e[1;37m[\e[m\]\[\e[1;32m\u\e[m\]\[\e[1;33m@\e[m\]\[\e[1;35m\h $Time \e[m\]\e[1;36m`pwd`\e[m\e[1;37m]\e[m\n\\$"
+      }
+      PROMPT_COMMAND=my_ps1

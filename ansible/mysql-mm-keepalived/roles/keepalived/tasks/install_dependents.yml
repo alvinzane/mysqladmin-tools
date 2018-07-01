@@ -1,0 +1,5 @@
+---
+- name: MySQL-python
+  yum:
+    name: MySQL-python
+    state: present
