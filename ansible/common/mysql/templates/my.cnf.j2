@@ -29,9 +29,9 @@ key_buffer_size = 32M
 bulk_insert_buffer_size = 64M
 skip-name-resolve = 1
 transaction_isolation = READ-COMMITTED
-#lower_case_table_names = 1         #todo 8.0出错
-#event_scheduler = ON
+event_scheduler = ON
 #read_only = 1
+#lower_case_table_names = 1         #todo 8.0出错
 
 ###### character ####################
 character-set-client-handshake = FALSE
@@ -59,7 +59,7 @@ myisam_repair_threads = 1
 
 ###### innodb ####################
 innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
-#innodb_data_file_path = ibdata1:10M:autoextend
+#innodb_data_file_path = ibdata1:100M:autoextend
 innodb_write_io_threads = 8
 innodb_read_io_threads = 8
 #innodb_thread_concurrency = 16
@@ -84,8 +84,13 @@ log-error = error.log
 log_error_verbosity=3
 
 ###### gtid #####################
+{% if gtid %}
 gtid_mode = on
 enforce_gtid_consistency = 1
+{% else %}
+gtid_mode = off
+enforce_gtid_consistency = 0
+{% endif %}
 
 ###### replication #####################
 sync_binlog = 0
@@ -94,23 +99,27 @@ binlog_checksum = NONE
 binlog_cache_size = 10M
 max_binlog_size = 900M
 max_binlog_cache_size = 50M
-max_relay_log_size = 900M
-log_slave_updates = 1
 skip_slave_start = 1
 log-bin = {{ mysql_portdir }}/logs/mysql-bin
 expire_logs_days = 10
 
+relay-log={{ mysql_portdir }}/logs/relay-bin
+relay-log-index=relay-bin.index
 relay_log_purge = 1
 relay_log_recovery = 1
-relay-log=relay-bin
-relay-log-index=relay-bin.index
-log_slave_updates
+max_relay_log_size = 900M
 
+{% if log_slave_updates %}
+log_slave_updates
+{% endif %}
+
+{% if semi_replication %}
 ##### semi replication #####################
-#rpl_semi_sync_master_enabled = 1
-#rpl_semi_sync_master_wait_point = AFTER_SYNC       #AFTER_SYNC|AFTER_COMMIT
-#rpl_semi_sync_master_timeout = 1000                # 1 second 无响应转成异步
-#rpl_semi_sync_slave_enabled = 1
+rpl_semi_sync_master_enabled = 1
+rpl_semi_sync_master_wait_point = AFTER_COMMIT       #AFTER_SYNC|AFTER_COMMIT
+rpl_semi_sync_master_timeout = 1000                  # 1 second 无响应转成异步
+rpl_semi_sync_slave_enabled = 1
+{% endif %}
 
 [mysqldump]
 quick

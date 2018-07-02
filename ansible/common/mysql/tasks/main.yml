@@ -11,7 +11,7 @@
   when: not mysql_install_result.stat.exists
 
 # 检查MySQL实例子目录是否已存在,并初始化目录&服务&密码
-- name: MySQL Datadir Stat | Check if MySQL Datadir is already exists.
+- name: Install Stat | Check if MySQL Datadir is already exists.
   stat: path={{ mysql_portdir }}
   register: mysql_datadir_result
 - block:

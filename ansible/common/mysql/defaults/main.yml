@@ -29,5 +29,9 @@ mysql_servicename : "mysql{{ mysql_port }}"
 
 mysql_innodb_buffer_pool_size: "32M"
 
+semi_replication: False
+log_slave_updates: False
+gtid: True
+
 # 用于启动mysql后,修改密码
 sleep_time: 15

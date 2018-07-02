@@ -1,14 +1,14 @@
 ---
 # 设置帐号密码,安装插件
-- name: Transfer sql to remote host
+- name: Initialize | Transfer sql to remote host
   template:
     src: ../templates/setup.sql
     dest: /tmp/setup.sql
 
-- name: reset root password
+- name: Initialize | reset root password
   shell: mysql -uroot -S {{ mysql_sock }} < /tmp/setup.sql
 
-- name: clear temp file tmp/setup.sql
+- name: Initialize | clear temp file tmp/setup.sql
   file:
     dest: tmp/setup.sql
     state: absent

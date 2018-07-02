@@ -1,5 +1,5 @@
 ---
- - name: Install MySQL requirements
+ - name: Install | MySQL requirements
    yum: name={{ item }} state=present
    with_items:
     - "libaio-devel"

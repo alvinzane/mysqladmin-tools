@@ -1,26 +1,26 @@
 ---
 # 安装启动服务
-  - name: create systemd config file
+  - name: Initialize | create systemd config file
     when: ansible_distribution_major_version == "7"
     template:
      src: ../templates/mysql.service
      dest: /usr/lib/systemd/system/mysql{{ mysql_port }}.service
 
-  - name: start mysql{{ mysql_port }} (sytemctl)
+  - name: Initialize | start mysql{{ mysql_port }} (sytemctl)
     when: ansible_distribution_major_version == "7"
     systemd:
      name: mysql{{ mysql_port }}
      state: started
      daemon_reload: yes
 
-  - name: config mysql{{ mysql_port }}.service start up on boot
+  - name: Initialize | config mysql{{ mysql_port }}.service start up on boot
     when: ansible_distribution_major_version == "7"
     systemd:
      name: mysql{{ mysql_port }}
      enabled: yes
      daemon_reload: yes
 
-#  - name: config sysv start script
+#  - name: Initialize | config sysv start script
 #    when: ansible_distribution_major_version == "6"
 #    copy:
 #     remote_src: yes
@@ -28,7 +28,7 @@
 #     dest: /etc/init.d/mysqld
 #     mode: 0755
 #
-#  - name: start mysql(service)
+#  - name: Initialize | start mysql(service)
 #    when: ansible_distribution_major_version == "6"
 #    service:
 #     name: mysqld

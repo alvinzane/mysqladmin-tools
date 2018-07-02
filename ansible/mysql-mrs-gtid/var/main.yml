@@ -1,0 +1,6 @@
+mysql_repl_user: repl
+mysql_repl_password: repl@1234
+mysql_port: 3317
+mysql_password: aaaaaa
+gtid: True
+semi_replication: True

@@ -1,8 +1,6 @@
 ---
-# 配置从库
-- block:
-  - import_tasks: init_master.yml
-  when: master is defined
+# 配置从库,每个节点都创建复制帐号,保证切换不会出现
+- import_tasks: init_master.yml
 
 - block:
   - import_tasks: init_slave.yml
