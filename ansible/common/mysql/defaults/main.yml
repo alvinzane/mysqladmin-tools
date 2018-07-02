@@ -17,9 +17,9 @@ mysql_port: "3306"
 mysql_user: "mysql"
 # root 密码
 mysql_password: "abcd@1234"
-# MySQL全局 Datahome
+# MySQL全局 Data home
 mysql_datahome: "/data/mysql"
-# MySQL实例 Datahome,使用端口号
+# MySQL实例 Data home,使用端口号
 mysql_portdir: "{{ mysql_datahome }}/{{ mysql_port }}"
 mysql_datadir: "{{ mysql_portdir }}/data"
 mysql_sock: "/tmp/mysql{{ mysql_port }}.sock"
@@ -29,7 +29,10 @@ mysql_servicename : "mysql{{ mysql_port }}"
 
 mysql_innodb_buffer_pool_size: "32M"
 
+# 半同步复制
 semi_replication: False
+
+# 级联复制
 log_slave_updates: False
 gtid: True
 

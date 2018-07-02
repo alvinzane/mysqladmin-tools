@@ -2,7 +2,7 @@
 - name: Install Stat | Check if percona-toolkit is already installed.
   command: "rpm -q percona-toolkit"
   register: percona_toolkit_installed
-  failed_when: no
+  ignore_errors: True
 - name: Install percona-toolkit
   import_tasks: install_percona_toolkit_via_bin.yml
   when: percona_toolkit_installed.rc == 1
@@ -19,7 +19,7 @@
 - name: Install Stat | Check if sysbench src file is already installed.
   stat: path=/usr/local/src/sysbench
   register: sysbench_src_installed
-  failed_when: no
+  ignore_errors: True
 - name: Install sysbench via src
   import_tasks: install_sysbench_via_src.yml
   when: not sysbench_src_installed.stat.exists
@@ -27,7 +27,7 @@
 - name: Install Stat | Check if tpcc-mysql file is already installed.
   stat: path=/usr/local/src/tpcc-mysql
   register: tpcc_mysql_src_installed
-  failed_when: no
+  ignore_errors: True
 - name: Install tpcc-mysql via src
   import_tasks: install_tpcc_mysql_via_src.yml
   when: not tpcc_mysql_src_installed.stat.exists

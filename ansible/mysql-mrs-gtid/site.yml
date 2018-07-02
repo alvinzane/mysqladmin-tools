@@ -1,6 +1,7 @@
 ---
 - name: Install MySQL Master
-  hosts: mysql-servers
+  hosts: all
+  gather_facts: no
   remote_user: root
   vars_files:
     - var/main.yml

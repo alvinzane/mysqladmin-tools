@@ -1,5 +1,7 @@
 # MySQL 一主多从 级联复制
 
+## playbooks_variables
+    https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 ## 环境
 ```
 | Hosts      | IP            | 角色                |

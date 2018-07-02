@@ -1,13 +1,13 @@
 ---
-- name: Transfer master slave sql to remote host
+- name: Initialize Slave | Transfer master slave sql to remote host
   template:
     src: ../templates/mysql_slave_change_master.sql
     dest: /tmp/mysql_slave_change_master.sql
 
-- name: start slave
+- name: Initialize Slave | Start slave
   shell: mysql -hlocalhost -uroot -p{{ mysql_password }} -S {{ mysql_sock }} < /tmp/mysql_slave_change_master.sql
 
-- name: clear temp file tmp/mysql_slave_change_master.sql
+- name: Initialize Slave | Clear temp file tmp/mysql_slave_change_master.sql
   file:
     dest: tmp/mysql_master_slaves.sql
     state: absent

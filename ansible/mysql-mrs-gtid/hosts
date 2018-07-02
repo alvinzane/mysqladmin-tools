@@ -1,4 +1,8 @@
-[mysql-servers]
+[node1]
 192.168.20.101
+
+[node2]
 192.168.20.102 slave=True master_ip=192.168.20.101
+
+[node3]
 192.168.20.103 slave=True master_ip=192.168.20.102
