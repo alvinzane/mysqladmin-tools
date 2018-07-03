@@ -30,6 +30,7 @@ bulk_insert_buffer_size = 64M
 skip-name-resolve = 1
 transaction_isolation = READ-COMMITTED
 event_scheduler = ON
+bind_address = {{ ansible_host }}
 #read_only = 1
 #lower_case_table_names = 1         #todo 8.0出错
 
@@ -62,8 +63,8 @@ innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
 #innodb_data_file_path = ibdata1:100M:autoextend
 innodb_write_io_threads = 8
 innodb_read_io_threads = 8
-#innodb_thread_concurrency = 16
-innodb_max_dirty_pages_pct = 90
+innodb_thread_concurrency = 0
+innodb_max_dirty_pages_pct = 80
 #innodb_lock_wait_timeout = 120
 innodb_file_per_table = 1
 innodb_open_files = 10240
@@ -115,6 +116,7 @@ log_slave_updates
 
 {% if semi_replication %}
 ##### semi replication #####################
+plugin_load="rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so"
 rpl_semi_sync_master_enabled = 1
 rpl_semi_sync_master_wait_point = AFTER_COMMIT       #AFTER_SYNC|AFTER_COMMIT
 rpl_semi_sync_master_timeout = 1000                  # 1 second 无响应转成异步
