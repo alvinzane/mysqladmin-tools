@@ -6,6 +6,13 @@
      src: ../templates/mysql.service
      dest: /usr/lib/systemd/system/mysql{{ mysql_port }}.service
 
+  - name: Initialize | config mysql{{ mysql_port }}.service start up on boot
+    when: ansible_distribution_major_version == "7"
+    systemd:
+     name: mysql{{ mysql_port }}
+     enabled: yes
+     daemon_reload: yes
+
   - name: Initialize | start mysql{{ mysql_port }} (sytemctl)
     when: ansible_distribution_major_version == "7"
     systemd:
@@ -13,12 +20,8 @@
      state: started
      daemon_reload: yes
 
-  - name: Initialize | config mysql{{ mysql_port }}.service start up on boot
-    when: ansible_distribution_major_version == "7"
-    systemd:
-     name: mysql{{ mysql_port }}
-     enabled: yes
-     daemon_reload: yes
+  - name: Initialize | Wait for mysql start.
+    wait_for: port={{ mysql_port }} delay=5 timeout=60
 
 #  - name: Initialize | config sysv start script
 #    when: ansible_distribution_major_version == "6"

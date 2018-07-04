@@ -1,0 +1,49 @@
+---
+- name: Replication | Slave | Wait for master start.
+  wait_for: port={{ mysql_port }} delay=1 timeout=10
+  delegate_to: "{{ master_ip }}"
+
+- name: Replication | Slave | Get the current master servers replication status
+  mysql_replication:
+    mode: getmaster
+    login_user: root
+    login_unix_socket: "{{ mysql_sock }}"
+    login_password: "{{ mysql_password }}"
+  delegate_to: "{{ master_ip }}"
+  register: master
+
+- name: Replication | Slave | Change the master in slave to start the replication
+  mysql_replication:
+    mode: changemaster
+    login_host: localhost
+    login_unix_socket: "{{ mysql_sock }}"
+    login_user: root
+    login_password: "{{ mysql_password }}"
+    master_host: "{{ master_ip }}"
+    master_host: "{{ mysql_port }}"
+    master_user: "{{ mysql_repl_user }}"
+    master_password: "{{ mysql_repl_password }}"
+    master_log_file: "{{ master.File }}"
+    master_log_pos: "{{ master.Position }}"
+
+- name: Replication | Slave | Start slave in slave to start the replication
+  mysql_replication:
+    mode: startslave
+    login_host: localhost
+    login_unix_socket: "{{ mysql_sock }}"
+    login_user: root
+    login_password: "{{ mysql_password }}"
+
+- name: Replication | Slave | Get slave status.
+  mysql_replication:
+    mode: getslave
+    login_user: root
+    login_unix_socket: "{{ mysql_sock }}"
+    login_password: "{{ mysql_password }}"
+  ignore_errors: true
+  register: slave_status
+
+- name: Replication | Slave | Check slave replication status.
+  debug: msg="Slave replication status is faild. Error:{{slave.Last_IO_Error}}"
+  ignore_errors: true
+  when: slave_status.Slave_SQL_Running != 'Yes' and slave_status.Slave_IO_Running != 'Yes'

@@ -5,11 +5,10 @@ if [ -z $port ]; then
     exit 1
 fi
 running=`ps aux|grep -v grep |grep -E "mysqld.*$port" |wc -l`
-cmd="/usr/local/mysql/bin/mysqld --defaults-file=/data/mysql/$port/my.cnf"
+cmd="{{mysql_basedir}}/bin/mysqld --defaults-file={{ mysql_datahome }}/$port/my.cnf"
 
 if [ "$running" = "0" ]; then
     echo "MySQL $port start."
-
     echo $cmd
     $cmd &
 else

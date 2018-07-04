@@ -1,7 +1,10 @@
 ---
 # 配置从库,每个节点都创建复制帐号,保证切换时主从不会出错
+- import_tasks: init_dependents.yml
 - import_tasks: init_master.yml
 
-- block:
-  - import_tasks: init_slave.yml
-  when:  slave is defined
+- import_tasks: init_slave_gtid.yml
+  when:  slave is defined and gtid == True
+
+- import_tasks: init_slave_position.yml
+  when:  slave is defined and gtid == False

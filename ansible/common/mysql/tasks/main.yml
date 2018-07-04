@@ -17,7 +17,7 @@
 - block:
   - import_tasks: init_mysql.yml
   - import_tasks: init_service.yml
-  - import_tasks: sleep.yml
+#  - import_tasks: sleep.yml
   - import_tasks: init_pwd_plugin.yml
   when: not mysql_datadir_result.stat.exists
 
