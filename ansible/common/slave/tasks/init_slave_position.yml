@@ -20,7 +20,7 @@
     login_user: root
     login_password: "{{ mysql_password }}"
     master_host: "{{ master_ip }}"
-    master_host: "{{ mysql_port }}"
+    master_port: "{{ mysql_port }}"
     master_user: "{{ mysql_repl_user }}"
     master_password: "{{ mysql_repl_password }}"
     master_log_file: "{{ master.File }}"
