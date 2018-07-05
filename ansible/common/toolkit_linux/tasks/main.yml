@@ -12,3 +12,5 @@
     - "inotify-tools"
     - "strace"
     - "perf"
+    - "lrzsz"
+    - "screen"
