@@ -10,7 +10,7 @@
    shell: "{{ item }} chdir=/usr/local/src/sysbench"
    with_items:
     - "./autogen.sh"
-    - "./configure --prefix=/usr/local/sysbench"
+    - "./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib"
     - "make -j 2 && make install"
 
  - name: Install sysbench link
@@ -18,8 +18,10 @@
 
  - name: Export path env variable
    lineinfile:
-    path: /etc/profile
-    line: export LD_LIBRARY_PATH=/usr/local/mysql/lib/
+    path: /etc/ld.so.conf
+    line: /usr/local/mysql/lib
     insertafter: EOF
    notify: reload profile
 
+ - name: Git clone sysbench src
+   shell: "/sbin/ldconfig -v"
