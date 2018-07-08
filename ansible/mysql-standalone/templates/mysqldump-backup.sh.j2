@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+CUR_TIME=`date +%Y%m%d`
+BACKUP_FILE={{ mysql_backup_dir }}/"$CUR_TIME"_{{ ansible_host }}_{{ mysql_port}}.sql
+mysqldump -S {{ mysql_sock }} -p{{ mysql_password }} --master-data=2 --single-transaction --all-databases >$BACKUP_FILE

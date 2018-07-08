@@ -3,8 +3,7 @@
   hosts: all
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
     - var/main.yml
 
   roles:
-    - { role: mysql , mysql_port: 3307 }
+    - { role: mysql , mysql_port: 3306 }

@@ -2,6 +2,9 @@
 mysql_port: 3306
 # root 密码
 mysql_password: aaaaaa
+mysql_innodb_buffer_pool_size: "1G"
+#mysql_version: "8.0.11"
+#mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+#mysql_datahome: "/data/mysql"
 
-mysql_version: "8.0.11"
-mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+mysql_backup_dir: /data/backup/mysql

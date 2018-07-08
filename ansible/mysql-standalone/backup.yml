@@ -1,0 +1,25 @@
+---
+- name: Backup MySQL via mysqldump
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    - name: Backup | Create MySQL backup directory.
+      file: path={{ mysql_backup_dir }} state=directory owner=mysql group=mysql
+
+    - name: Backup | Transfer sql to remote host
+      template:
+        src: templates/mysqldump-backup.sh.j2
+        dest: /tmp/mysqldump-backup.sh
+        mode: 0755
+    
+    - name: Backup | Backup MySQL datas
+      shell: /tmp/mysqldump-backup.sh
+
+    - name: Backup | clear temp file tmp/mysqldump-backup.sh
+      file:
+        dest: tmp/mysqldump-backup.sh
+        state: absent
