@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+{% if general_log %}
+mysql -S {{ mysql_sock }} -u{{ mysql_backup_user }} -p{{ mysql_backup_password }} -e "set global general_log=on"
+{% endif %}
+
+CUR_TIME=`date +%Y%m%d`
+BACKUP_DIR={{ mysql_backup_dir }}/xtrabackup-"$CUR_TIME"
+innobackupex --defaults-file={{ mysql_portdir }}/my.cnf --user={{ mysql_backup_user }} --password={{ mysql_backup_password }} $BACKUP_DIR
+
+{% if general_log %}
+mysql -S {{ mysql_sock }} -u{{ mysql_backup_user }} -p{{ mysql_backup_password }} -e "set global general_log=off"
+{% endif %}

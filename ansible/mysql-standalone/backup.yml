@@ -1,7 +1,13 @@
 ---
-- name: Backup MySQL via mysqldump
+- name: Backup MySQL via {{ mysql_backup_cmd }}
   hosts: all
   remote_user: root
+  vars:
+    mysql_backup_cmd: xtrabackup
+    database: dbtest1
+    general_log: True
+    general_log_file: mysql0.log
+    clear_general_log_file: True
   vars_files:
     - ../common/mysql/defaults/main.yml
     - var/main.yml
@@ -10,16 +16,23 @@
     - name: Backup | Create MySQL backup directory.
       file: path={{ mysql_backup_dir }} state=directory owner=mysql group=mysql
 
-    - name: Backup | Transfer sql to remote host
+    - name: Backup | Transfer backup script to remote host
       template:
-        src: templates/mysqldump-backup.sh.j2
-        dest: /tmp/mysqldump-backup.sh
+        src: templates/{{ mysql_backup_cmd }}-backup.sh.j2
+        dest: /tmp/{{ mysql_backup_cmd }}-backup.sh
         mode: 0755
     
     - name: Backup | Backup MySQL datas
-      shell: /tmp/mysqldump-backup.sh
+      shell: /tmp/{{ mysql_backup_cmd }}-backup.sh
 
-    - name: Backup | clear temp file tmp/mysqldump-backup.sh
-      file:
-        dest: tmp/mysqldump-backup.sh
-        state: absent
+    - name: Backup | Fetch  general log file
+      fetch: src={{ mysql_datadir }}/{{ general_log_file }} dest=log/{{ inventory_hostname }}/{{ general_log_file }} flat=yes
+
+#    - name: Backup | clear temp file tmp/{{ mysql_backup_cmd }}-backup.sh
+#      file:
+#        dest: tmp/{{ mysql_backup_cmd }}-backup.sh
+#        state: absent
+
+    - name: Backup | clear general log file {{ general_log_file }}
+      shell: "cat /dev/null > {{ mysql_datadir }}/{{ general_log_file }}"
+      when: clear_general_log_file

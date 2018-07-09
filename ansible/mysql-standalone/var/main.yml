@@ -8,3 +8,5 @@ mysql_innodb_buffer_pool_size: "1G"
 #mysql_datahome: "/data/mysql"
 
 mysql_backup_dir: /data/backup/mysql
+mysql_backup_user: root
+mysql_backup_password: aaaaaa

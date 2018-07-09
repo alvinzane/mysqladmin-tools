@@ -1,0 +1,3 @@
+---
+xtrabackup_package: "percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm"
+mydumper_package: "mydumper-0.9.5-1.el7.x86_64.rpm"

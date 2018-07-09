@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+{% if general_log %}
+mysql -S {{ mysql_sock }} -u{{ mysql_backup_user }} -p{{ mysql_backup_password }} -e "set global general_log=on"
+{% endif %}
+
 CUR_TIME=`date +%Y%m%d`
-BACKUP_FILE={{ mysql_backup_dir }}/"$CUR_TIME"_{{ ansible_host }}_{{ mysql_port}}.sql
-mysqldump -S {{ mysql_sock }} -p{{ mysql_password }} --master-data=2 --single-transaction --all-databases >$BACKUP_FILE
+BACKUP_FILE={{ mysql_backup_dir }}/mysqldump/"$CUR_TIME"_{{ ansible_host }}_{{ mysql_port}}.sql
+mysqldump -S {{ mysql_sock }} -u{{ mysql_backup_user }} -p{{ mysql_backup_password }} --master-data=2 --single-transaction {{ database }} >$BACKUP_FILE
+
+{% if general_log %}
+mysql -S {{ mysql_sock }} -u{{ mysql_backup_user }} -p{{ mysql_backup_password }} -e "set global general_log=off"
+{% endif %}

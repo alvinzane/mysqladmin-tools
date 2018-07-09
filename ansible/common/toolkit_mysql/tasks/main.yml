@@ -1,11 +1,19 @@
 # 安装Linux 常用 监控性能工具
-- name: Install Stat | Check if percona-toolkit is already installed.
+- name: percona-toolkit | Check if percona-toolkit is already installed.
   command: "rpm -q percona-toolkit"
   register: percona_toolkit_installed
   ignore_errors: True
-- name: Install percona-toolkit
+- name: percona-toolkit | Install percona-toolkit
   import_tasks: install_percona_toolkit_via_bin.yml
   when: percona_toolkit_installed.rc == 1
+
+- name: xtrabackup | Check if mydumperis already installed.
+  command: "rpm -q percona-xtrabackup"
+  register: installed
+  failed_when: no
+- name: xtrabackup | Install mydumper
+  import_tasks: install_percona-xtrabackup_via_bin.yml
+  when: installed.rc == 1
 
 #- name: Install Stat | Check if sysbench is already installed.
 #  shell: "rpm -qa|grep sysbench"
@@ -16,18 +24,26 @@
 #  when: sysbench_toolkit_installed.rc == 1
 #
 
-- name: Install Stat | Check if sysbench src file is already installed.
+- name: sysbench | Check if sysbench src file is already installed.
   stat: path=/usr/local/src/sysbench
   register: sysbench_src_installed
   ignore_errors: True
-- name: Install sysbench via src
+- name: sysbench | Install sysbench via src
   import_tasks: install_sysbench_via_src.yml
   when: not sysbench_src_installed.stat.exists
 
-- name: Install Stat | Check if tpcc-mysql file is already installed.
+- name: tpcc_mysq | Check if tpcc-mysql file is already installed.
   stat: path=/usr/local/src/tpcc-mysql
   register: tpcc_mysql_src_installed
   ignore_errors: True
-- name: Install tpcc-mysql via src
+- name: tpcc_mysq | Install tpcc-mysql via src
   import_tasks: install_tpcc_mysql_via_src.yml
   when: not tpcc_mysql_src_installed.stat.exists
+
+- name: mydumper | Check if mydumperis already installed.
+  command: "rpm -q mydumper"
+  register: installed
+  failed_when: no
+- name: mydumper | Install mydumper
+  import_tasks: install_mydumper_via_bin.yml
+  when: installed.rc == 1

@@ -1,27 +1,28 @@
 ---
 # https://github.com/akopytov/sysbench#rhelcentos
 # https://github.com/Percona-Lab/sysbench-tpcc
- - name: Git clone sysbench src
+ - name: sysbench | Git clone sysbench src
    shell: "{{ item }} chdir=/usr/local/src"
    with_items:
     - "git clone https://github.com/akopytov/sysbench.git"
 
- - name: Install sysbench via src
+ # ./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib
+ - name: sysbench | Install sysbench via src
    shell: "{{ item }} chdir=/usr/local/src/sysbench"
    with_items:
     - "./autogen.sh"
-    - "./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib"
+    - "./configure --prefix=/usr/local/sysbench"
     - "make -j 2 && make install"
 
- - name: Install sysbench link
+ - name: sysbench | Install sysbench link
    shell: "ln -s /usr/local/sysbench/bin/sysbench /bin/sysbench"
 
- - name: Export path env variable
+ - name: sysbench | Export path env variable
    lineinfile:
     path: /etc/ld.so.conf
     line: /usr/local/mysql/lib
     insertafter: EOF
    notify: reload profile
 
- - name: Git clone sysbench src
+ - name: sysbench | Reload ldconfig
    shell: "/sbin/ldconfig -v"

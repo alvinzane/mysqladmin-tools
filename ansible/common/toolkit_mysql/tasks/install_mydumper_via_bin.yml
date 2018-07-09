@@ -1,0 +1,6 @@
+---
+- name: mydumper | Copy file
+  copy: src=../files/{{ mydumper_package }} dest=/tmp/{{ mydumper_package }}
+
+- name: mydumper | Install mydumper
+  command: "yum -y localinstall /tmp/{{ mydumper_package }}"

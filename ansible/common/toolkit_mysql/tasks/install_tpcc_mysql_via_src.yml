@@ -1,5 +1,5 @@
 ---
- - name: Install tpcc-mysql via src
+ - name: tpcc-mysql | Install tpcc-mysql via src
    shell: "{{ item }} chdir=/usr/local/src"
    with_items:
     - "git clone https://github.com/Percona-Lab/tpcc-mysql.git"
