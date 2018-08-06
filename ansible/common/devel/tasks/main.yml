@@ -8,7 +8,7 @@
     - "make"
     - "automake"
     - "pkgconfig"
-#    - "libtool"
+    - "libtool"
 #    - "libyaml-devel"
 #    - "zlib-devel"
 #    - "openssl-devel"

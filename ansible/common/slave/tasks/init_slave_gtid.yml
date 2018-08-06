@@ -1,24 +1,25 @@
 ---
-- name: Replication | Slave | Transfer master slave sql to remote host
+- name: Replication | Slave-Gtid | Transfer master slave sql to remote host
   template:
     src: ../templates/mysql_slave_change_master.sql
     dest: /tmp/mysql_slave_change_master.sql
 
-- name: Replication | Slave |  Start slave
+- name: Replication Gtid | Slave |  Start slave
   shell: mysql -hlocalhost -uroot -p{{ mysql_password }} -S {{ mysql_sock }} < /tmp/mysql_slave_change_master.sql
 
-- name: Replication | Slave |  Clear temp file tmp/mysql_slave_change_master.sql
+- name: Replication | Slave-Gtid |  Clear temp file tmp/mysql_slave_change_master.sql
   file:
     dest: tmp/mysql_master_slaves.sql
     state: absent
 
-- name: Replication | Slave | Start slave in slave to start the replication
-  mysql_replication:
-    mode: startslave
-    login_user: root
-    login_password: "{{ mysql_password }}"
+#- name: Replication | Slave-Gtid | Start slave in slave to start the replication
+#  mysql_replication:
+#    mode: startslave
+#    login_user: root
+#    login_password: "{{ mysql_password }}"
+#    login_unix_socket: "{{ mysql_sock }}"
 
-- name: Replication | Slave | Get slave status.
+- name: Replication | Slave-Gtid | Get slave status.
   mysql_replication:
     mode: getslave
     login_user: root
@@ -27,7 +28,7 @@
   ignore_errors: true
   register: slave_status
 
-- name: Replication | Slave | Check slave replication status.
+- name: Replication | Slave-Gtid | Check slave replication status.
   debug: msg="Slave replication status is faild. Error:{{slave.Last_IO_Error}}"
   ignore_errors: true
   when: slave_status.Slave_SQL_Running != 'Yes' and slave_status.Slave_IO_Running != 'Yes'
