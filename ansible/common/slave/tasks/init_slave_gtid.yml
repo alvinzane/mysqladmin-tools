@@ -4,7 +4,7 @@
     src: ../templates/mysql_slave_change_master.sql
     dest: /tmp/mysql_slave_change_master.sql
 
-- name: Replication Gtid | Slave |  Start slave
+- name: Replication | Slave-Gtid |  Start slave
   shell: mysql -hlocalhost -uroot -p{{ mysql_password }} -S {{ mysql_sock }} < /tmp/mysql_slave_change_master.sql
 
 - name: Replication | Slave-Gtid |  Clear temp file tmp/mysql_slave_change_master.sql

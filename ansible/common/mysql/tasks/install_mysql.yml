@@ -9,28 +9,19 @@
 
 # 由本地传输mysql安装包到目标主机、并把安装包解压到/opt/mysql
 # 等价bash
-# scp mysql-xxxx.tar.gz 192.168.xx.xx:/tmp/
-#tar -xvf /tmp/mysq-xxxx.tar.gz -C /opt/mysql/
- - name: Install | Transfer MySQL install package to remote host and unarchive to /opt/mysql/
-   unarchive:
+# scp mysql-xxxx.tar.gz 192.168.xx.xx:/opt/mysql/
+# tar -xvf mysq-xxxx.tar.gz
+ - name: Install | Transfer MySQL install package to remote host to /opt/mysql/
+   copy:
     src: "{{ software_files_path }}/{{ mysql_package }}"
-    dest: /opt/mysql
-    owner: mysql
-    group: mysql
+    dest: "/opt/mysql/{{ mysql_package }}"
 
-#  mv /opt/mysql/mysql-5.7.20-linux-glibc2.12-x86_64 /opt/mysql/mysql-x.xx
- - name: Install | Rename MySQL package name to a short name
-   command: mv /opt/mysql/{{ mysql_package | regex_replace('.tar.gz','') }}  /opt/mysql/{{ mysql_dirname }}
-
-# 设置权限
-# 等价bash
-# chown -R mysql:mysql /usr/local/mysql-xxxx
- - name: Install | Change owner to MySQL user
-   file:
-    path: /opt/mysql/{{ mysql_dirname }}
-    owner: mysql
-    group: mysql
-    recurse: yes
+ - name: Install | Unarchive and rename MySQL package
+   shell: "{{ item }} chdir=/opt/mysql/"
+   with_items:
+    - "tar -xvf {{ mysql_package }}"
+    - "mv {{ mysql_package | regex_replace('.tar.gz','') }}  {{ mysql_dirname }}"
+    - "chown -R mysql:mysql {{ mysql_dirname }}"
 
 # 创建连接文件
 # 等价bash

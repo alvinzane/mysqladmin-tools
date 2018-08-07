@@ -1,6 +1,6 @@
 mysql_repl_user: repl
 mysql_repl_password: repl@1234
-
-mysql_port: 3308
+gtid: False
+mysql_port: 3307
 mysql_password: aaaaaa
 
