@@ -1,6 +1,6 @@
 ---
 - name: xtrabackup | Copy file
-  copy: src=../files/{{ xtrabackup_package }} dest=/tmp/{{ xtrabackup_package }}
+  copy: src={{ software_files_path }}/{{ xtrabackup_package }} dest=/tmp/{{ xtrabackup_package }}
 
 - name: xtrabackup | Install mydumper
   command: "yum -y localinstall /tmp/{{ xtrabackup_package }}"

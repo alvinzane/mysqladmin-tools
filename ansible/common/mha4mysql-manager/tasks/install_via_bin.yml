@@ -1,0 +1,8 @@
+---
+- name: Install | Transfer {{ mha4mysql_manage_package }} to remote host to /tmp
+  copy:
+    src: "{{ software_files_path }}/{{ mha4mysql_manage_package }}"
+    dest: "/tmp/{{ mha4mysql_manage_package }}"
+
+- name: Install | {{ mha4mysql_manage_package }}
+  command: "yum -y localinstall {{ mha4mysql_manage_package }} chdir=/tmp"

@@ -1,0 +1,8 @@
+# 安装Linux 常用 监控性能工具
+- name: Check if {{ mha4mysql_node_package }} is already installed.
+  command: "rpm -q {{ mha4mysql_node_package |  regex_replace('.rpm','') }}"
+  register: installed
+  ignore_errors: True
+- name: Install {{ mha4mysql_node_package }}
+  import_tasks: install_via_bin.yml
+  when: installed.rc == 1
