@@ -1,0 +1,1 @@
+0 4 * * * /bin/bash /root/purge_relay_log.sh

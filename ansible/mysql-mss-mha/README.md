@@ -36,5 +36,8 @@
 
     sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no root@192.168.20.103
 
+masterha_check_ssh --conf=/etc/masterha/app1.cnf
+masterha_check_repl --conf=/etc/masterha/app1.cnf
+masterha_check_status --conf=/etc/masterha/app1.cnf
 
-
+/sbin/ifconfig enp0s8:1 192.168.20.10/24

@@ -1,0 +1,29 @@
+[server default]
+manager_workdir=/var/log/masterha/app1.log
+manager_log=/var/log/masterha/app1/manager.log
+master_binlog_dir=/data/mysql/3308/logs/
+master_ip_failover_script= /usr/local/bin/master_ip_failover
+master_ip_online_change_script= /usr/local/bin/master_ip_online_change
+user=admin
+password=aaaaaa
+ping_interval=5
+remote_workdir=/tmp
+repl_user=repl
+repl_password=repl@1234
+report_script=/usr/local/send_report
+secondary_check_script= /usr/local/bin/masterha_secondary_check -s server03 -s server02
+shutdown_script=""
+ssh_user=root
+
+[server1]
+hostname=192.168.20.101
+port=3308
+
+[server2]
+hostname=192.168.20.102
+port=3308
+candidate_master=1
+
+[server3]
+hostname=192.168.20.103
+port=3308

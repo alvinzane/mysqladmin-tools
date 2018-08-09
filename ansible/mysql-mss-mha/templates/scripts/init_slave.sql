@@ -1,0 +1,1 @@
+set global read_only=1; set global relay_log_purge=0;
