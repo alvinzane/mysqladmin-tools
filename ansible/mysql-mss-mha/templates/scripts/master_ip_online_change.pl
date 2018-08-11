@@ -37,6 +37,11 @@ my (
   $new_master_ip,        $new_master_port,          $new_master_user,
   $new_master_password,  $new_master_ssh_user,
 );
+
+my $vip = '{{ mha_vip }}';
+my $ssh_start_vip = "/sbin/ifconfig {{ if_name }} $vip";
+my $ssh_stop_vip = "/sbin/ifconfig {{ if_name }} down";
+
 GetOptions(
   'command=s'                => \$command,
   'orig_master_is_new_slave' => \$orig_master_is_new_slave,
@@ -116,6 +121,9 @@ sub get_threads_util {
 }
 
 sub main {
+
+  print "\n\nIN SCRIPT TEST====$ssh_stop_vip==$ssh_start_vip===\n\n";
+
   if ( $command eq "stop" ) {
     ## Gracefully killing connections on the current master
     # 1. Set read_only= 1 on the new master
@@ -125,6 +133,9 @@ sub main {
     # * Any database access failure will result in script die.
     my $exit_code = 1;
     eval {
+      print current_time_us()." Disabling the VIP on old master: $orig_master_host \n";
+      &stop_vip();
+
       ## Setting read_only=1 on the new master (to avoid accident)
       my $new_master_handler = new MHA::DBHelper();
 
@@ -148,8 +159,8 @@ sub main {
 
       ## Drop application user so that nobody can connect. Disabling per-session binlog beforehand
       $orig_master_handler->disable_log_bin_local();
-      print current_time_us() . " Drpping app user on the orig master..\n";
-      FIXME_xxx_drop_app_user($orig_master_handler);
+      print current_time_us() . "TODO: Drpping app user on the orig master..\n";
+#      FIXME_xxx_drop_app_user($orig_master_handler);
 
       ## Waiting for N * 100 milliseconds so that current connections can exit
       my $time_until_read_only = 15;
@@ -242,12 +253,15 @@ sub main {
       $new_master_handler->disable_read_only();
 
       ## Creating an app user on the new master
-      print current_time_us() . " Creating app user on the new master..\n";
-      FIXME_xxx_create_app_user($new_master_handler);
-      $new_master_handler->enable_log_bin_local();
-      $new_master_handler->disconnect();
+      print current_time_us() . " TODO: Creating app user on the new master..\n";
+#      FIXME_xxx_create_app_user($new_master_handler);
+#      $new_master_handler->enable_log_bin_local();
+#      $new_master_handler->disconnect();
 
       ## Update master ip on the catalog database, etc
+      print "Enabling the VIP - $vip on the new master - $new_master_host \n";
+      &start_vip();
+
       $exit_code = 0;
     };
     if ($@) {
@@ -265,6 +279,15 @@ sub main {
     &usage();
     exit 1;
   }
+}
+
+# A simple system call that enable the VIP on the new master
+sub start_vip() {
+    `ssh $new_master_ssh_user\@$new_master_host \" $ssh_start_vip \"`;
+}
+# A simple system call that disable the VIP on the old_master
+sub stop_vip() {
+    `ssh $orig_master_ssh_user\@$orig_master_host \" $ssh_stop_vip \"`;
 }
 
 sub usage {

@@ -69,9 +69,9 @@ OLTP_ARGS="
 --tables=2
 "
 
-TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_only.lua
-#TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_write.lua
+#TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_only.lua
+TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_write.lua
 
 sysbench $TESTNAME $ARGS $OLTP_ARGS prepare
 sysbench $TESTNAME $ARGS $OLTP_ARGS run | tee -a /tmp/"$HOST"_`basename $TESTNAME .lua`_"$THREADS"_`date +%Y%m%d_%H%M%S`.log
-sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup
+#sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup

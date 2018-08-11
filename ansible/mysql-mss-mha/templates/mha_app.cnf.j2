@@ -1,29 +1,32 @@
 [server default]
-manager_workdir=/var/log/masterha/app1.log
-manager_log=/var/log/masterha/app1/manager.log
-master_binlog_dir=/data/mysql/3308/logs/
-master_ip_failover_script= /usr/local/bin/master_ip_failover
-master_ip_online_change_script= /usr/local/bin/master_ip_online_change
+ssh_user=root
+manager_workdir=/var/log/masterha/{{ app_name }}.log
+manager_log=/var/log/masterha/{{ app_name }}/manager.log
+
 user=admin
-password=aaaaaa
+password={{ mysql_password }}
+repl_user={{ mysql_repl_user }}
+repl_password={{ mysql_repl_password }}
+
 ping_interval=5
 remote_workdir=/tmp
-repl_user=repl
-repl_password=repl@1234
-report_script=/usr/local/send_report
-secondary_check_script= /usr/local/bin/masterha_secondary_check -s server03 -s server02
-shutdown_script=""
-ssh_user=root
+
+master_binlog_dir={{ mysql_portdir }}/logs/
+master_ip_failover_script= /etc/masterha/scripts/{{ app_name }}/master_ip_failover
+master_ip_online_change_script= /etc/masterha/scripts/{{ app_name }}/master_ip_online_change
+secondary_check_script= /usr/bin/masterha_secondary_check -s {{ groups['mha-node'][0] }} -s {{ groups['mha-node'][1] }} -s {{ groups['mha-node'][2] }}
+#report_script=/etc/masterha/scripts/send_report
+#shutdown_script=""
 
 [server1]
-hostname=192.168.20.101
-port=3308
+hostname={{ groups['mha-node'][0] }}
+port={{ mysql_port }}
 
 [server2]
-hostname=192.168.20.102
-port=3308
+hostname={{ groups['mha-node'][1] }}
+port={{ mysql_port }}
 candidate_master=1
 
 [server3]
-hostname=192.168.20.103
-port=3308
+hostname={{ groups['mha-node'][2] }}
+port={{ mysql_port }}

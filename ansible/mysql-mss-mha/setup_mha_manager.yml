@@ -1,0 +1,32 @@
+---
+- name: Setup MHA manager
+  hosts: mha-manager
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    # 安装 master app 配置文件
+    - name: Setup | Make dir /etc/masterha/scripts/{{ app_name }}
+      file: path={{ item }} state=directory
+      with_items:
+        - "/var/log/masterha"
+        - "/etc/masterha/scripts/{{ app_name }}"
+
+    - name: Setup | Transfer cnf file to manager host
+      template:
+        src: templates/mha_app.cnf.j2
+        dest: /etc/masterha/{{ app_name }}.cnf
+
+    # 安装 自定义脚本,按app分开脚本,解决VIP问题
+    - name: Setup | Transfer script to manager host
+      template:
+        src: templates/scripts/{{ item }}
+        dest: /etc/masterha/scripts/{{ app_name }}/{{ item | regex_replace('.pl','')}}
+        mode: 0755
+      with_items:
+        - "master_ip_failover.pl"
+        - "master_ip_online_change.pl"
+        - "power_manager.pl"
+        - "send_report.pl"
