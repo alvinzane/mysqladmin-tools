@@ -30,3 +30,15 @@
         - "master_ip_online_change.pl"
         - "power_manager.pl"
         - "send_report.pl"
+
+    - name: Setup | Install requirements sshpass
+      yum: name=sshpass state=present
+
+    - name: Setup | Generate SSH keys
+      shell: echo -e "y\n" | ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
+      args:
+        creates: /root/.ssh/id_rsa
+
+    - name: Setup | Setup SSH public key authentication
+      command: "sshpass -p '{{ ssh_password }}' ssh-copy-id  -o StrictHostKeyChecking=no {{ item }}"
+      with_items: "{{ groups['mha-node'] }}"

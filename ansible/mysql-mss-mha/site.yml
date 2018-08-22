@@ -13,5 +13,8 @@
 - name: Install mha4mysql-manager
   hosts: mha-manager
   remote_user: root
+  vars_files:
+  - ../common/mysql/defaults/main.yml
+  - var/main.yml
   roles:
     - mha4mysql-manager
