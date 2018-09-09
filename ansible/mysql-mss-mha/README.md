@@ -35,6 +35,7 @@
 ## 参考raw安装
 
     sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.20.103
+    sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.20.201
 
 ## MHA 脚本
 ```
@@ -45,6 +46,7 @@ masterha_check_status --conf=/etc/masterha/app1.cnf
 
 # 手动绑定vip
 /sbin/ifconfig enp0s8:1 192.168.20.10/24
+/sbin/ifconfig enp0s8:2 192.168.20.20/24
 /sbin/ifconfig enp0s8:1 down
 
 # 开启MHA Manager监控

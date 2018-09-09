@@ -40,6 +40,7 @@ ARGS="
 --mysql-host=$HOST
 --mysql-user=$USER
 --mysql-port=$PORT
+--mysql-socket=$SOCKET
 --mysql-password=$PASSWORD
 --mysql-db=$DB
 --report-interval=10
@@ -63,9 +64,9 @@ OLTP_ARGS="
 --range_size=100
 --secondary=off
 --simple_ranges=1
---skip_trx=on
+--skip_trx=off
 --sum_ranges=1
---table_size=10
+--table_size=10000
 --tables=2
 "
 
@@ -74,4 +75,4 @@ TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_write.lua
 
 sysbench $TESTNAME $ARGS $OLTP_ARGS prepare
 sysbench $TESTNAME $ARGS $OLTP_ARGS run | tee -a /tmp/"$HOST"_`basename $TESTNAME .lua`_"$THREADS"_`date +%Y%m%d_%H%M%S`.log
-#sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup
+sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup
