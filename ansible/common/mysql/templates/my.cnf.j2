@@ -87,6 +87,9 @@ log_error_verbosity=3
 general_log = 0
 general_log_file = general.log
 
+###### mysql_plugins #####################
+plugin_load="{% for plugin in mysql_plugins %}{{ plugin.name }}={{ plugin.so }};{% endfor %}"
+
 ###### gtid #####################
 {% if gtid %}
 gtid_mode = on
@@ -106,24 +109,37 @@ max_binlog_cache_size = 50M
 skip_slave_start = 1
 log-bin = {{ mysql_portdir }}/logs/mysql-bin
 expire_logs_days = 10
+master_info_repository = {{ master_info_repository }}
+relay_log_info_repository = {{ master_info_repository }}
 
 relay-log={{ mysql_portdir }}/logs/relay-bin
-relay-log-index=relay-bin.index
+relay-log-index = relay-bin.index
 relay_log_purge = 1
 relay_log_recovery = 1
 max_relay_log_size = 900M
 
 {% if log_slave_updates %}
-log_slave_updates
+log_slave_updates=ON
 {% endif %}
 
 {% if semi_replication %}
 ##### semi replication #####################
-plugin_load="rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so"
 rpl_semi_sync_master_enabled = 1
 rpl_semi_sync_master_wait_point = AFTER_COMMIT       #AFTER_SYNC|AFTER_COMMIT
 rpl_semi_sync_master_timeout = 1000                  # 1 second 无响应转成异步
 rpl_semi_sync_slave_enabled = 1
+{% endif %}
+
+{% if group_replication and gtid %}
+##### group replication #####################
+transaction_write_set_extraction = XXHASH64
+group_replication_group_name = '7cd80e42-b5cc-11e8-a596-0800275ae9e7'   # 可通过select uuid()获得
+group_replication_start_on_boot = off
+group_replication_local_address = 'node1:33061'
+group_replication_group_seeds ='node1:33061,node2:33062,node3:33063'
+group_replication_bootstrap_group = off
+group_replication_single_primary_mode=off
+group_replication_enforce_update_everywhere_checks=true
 {% endif %}
 
 [mysqldump]

@@ -29,8 +29,11 @@ mysql_servicename : "mysql{{ mysql_port }}"
 
 mysql_innodb_buffer_pool_size: "32M"
 
+master_info_repository: "FILE"
 # 半同步复制
 semi_replication: False
+# 组复制
+group_replication: False
 
 # 级联复制
 log_slave_updates: False
@@ -38,3 +41,8 @@ gtid: True
 
 # 用于启动mysql后,修改密码
 sleep_time: 15
+
+mysql_plugins:
+ - { name: "rpl_semi_sync_master", so: "semisync_master.so" }
+ - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }
+ - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }
