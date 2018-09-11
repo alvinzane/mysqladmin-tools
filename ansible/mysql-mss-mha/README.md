@@ -1,4 +1,4 @@
-# MySQL 一主多从 + MHA 环境安装(未完成)
+# MySQL 一主多从 + MHA 环境安装
 
 ## 环境
 ```
@@ -12,11 +12,12 @@
 ```
 ## 用法:
 
-    # 生产环境
-	ansible-playbook -i inventories/production/hosts mysql-servers.yml
-
-	# 测试环境
-	ansible-playbook -i inventories/staging/hosts mysql-servers.yml
+	# 安装 MySQL
+	ansible-playbook -i hosts site.yml
+	# 配置 MHA manager
+	ansible-playbook -i hosts setup_mha_manager.yml
+	# 配置 MHA node
+	ansible-playbook -i hosts setup_mha_node.yml
 
 ## 主配置文件:
 
