@@ -29,7 +29,7 @@
  - name: Install | Make link /opt/mysql/mysql-xx.yy.zz to /usr/local/mysql
    file:
     src: /opt/mysql/{{ mysql_dirname }}
-    dest: /usr/local/mysql
+    dest: '{{ mysql_basedir }}'
     state: link
     owner: mysql
     group: mysql
@@ -48,11 +48,11 @@
  - name: Install | Export path env variable
    lineinfile:
     path: /etc/profile
-    line: export PATH=/usr/local/mysql/bin/:$PATH
+    line: export PATH={{ mysql_basedir }}/bin/:$PATH
     insertafter: EOF
 
  - name: Install | Export path env to /root/.bashrc
    lineinfile:
     path: /root/.bashrc
-    line: export PATH=/usr/local/mysql/bin/:$PATH
+    line: export PATH={{ mysql_basedir }}/bin/:$PATH
     insertafter: EOF

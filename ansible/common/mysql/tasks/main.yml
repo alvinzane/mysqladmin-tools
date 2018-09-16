@@ -3,7 +3,7 @@
 
 #  检查MySQL文件是否已安装后,二进制包安装MySQL
 - name: Install Stat | Check if MySQL file is already installed.
-  stat: path=/opt/mysql/{{ mysql_dirname }}
+  stat: path={{ mysql_basedir }}
   register: mysql_install_result
 - block:
   - import_tasks: install_mysql_dependents.yml
@@ -17,7 +17,6 @@
 - block:
   - import_tasks: init_mysql.yml
   - import_tasks: init_service.yml
-#  - import_tasks: sleep.yml
-  - import_tasks: init_pwd_plugin.yml
+  - import_tasks: init_pwd.yml
   when: not mysql_datadir_result.stat.exists
 

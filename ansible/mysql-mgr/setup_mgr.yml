@@ -1,0 +1,66 @@
+---
+- name: Setup MySQL Group Replication
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    # 修改my.cnf配置文件
+    - name: Configure | Configure group_replication_local_address
+      lineinfile:
+        dest: "{{ mysql_portdir }}/my.cnf"
+        regexp: "group_replication_local_address"
+        line: "group_replication_local_address = '{{ ansible_host }}:{{ group_seed_port }}'"
+
+    - name: Configure | Configure group_replication_group_seeds
+      lineinfile:
+        dest: "{{ mysql_portdir }}/my.cnf"
+        regexp: "group_replication_group_seeds"
+        line: "group_replication_group_seeds = '{% for node in groups['mgr_node'] %}{{ node }}:{{ group_seed_port }},{% endfor %}'"
+
+    - name: Configure | Configure group_replication_group_seeds
+      replace:
+        path: "{{ mysql_portdir }}/my.cnf"
+        regexp: "(group_replication_group_seeds.*)(,)(')"
+        replace: '\1\3'
+
+    - name: Configure | Restart mysql{{ mysql_port }} (sytemctl)
+      when: ansible_distribution_major_version == "7"
+      systemd:
+       name: mysql{{ mysql_port }}
+       state: restarted
+
+    - name: Configure | Wait for mysql start.
+      wait_for: port={{ mysql_port }} delay=5 timeout=60
+
+    - name: Setup | Transfer script to node
+      template:
+        src: templates/{{ item }}
+        dest: /tmp/{{ item }}
+        mode: 0755
+      with_items:
+        - "create_replication_user.sql"
+        - "start_first_node.sql"
+        - "start_other_node.sql"
+
+    - name: Setup | Create replication user
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/create_replication_user.sql"
+
+    - name: Setup | Start first node
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/start_first_node.sql"
+      when:  bootstrap is defined
+
+    - name: Setup | Start other node
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/start_other_node.sql"
+      when:  bootstrap is not defined
+
+#    - name: Setup | clear temp sql file
+#      file:
+#        dest: /tmp/{{ item }}
+#        state: absent
+#      with_items:
+#        - "create_replication_user.sql"
+#        - "start_first_node.sql"
+#        - "start_other_node.sql"

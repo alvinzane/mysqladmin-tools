@@ -1,0 +1,9 @@
+---
+- name: Install MySQL servers
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+  roles:
+    - mysql

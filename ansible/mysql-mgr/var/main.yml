@@ -1,0 +1,21 @@
+mysql_version: "8.0.11"
+mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+mysql_datahome: "/data/mysql"
+mysql_basedir: "{{ software_install_path }}/mysql80"
+
+mysql_repl_user: repl
+mysql_repl_password: repl@1234
+mysql_port: 3308
+mysql_password: aaaaaa
+
+# 组复制
+master_info_repository: "TABLE"
+log_slave_updates: True
+gtid: True
+group_replication: True
+mysql_plugins:
+ - { name: "group_replication", so: "group_replication.so" }
+
+# group_name 可通过select uuid() 生成
+group_replication_group_name : '7cd80e42-bbbb-11e8-a596-0800275ae9e7'
+group_seed_port: 33081

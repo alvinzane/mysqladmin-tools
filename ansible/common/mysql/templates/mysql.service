@@ -11,7 +11,7 @@ WantedBy=multi-user.target
 [Service]
 User=mysql
 Group=mysql
-ExecStart=/usr/local/mysql/bin/mysqld --defaults-file=/data/mysql/{{ mysql_port }}/my.cnf
+ExecStart={{ mysql_basedir }}/bin/mysqld --defaults-file={{ mysql_datahome }}/{{ mysql_port }}/my.cnf
 LimitNOFILE = 65536
 #Restart=on-failure
 #RestartPreventExitStatus=1
