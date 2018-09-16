@@ -20,7 +20,7 @@
       when: item != ansible_host
 
     - name: Setup | Set global read_only=1,relay_log_purge=0 on slave
-      command: "mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} -e 'set global read_only=1; set global relay_log_purge=0;'"
+      command: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} -e 'set global read_only=1; set global relay_log_purge=0;'"
       when:  slave is defined
 
     # 绑定 VIP
