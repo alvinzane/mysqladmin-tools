@@ -1,0 +1,8 @@
+# 安装 percona-toolkit
+- name: percona-toolkit | Check if percona-toolkit is already installed.
+  command: "rpm -q percona-toolkit"
+  register: percona_toolkit_installed
+  ignore_errors: True
+- name: percona-toolkit | Install percona-toolkit
+  import_tasks: install_percona_toolkit_via_bin.yml
+  when: percona_toolkit_installed.rc == 1

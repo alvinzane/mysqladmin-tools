@@ -1,0 +1,14 @@
+---
+# yum install -y git scons gcc gcc-c++ openssl check cmake bison boost-devel asio-devel libaio-devel ncurses-devel readline-devel pam-devel socat
+ - name: Install | MySQL pxc requirements
+   yum: name={{ item }} state=present
+   with_items:
+    - "openssl"
+    - "asio-devel"
+    - "ncurses-devel"
+    - "readline-devel"
+    - "pam-devel"
+    - "libaio-devel"
+    - "numactl-devel"
+    - "socat"
+   failed_when: no

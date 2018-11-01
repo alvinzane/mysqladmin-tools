@@ -1,0 +1,22 @@
+mysql_version: "5.7.22"
+mysql_package: "Percona-XtraDB-Cluster-5.7.22-rel22-29.26.1.Linux.x86_64.ssl101.tar.gz"
+mysql_datahome: "/data/pxc"
+
+# MySQL 分支 pxc
+mysql_branch: "pxc"
+mysql_basedir: "{{ software_install_path }}/{{ mysql_branch }}"
+
+mysql_port: 5508
+mysql_password: aaaaaa
+
+# 复制帐号
+mysql_repl_user: repl
+mysql_repl_password: repl@1234
+
+# PXC 配置
+wsrep_provider_optins: debug=on;gcache.size=64M
+wsrep_cluster_name: my_pxc_cluster
+wsrep_sst_method: xtrabackup-v2
+wsrep_sst_auth_user: sst
+wsrep_sst_auth_pwd: sstpwd
+wsrep_slave_threads: 2

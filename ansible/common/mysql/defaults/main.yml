@@ -9,7 +9,10 @@ software_install_path: "/usr/local"
 mysql_version: "5.7.20"
 mysql_package: "mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz"
 
-mysql_dirname: "mysql-{{ mysql_version }}"
+# MySQL 分支,默认官司版本,可选:[mysql, pxc]
+mysql_branch: "mysql"
+
+mysql_dirname: "{{ mysql_branch }}-{{ mysql_version }}"
 mysql_basedir: "{{ software_install_path }}/mysql"
 
 # 端口号
@@ -24,11 +27,12 @@ mysql_portdir: "{{ mysql_datahome }}/{{ mysql_port }}"
 mysql_datadir: "{{ mysql_portdir }}/data"
 mysql_sock: "/tmp/mysql{{ mysql_port }}.sock"
 
+# 是否开机启动
+mysql_start_up_on_boot: False
+
 # 多实例service name,用于 systemctl start mysql_servicename
 mysql_servicename : "mysql{{ mysql_port }}"
-
 mysql_innodb_buffer_pool_size: "32M"
-
 master_info_repository: "FILE"
 # 半同步复制
 semi_replication: False
@@ -39,10 +43,6 @@ group_replication: False
 log_slave_updates: False
 gtid: True
 
-# 用于启动mysql后,修改密码
-sleep_time: 15
-
 mysql_plugins:
  - { name: "rpl_semi_sync_master", so: "semisync_master.so" }
- - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }
  - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }

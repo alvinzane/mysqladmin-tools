@@ -4,7 +4,7 @@ mysql_repl_password: repl@1234
 mysql_port: 3306
 mysql_password: aaaaaa
 
-#
+#ssh root passwd
 ssh_password: "vagrant"
 
 if_name: "enp0s8:1"

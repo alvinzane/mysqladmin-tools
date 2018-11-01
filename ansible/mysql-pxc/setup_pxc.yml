@@ -1,0 +1,64 @@
+---
+- name: Setup Percona XtraDB Cluster
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    # 初始化帐号
+    - name: Setup | Transfer script to node
+      template:
+        src: templates/{{ item }}
+        dest: /tmp/{{ item }}
+        mode: 0755
+      with_items:
+        - "create_replication_user.sql"
+
+    - name: Setup | Create replication user
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/create_replication_user.sql"
+
+    # 关闭MySQL
+    - name: Setup | stop mysql{{ mysql_port }} (sytemctl)
+      when: ansible_distribution_major_version == "7"
+      systemd:
+       name: "{{ mysql_servicename }}"
+       state: stopped
+
+    # 修改my.cnf配置文件, 去掉wsrep的注释
+    - name: Setup | Configure wsrep_cluster_address
+      replace:
+        path: "{{ mysql_portdir }}/my.cnf"
+        regexp: "(#)(wsrep_.*)"
+        replace: '\2'
+
+    # 修改wsrep_cluster_address
+    - name: Setup | Configure wsrep_cluster_address
+      lineinfile:
+        dest: "{{ mysql_portdir }}/my.cnf"
+        regexp: "wsrep_cluster_address"
+        line: "wsrep_cluster_address = 'gcomm://{% for node in groups['pxc_node'] %}{{ node }},{% endfor %}'"
+
+    # 去掉最后一个逗号
+    - name: Setup | Configure wsrep_cluster_address
+      replace:
+        path: "{{ mysql_portdir }}/my.cnf"
+        regexp: "(wsrep_cluster_address.*)(,)(')"
+        replace: '\1\3'
+
+    # 启动mysql及PXC服务
+    # /usr/local/pxc/bin/mysqld_safe --defaults-file=/data/pxc/5507/my.cnf --wsrep-new-cluster &
+    - name: Setup | start first pxc node
+      shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf --wsrep-new-cluster &"
+      when:  bootstrap is defined
+
+    # 等待MySQL启动
+    - name: Initialize | Wait for mysql start.
+      wait_for: port={{ mysql_port }} delay=5 timeout=60
+      when:  bootstrap is defined
+
+#    # 启动mysql及PXC服务
+#    - name: Setup | Start other node
+#      shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf"
+#      when:  bootstrap is not defined

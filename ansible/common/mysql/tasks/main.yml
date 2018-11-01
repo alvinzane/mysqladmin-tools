@@ -1,12 +1,10 @@
 ---
-- import_tasks: install_mysql_dependents.yml
-
-#  检查MySQL文件是否已安装后,二进制包安装MySQL
+#  二进制包安装MySQL
 - name: Install Stat | Check if MySQL file is already installed.
   stat: path={{ mysql_basedir }}
   register: mysql_install_result
 - block:
-  - import_tasks: install_mysql_dependents.yml
+  - import_tasks: install_dependents_{{ mysql_branch }}.yml
   - import_tasks: install_mysql.yml
   when: not mysql_install_result.stat.exists
 

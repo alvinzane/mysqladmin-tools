@@ -29,7 +29,7 @@
     - name: Configure | Restart mysql{{ mysql_port }} (sytemctl)
       when: ansible_distribution_major_version == "7"
       systemd:
-       name: mysql{{ mysql_port }}
+       name: "{{ mysql_servicename }}"
        state: restarted
 
     - name: Configure | Wait for mysql start.

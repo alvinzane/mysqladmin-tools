@@ -1,0 +1,17 @@
+---
+- name: Uninstall MySQL
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Uninstall |  Uninstall MySQL
+      command: "{{ item }}"
+      with_items:
+        - "pkill mysqld"
+        - "rm -rf /opt/mysql"
+        - "rm -rf /data/mysql"
+        - "rm -rf /data/pxc"
+        - "rm -rf /usr/local/pxc"
+        - "rm -f /usr/local/mysql"
+        - "rm -f /usr/local/mysq80"
+        - "rm -f /usr/local/mariadb"
+        - "rm -f /usr/lib/systemd/system/mysql*"

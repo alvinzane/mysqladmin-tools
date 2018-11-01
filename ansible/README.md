@@ -30,13 +30,16 @@ MySQL ansible roles 是提供给MySQL DBA及学习爱好者的一个基于ansibl
     # 设置 SSH 公钥认证,
     ssh-keygen -t rsa
     # 方式一:
-    ansible all -u root -m copy -a "src=/root/.ssh/id_rsa.pub dest=/tmp/id_rsa.pub" --ask-pass -c paramiko
-    ansible all -u root -m shell -a "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys" --ask-pass -c paramiko
+    ansible -i hosts all -u root -m copy -a "src=/root/.ssh/id_rsa.pub dest=/tmp/id_rsa.pub" --ask-pass -c paramiko
+    ansible -i hosts all -u root -m shell -a "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys" --ask-pass -c paramiko
 
     # 方式二:
-    sshpass -p vagrant ssh-copy-id 192.168.20.101
-    sshpass -p vagrant ssh-copy-id 192.168.20.102
-    sshpass -p vagrant ssh-copy-id 192.168.20.103
+    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.101
+    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.102
+    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.103
+
+    # 验证方法
+    ansible -i hosts all -m ping
 
 ## 安装mysqladmin-tools
     git clone mysqladmin-tools.git

@@ -1,0 +1,8 @@
+---
+- name: percona-toolkit | Install percona-release
+  command: "yum -y install http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm"
+
+- name: percona-toolkit | Install percona-toolkit
+  yum: name={{ item }} state=present
+  with_items:
+    - "percona-toolkit"

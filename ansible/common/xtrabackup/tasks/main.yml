@@ -1,0 +1,8 @@
+# 安装xtrabackup
+- name: xtrabackup | Check if xtrabackup already installed.
+  command: "rpm -q percona-xtrabackup"
+  register: installed
+  failed_when: no
+- name: xtrabackup | Install xtrabackup
+  import_tasks: install_percona-xtrabackup_via_bin.yml
+  when: installed.rc == 1
