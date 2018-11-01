@@ -31,8 +31,6 @@
 
     mysql_innodb_buffer_pool_size: "32M"
 
-    # 用于启动mysql后,修改密码
-    sleep_time: 15
 
 ### MySQL roles配置文件,可自行配置,安装时优先生效:
     # ansible/common/mysql/defaults/main.yml
