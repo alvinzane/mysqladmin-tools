@@ -4,9 +4,12 @@
 HOST=127.0.0.1
 PORT=3306
 USER=admin
-PASSWORD=
+PASSWORD=aaaaaa
 SOCKET=/tmp/mysql3306.sock
 DB=dbtest1
+
+# 日志目录
+LOG_DIR=/vagrant/mysqladmin-tools/ansible/mysql-toolkits/script/logs
 
 # 短选项值
 while getopts "h:u:P:p:S:" arg
@@ -36,43 +39,49 @@ echo "PORT:" $PORT
 echo "THREADS:" $THREADS
 echo "TIME:" $TIME
 
-ARGS="
---mysql-host=$HOST
---mysql-user=$USER
---mysql-port=$PORT
---mysql-socket=$SOCKET
---mysql-password=$PASSWORD
---mysql-db=$DB
---report-interval=10
---time=$TIME
---threads=$THREADS
+ARGS="\
+--mysql-host=$HOST \
+--mysql-user=$USER \
+--mysql-port=$PORT \
+--mysql-password=$PASSWORD \
+--mysql-db=$DB \
+--report-interval=10 \
+--time=$TIME \
+--threads=$THREADS \
 "
 
 # OLTP参数含义查看:
 # sysbench /usr/local/sysbench/share/sysbench/oltp_read_write.lua help
-OLTP_ARGS="
---auto_inc=on
---create_secondary=on
---delete_inserts=1
---distinct_ranges=1
---index_updates=1
---mysql_storage_engine=innodb
---non_index_updates=0
---order_ranges=1
---point_selects=10
---range_selects=on
---range_size=100
---secondary=off
---simple_ranges=1
---skip_trx=off
---sum_ranges=1
---table_size=10000
---tables=2
+OLTP_ARGS="\
+--auto_inc=on \
+--create_secondary=on \
+--delete_inserts=1 \
+--distinct_ranges=1 \
+--index_updates=1 \
+--mysql_storage_engine=innodb \
+--non_index_updates=0 \
+--order_ranges=1 \
+--point_selects=10 \
+--range_selects=on \
+--range_size=100 \
+--secondary=off \
+--simple_ranges=1 \
+--skip_trx=off \
+--sum_ranges=1 \
+--table_size=10000 \
+--tables=10 \
 "
 
 #TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_only.lua
 TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_write.lua
 
-sysbench $TESTNAME $ARGS $OLTP_ARGS prepare
-sysbench $TESTNAME $ARGS $OLTP_ARGS run | tee -a /tmp/"$HOST"_`basename $TESTNAME .lua`_"$THREADS"_`date +%Y%m%d_%H%M%S`.log
-sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup
+
+CMD_PREPARE="sysbench $TESTNAME $ARGS $OLTP_ARGS prepare"
+CMD_RUN="sysbench $TESTNAME $ARGS $OLTP_ARGS run | tee -a $LOG_DIR/`date +%Y%m%d`_$HOST_`basename $TESTNAME .lua`_$THREADS_`date +%Y%m%d_%H%M%S`.log"
+CMD_CLEANUP="sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup"
+echo $CMD_PREPARE
+echo $CMD_RUN
+echo $CMD_CLEANUP
+$CMD_PREPARE
+$CMD_RUN
+$CMD_CLEANUP
