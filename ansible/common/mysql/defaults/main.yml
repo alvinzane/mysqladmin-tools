@@ -39,8 +39,7 @@ semi_replication: False
 # 组复制
 group_replication: False
 
-# 级联复制
-log_slave_updates: False
+# GTID
 gtid: True
 
 mysql_plugins:

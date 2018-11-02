@@ -13,7 +13,6 @@ mysql_password: aaaaaa
 
 # 组复制
 master_info_repository: "TABLE"
-log_slave_updates: True
 gtid: True
 group_replication: True
 mysql_plugins:

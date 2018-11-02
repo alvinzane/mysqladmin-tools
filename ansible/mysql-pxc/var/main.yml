@@ -6,7 +6,7 @@ mysql_datahome: "/data/pxc"
 mysql_branch: "pxc"
 mysql_basedir: "{{ software_install_path }}/{{ mysql_branch }}"
 
-mysql_port: 5508
+mysql_port: 5506
 mysql_password: aaaaaa
 
 # 复制帐号
