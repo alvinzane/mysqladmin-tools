@@ -6,5 +6,5 @@
   vars_files:
     - ../common/mysql/defaults/main.yml
   roles:
-#    - toolkit_linux
-    - toolkit_mysql
+    - toolkit_linux
+#    - toolkit_mysql

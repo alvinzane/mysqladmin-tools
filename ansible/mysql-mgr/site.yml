@@ -1,6 +1,6 @@
 ---
 - name: Install MySQL servers
-  hosts: all
+  hosts: mgr_node
   remote_user: root
   vars_files:
     - ../common/mysql/defaults/main.yml

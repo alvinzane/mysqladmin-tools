@@ -1,6 +1,6 @@
 ---
 - name: Setup Percona XtraDB Cluster
-  hosts: all
+  hosts: pxc_node
   remote_user: root
   vars_files:
     - ../common/mysql/defaults/main.yml
@@ -58,7 +58,12 @@
       wait_for: port={{ mysql_port }} delay=5 timeout=60
       when:  bootstrap is defined
 
-#    # 启动mysql及PXC服务
-#    - name: Setup | Start other node
-#      shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf"
-#      when:  bootstrap is not defined
+    # 启动mysql及PXC服务
+    - name: Setup | Start other node
+      shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf &"
+      when:  bootstrap is not defined
+
+    # 等待MySQL启动
+    - name: Initialize | Wait for mysql start.
+      wait_for: port={{ mysql_port }} delay=5 timeout=60
+      when:  bootstrap is not defined

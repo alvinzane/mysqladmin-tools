@@ -1,6 +1,6 @@
 ---
 - name: Install MySQL servers
-  hosts: all
+  hosts: pxc_node
   remote_user: root
   vars_files:
     - ../common/mysql/defaults/main.yml
@@ -8,4 +8,12 @@
   roles:
     - mysql
     - xtrabackup
-    - percona-toolkit
+#    - percona-toolkit
+
+- name: Install MySQL servers
+  hosts: proxy_server
+  remote_user: root
+  vars_files:
+    - var/main.yml
+  roles:
+    - proxysql

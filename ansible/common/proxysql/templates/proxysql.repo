@@ -1,0 +1,5 @@
+[proxysql_repo]
+name= ProxySQL YUM repository
+baseurl=http://repo.proxysql.com/ProxySQL/proxysql-1.4.x/centos/\$releasever
+gpgcheck=1
+gpgkey=http://repo.proxysql.com/ProxySQL/repo_pub_key
