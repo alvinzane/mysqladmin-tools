@@ -114,6 +114,7 @@ max_binlog_cache_size = 50M
 skip_slave_start = 1
 log-bin = {{ mysql_portdir }}/logs/mysql-bin
 expire_logs_days = 10
+log_slave_updates = ON
 master_info_repository = {{ master_info_repository }}
 relay_log_info_repository = {{ master_info_repository }}
 
@@ -122,10 +123,6 @@ relay-log-index = relay-bin.index
 relay_log_purge = 1
 relay_log_recovery = 1
 max_relay_log_size = 900M
-
-{% if log_slave_updates %}
-log_slave_updates=ON
-{% endif %}
 
 {% if semi_replication %}
 ##### semi replication #####################
