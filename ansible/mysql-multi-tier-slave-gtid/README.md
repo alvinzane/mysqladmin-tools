@@ -14,7 +14,7 @@
 $ cat hosts
 [mysql-servers]
 192.168.20.101
-192.168.20.102 slave=True master_ip=192.168.20.101 log_slave_updates=True
+192.168.20.102 slave=True master_ip=192.168.20.101
 192.168.20.103 slave=True master_ip=192.168.20.102
 
 # MySQL 配置
