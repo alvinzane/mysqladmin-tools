@@ -127,7 +127,7 @@ max_relay_log_size = 900M
 {% if semi_replication %}
 ##### semi replication #####################
 rpl_semi_sync_master_enabled = 1
-rpl_semi_sync_master_wait_point = AFTER_COMMIT       #AFTER_SYNC|AFTER_COMMIT
+rpl_semi_sync_master_wait_point = AFTER_SYNC         #AFTER_SYNC|AFTER_COMMIT
 rpl_semi_sync_master_timeout = 1000                  # 1 second 无响应转成异步
 rpl_semi_sync_slave_enabled = 1
 {% endif %}
