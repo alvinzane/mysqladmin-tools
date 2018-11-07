@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Usage:
+# ./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp -paaaaaa 10 600 oltp_read_write
+# ./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp -paaaaaa 10 600 oltp_read_only
+
 
 # 默认值
 HOST=127.0.0.1
@@ -10,6 +14,8 @@ DB=dbtest1
 
 # 日志目录
 LOG_DIR=/vagrant/mysqladmin-tools/ansible/mysql-toolkits/script/logs
+# 默认测试模式
+SCRIPT_NAME=oltp_read_write
 
 # 短选项值
 while getopts "h:u:P:p:S:" arg
@@ -21,7 +27,11 @@ do
         u) USER=$OPTARG ;;
         S) SOCKET=$OPTARG ;;
         ?)
-            echo "Usage: `basename $0` [-h host -P port -s socket -u user -p password] THREADS TIME"
+            echo "Usage: `basename $0` [-h host -P port -s socket -u user -p password] THREADS TIME SCRIPT_NAME"
+            echo "SCRIPT_NAME:[oltp_read_write oltp_read_only]"
+            echo "eg:"
+            echo "./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp -pxxxxxx 10 600 oltp_read_write"
+            echo "./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp -pxxxxxx 10 600 oltp_read_only"
             exit 1
             ;;
     esac
@@ -33,6 +43,8 @@ shift $((OPTIND-1))
 if [ -z $1 ]; then THREADS=1; else THREADS=$1; fi
 # 第二个参数为测试时间,默认1分钟
 if [ -z $2 ]; then TIME=60; else TIME=$2; fi
+# 第三个参数为测试模式,默认oltp_read_write
+if [ -z $3 ]; then SCRIPT_NAME=oltp_read_write; else SCRIPT_NAME=$3; fi
 
 echo "HOST:" $HOST
 echo "PORT:" $PORT
@@ -70,18 +82,18 @@ OLTP_ARGS="\
 --sum_ranges=1 \
 --table_size=10000 \
 --tables=10 \
+--mysql-ignore-errors=all \
 "
 
-#TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_only.lua
-TESTNAME=/usr/local/sysbench/share/sysbench/oltp_read_write.lua
+TESTNAME=/usr/local/sysbench/share/sysbench/$SCRIPT_NAME.lua
 
 
 CMD_PREPARE="sysbench $TESTNAME $ARGS $OLTP_ARGS prepare"
-CMD_RUN="sysbench $TESTNAME $ARGS $OLTP_ARGS run | tee -a $LOG_DIR/`date +%Y%m%d`_$HOST_`basename $TESTNAME .lua`_$THREADS_`date +%Y%m%d_%H%M%S`.log"
+CMD_RUN="sysbench $TESTNAME $ARGS $OLTP_ARGS run "
 CMD_CLEANUP="sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup"
-echo $CMD_PREPARE
-echo $CMD_RUN
-echo $CMD_CLEANUP
+#echo $CMD_PREPARE
+#echo $CMD_RUN
+#echo $CMD_CLEANUP
 $CMD_PREPARE
-$CMD_RUN
-$CMD_CLEANUP
+$CMD_RUN | tee -a $LOG_DIR/`date +%Y%m%d`_$HOST_`basename $TESTNAME .lua`_$THREADS_`date +%Y%m%d_%H%M%S`.log
+#$CMD_CLEANUP
