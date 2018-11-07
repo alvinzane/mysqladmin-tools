@@ -1,0 +1,18 @@
+---
+- name: Setup Percona XtraDB Cluster
+  hosts: proxy_server
+  remote_user: root
+  vars_files:
+    - ../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    - name: Setup | Transfer script to node
+      template:
+        src: templates/{{ item }}
+        dest: /tmp/{{ item }}
+      with_items:
+        - "proxysql.sql"
+
+    - name: Setup | Init proxysql
+      shell: "{{ mysql_basedir }}/bin/mysql -h127.0.0.1 -P6032 -uadmin -padmin < /tmp/proxysql.sql"
