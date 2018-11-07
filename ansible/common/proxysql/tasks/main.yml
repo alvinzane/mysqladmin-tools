@@ -1,10 +1,4 @@
 ---
- - name: proxysql | Adding proxysql repository
-   template:
-    src: ../templates/proxysql.repo
-    dest: /etc/yum.repos.d/proxysql.repo
-
- - name: proxysql | Install proxysql
-   yum: name={{ item }} state=present
-   with_items:
-    - "proxysql"
+- name: proxysql | Install proxysql
+  import_tasks: install_proxysql_using_{{ install_method }}.yml
+  import_tasks: install_start_service.yml

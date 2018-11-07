@@ -1,0 +1,8 @@
+---
+- name: Install | Transfer {{ proxysql_package }} to remote host to /tmp
+  copy:
+    src: "{{ software_files_path }}/{{ proxysql_package }}"
+    dest: "/tmp/{{ proxysql_package }}"
+
+- name: Install | {{ proxysql_package }}
+  command: "yum -y localinstall {{ proxysql_package }} chdir=/tmp"

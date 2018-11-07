@@ -1,0 +1,3 @@
+---
+install_method: "rpm"
+proxysql_package: "proxysql-rc1_2.0.0-1-centos7.x86_64.rpm"
