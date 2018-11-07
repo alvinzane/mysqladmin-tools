@@ -1,0 +1,9 @@
+---
+ - name: sysbench | Install sysbench repositories
+   shell: "curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash"
+
+ - name: sysbench | Install sysbench
+   yum: name={{ item }} state=present
+   with_items:
+    - "sysbench"
+    - "sysbench-tpcc"
