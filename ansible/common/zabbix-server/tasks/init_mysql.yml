@@ -1,0 +1,16 @@
+---
+- name: Initialize MySQL | Transfer create_database.sql to remote host
+  template:
+    src: ../templates/create_database.sql
+    dest: /tmp/create_database.sql
+
+- name: Initialize MySQL | Create zabbix database and user
+  shell: mysql -h{{ DBHost }} -P{{DBPort}} -u{{ mysql_admin_user }} -p{{ mysql_admin_pwd }} < /tmp/create_database.sql
+
+- name: Initialize MySQL | clear temp file tmp/create_database.sql
+  file:
+    dest: tmp/create_database.sql
+    state: absent
+
+- name: Install MySQL | Import mysql schema
+  shell: "cat schema.sql images.sql data.sql| mysql -h{{ DBHost }} -P{{DBPort}} -u{{ mysql_admin_user }} -p{{ mysql_admin_pwd }} {{ DBName }} chdir={{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}/database/mysql"

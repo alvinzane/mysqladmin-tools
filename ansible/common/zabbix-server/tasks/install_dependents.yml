@@ -1,0 +1,12 @@
+---
+# https://www.zabbix.com/documentation/3.4/manual/installation/requirements
+- name: zabbix_server | Install zabbix_server requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - fping
+    - libevent-devel
+    - libssh2-devel
+    - libcurl-devel
+    - net-snmp-devel
+    - libxml2-devel
+    - mysql-devel

@@ -1,0 +1,32 @@
+---
+- name: Initialize service | Create zabbix-server configuration file.
+  template:
+    src: ../templates/{{ item }}
+    dest: /etc/zabbix/{{ item }}
+  with_items:
+    - zabbix_server.conf
+
+- name: Initialize service | create systemd config file
+  template:
+   src: ../templates/zabbix-server.service
+   dest: /usr/lib/systemd/system/zabbix-server.service
+
+# 重启后自动创建 /var/run/zabbix 临时目录
+- name: Initialize service | create tmpfiles.d/zabbix-agent.conf
+  template:
+   src: ../templates/zabbix.conf
+   dest: /usr/lib/tmpfiles.d/zabbix-agent.conf
+
+- name: Initialize service | config zabbix-server.service start up on boot
+  systemd:
+    name: zabbix-server
+    enabled: yes
+    daemon_reload: yes
+
+- name: Initialize service | start zabbix-server (sytemctl)
+  systemd:
+    name: zabbix-server
+    state: started
+
+- name: Initialize | Wait for zabbix-server start.
+  wait_for: port=10051 delay=1 timeout=15
