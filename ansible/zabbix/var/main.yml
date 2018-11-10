@@ -1,0 +1,13 @@
+---
+install_method: "src"
+zabbix_server_package: "zabbix-3.4.14.tar.gz"
+zabbix_server_install_dir: "{{ software_install_path }}/zabbix"
+
+mysql_admin_user: admin
+mysql_admin_pwd: aaaaaa
+
+DBHost: 192.168.1.100
+DBName: zabbix34
+DBUser: zabbix
+DBPassword: zabbixx
+DBPort: 3306

@@ -1,0 +1,21 @@
+---
+#- name: Install zabbix-server
+#  hosts: zabbix_server
+#  remote_user: root
+#  vars_files:
+#    - ../common/zabbix-server/defaults/main.yml
+#    - var/main.yml
+#  roles:
+#    - php7
+#    - httpd
+#    - zabbix-server
+#    - zabbix-agent
+
+- name: Install zabbix-server
+  hosts: zabbix_agent
+  remote_user: root
+  vars_files:
+    - ../common/zabbix-agent/defaults/main.yml
+    - var/main.yml
+  roles:
+    - zabbix-agent

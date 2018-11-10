@@ -1,0 +1,29 @@
+---
+- name: Initialize zabbix web
+  hosts: zabbix_server
+  remote_user: root
+  vars_files:
+    - ../common/zabbix-server/defaults/main.yml
+    - var/main.yml
+  tasks:
+    - name: Initialize | Transfer zabbix.conf to remote host
+      template:
+        src: ../templates/zabbix.conf
+        dest: /etc/httpd/conf.d/zabbix.conf
+
+    - name: Initialize | Transfer zabbix.conf.php to remote host
+      template:
+        src: ../templates/zabbix.conf.php
+        dest: /usr/share/zabbix/conf/zabbix.conf.php
+
+    - name: Initialize | remove file /usr/share/zabbix/setup.php
+      file: dest=/usr/share/zabbix/setup.php state=absent
+
+    - name: Initialize  | restart httpd (sytemctl)
+      when: ansible_distribution_major_version == "7"
+      systemd:
+        name: httpd
+        state: restarted
+
+    - name: Initialize | Wait for httpd restart.
+      wait_for: port=80 delay=1 timeout=5
