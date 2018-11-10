@@ -1,0 +1,10 @@
+---
+- name: zabbix_agnet | Check if zabbix_server local file is already configured.
+  stat: path={{ zabbix_server_install_dir }}
+  register: install_result
+- block:
+#  - import_tasks: install_dependents.yml
+  - import_tasks: install_zabbix_agent_using_{{ install_method }}.yml
+  when: not install_result.stat.exists
+
+- import_tasks: init_service.yml

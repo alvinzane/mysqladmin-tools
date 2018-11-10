@@ -1,0 +1,43 @@
+---
+- name: Install | Create zabbix user
+  user: name=zabbix shell=/sbin/nologin home=/usr/local/zabbix createhome=no state=present
+
+- name: Initialize | Create zabbix-server directory owner.
+  file: path={{ item }} recurse=yes owner=zabbix group=zabbix
+  with_items:
+     - /var/log/zabbix
+     - /var/run/zabbix
+
+- name: Install | Transfer zabbix-server install package to remote host to {{ software_install_src_path }}
+  unarchive:
+    src: "{{ software_files_path }}/{{ zabbix_server_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}"
+
+- name: Install | Make install zabbix-server
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}"
+  with_items:
+    - "{{ zabbix_server_source_configure_command }}"
+    - "make && make install"
+
+- name: Install | Create symbolic links for zabbix_get,zabbix_sender
+  file: "src=/usr/local/zabbix/sbin/{{ item }} dest=/usr/sbin/{{ item }} state=link"
+  with_items:
+    - "zabbix_agentd"
+
+- name: Install | Create symbolic links for zabbix_get,zabbix_sender
+  file: "src=/usr/local/zabbix/bin/{{ item }} dest=/usr/bin/{{ item }} state=link"
+  with_items:
+    - "zabbix_get"
+    - "zabbix_sender"
+
+- name: Install | Checking /etc/zabbix
+  stat: path=/etc/zabbix
+  register: etc_zabbix
+
+- name: Install | Copy etc to /usr/share/zabbix
+  command: "{{ item }}"
+  when: not etc_zabbix.stat.exists
+  with_items:
+    - cp -r {{ zabbix_server_install_dir }}/etc /etc/zabbix
+    - chown zabbix:zabbix /etc/zabbix
