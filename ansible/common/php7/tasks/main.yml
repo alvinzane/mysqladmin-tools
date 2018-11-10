@@ -1,0 +1,19 @@
+---
+- name: Install | Install php7 repository
+  command: "yum -y install https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
+
+- name: Install | Install php
+  yum: name={{ item }} state=present
+  with_items:
+    - php71w
+    - php71w-common
+    - php71w-gd
+    - php71w-bcmath
+    - php71w-xml
+    - php71w-mbstring
+    - php71w-mcrypt
+    - php71w-mysql
+    - php71w-ldap
+    - php71w-pdo
+    - php71w-cli
+    - php71w-process
