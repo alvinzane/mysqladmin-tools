@@ -50,6 +50,7 @@ MySQL ansible roles 是提供给MySQL DBA及学习爱好者的一个基于ansibl
     # 将common roles 路径加到 roles_path中
     grep roles_path /etc/ansible/ansible.cfg
     roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/vagrant/mysqladmin-tools/ansible/common
+    filter_plugins = /vagrant/mysqladmin-tools/ansible/common/mysql/filter_plugins
 
 ## 使用mysqladmin-tools
 
