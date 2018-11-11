@@ -11,9 +11,9 @@
 ```
 ## 用法:
 
-	# 安装 MySQL
-	ansible-playbook -i hosts site.yml
-	# 安装 MGR
+	# 安装 PXC
+	ansible-playbook -i hosts install_pxc.yml
+	# 配置 PXC
 	ansible-playbook -i hosts setup_pxc.yml
 
 ## 主配置文件:
