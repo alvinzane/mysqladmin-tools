@@ -2,3 +2,5 @@
 dependencies:
   - role: devel
   - role: epel
+  - role: php71w
+  - role: httpd

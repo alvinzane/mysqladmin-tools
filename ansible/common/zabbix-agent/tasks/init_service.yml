@@ -6,6 +6,9 @@
   with_items:
     - zabbix_agentd.conf
 
+- name: Initialize | Create zabbix-server directory owner.
+  file: path=/etc/zabbix/zabbix_agentd.conf.d/ recurse=yes owner=zabbix group=zabbix
+
 - name: Initialize service | create systemd config file
   template:
    src: ../templates/zabbix-agent.service
@@ -14,7 +17,7 @@
 # 重启后自动创建 /var/run/zabbix 临时目录
 - name: Initialize service | create tmpfiles.d/zabbix-agent.conf
   template:
-   src: ../templates/zabbix.conf
+   src: ../templates/zabbix-tmpfiles.conf
    dest: /usr/lib/tmpfiles.d/zabbix-agent.conf
 
 - name: Initialize service | config zabbix-agent.service start up on boot

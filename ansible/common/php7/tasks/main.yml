@@ -1,6 +1,7 @@
 ---
 - name: Install | Install php7 repository
   command: "yum -y install https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
+  failed_when: no
 
 - name: Install | Install php
   yum: name={{ item }} state=present

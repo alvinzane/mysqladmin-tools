@@ -1,0 +1,21 @@
+---
+- name: Install | Install httpd
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+
+- name: Initialize | config httpdr.service start up on boot
+  systemd:
+    name: httpd
+    enabled: yes
+    daemon_reload: yes
+
+- name: Initialize  | start httpd (sytemctl)
+  when: ansible_distribution_major_version == "7"
+  systemd:
+    name: httpd
+    state: started
+    daemon_reload: yes
+
+- name: Initialize | Wait for httpd start.
+  wait_for: port=80 delay=1 timeout=5
