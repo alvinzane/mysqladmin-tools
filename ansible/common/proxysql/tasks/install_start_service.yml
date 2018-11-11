@@ -1,9 +1,0 @@
----
-  - name: Initialize | start proxymysql (sytemctl)
-    systemd:
-     name: proxysql
-     state: started
-     daemon_reload: yes
-
-  - name: Initialize | Wait for proxmysql start.
-    wait_for: port=6032 delay=2 timeout=60

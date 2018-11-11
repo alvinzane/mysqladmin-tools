@@ -1,3 +1,16 @@
 ---
+software_files_path: "/vagrant/downloads"
+software_install_path: "/usr/local"
+
 install_method: "rpm"
 proxysql_package: "proxysql-rc1_2.0.0-1-centos7.x86_64.rpm"
+
+# mgr,pxc,rep
+rep_type: mgr
+mysql_monitor_user: monitor
+mysql_monitor_pwd: monitorpwd
+
+mysql_app_user: app
+mysql_app_pwd: aaaaaa
+
+mysql_port: 7706

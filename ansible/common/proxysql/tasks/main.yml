@@ -1,4 +1,9 @@
 ---
 - name: proxysql | Install proxysql
   import_tasks: install_proxysql_using_{{ install_method }}.yml
-  import_tasks: install_start_service.yml
+
+- name: proxysql | Initialize proxysql
+  import_tasks: init_service.yml
+
+- name: proxysql | Initialize proxysql
+  import_tasks: init_proxysql.yml

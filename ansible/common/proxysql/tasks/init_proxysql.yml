@@ -1,0 +1,13 @@
+---
+- name: Initialize | Wait for proxmysql start.
+  wait_for: port=6032 delay=2 timeout=15
+
+- name: Initialize | Transfer script to node
+  template:
+    src: templates/{{ item }}
+    dest: /tmp/{{ item }}
+  with_items:
+    - proxysql.sql
+
+- name: Initialize | Init proxysql
+  shell: mysql -h127.0.0.1 -P6032 -uadmin -padmin -f < /tmp/proxysql.sql

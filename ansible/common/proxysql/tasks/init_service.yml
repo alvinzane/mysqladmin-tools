@@ -1,0 +1,6 @@
+---
+- name: Initialize | start proxymysql
+  shell: /etc/init.d/proxysql start
+
+- name: Initialize | Wait for proxmysql start.
+  wait_for: port=6032 delay=2 timeout=15
