@@ -18,8 +18,7 @@ if [ "$running" = "0" ]; then
     $cmd &
 
     # 检测pid文件,修改权限
-    while [ ! -s {{ mysql_portdir }}/mysqld.pid ]; do sleep 1; echo -e ".\c"; done
-    /usr/bin/chmod a+r {{ mysql_portdir }}/mysqld.pid
+    {{ mysql_datahome }}/chmod_mysql_pid.sh {{ mysql_portdir }}/mysqld.pid
     echo "MySQL $port is done."
 else
    echo "MySQL $port is already running."
