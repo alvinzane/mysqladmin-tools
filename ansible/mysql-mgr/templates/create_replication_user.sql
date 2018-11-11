@@ -5,6 +5,7 @@ grant replication slave on *.* to {{mysql_repl_user}}@'192.168.%.%';
 
 create user monitor@'192.168.%.%' identified by 'monitorpwd';
 grant replication client  on *.* to monitor@'192.168.%.%';
+grant select  on sys.* to monitor@'192.168.%.%';
 
 SET SQL_LOG_BIN=1;
 
