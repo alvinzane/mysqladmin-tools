@@ -18,4 +18,7 @@
    file: path={{ mysql_portdir }} recurse=yes owner=mysql group=mysql
 
  - name: Initialize | Create MySQL start shell.
-   template: src=start_mysql.sh dest={{ mysql_datahome }}/start_mysql.sh mode=755
+   template: src={{ item }} dest={{ mysql_datahome }}/{{ item }} mode=755
+   with_items:
+     - start_mysql.sh
+     - chmod_mysql_pid.sh
