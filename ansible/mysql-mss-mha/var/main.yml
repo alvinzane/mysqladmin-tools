@@ -1,6 +1,6 @@
 mysql_repl_user: repl
 mysql_repl_password: repl@1234
-#gtid: False
+gtid: False
 mysql_port: 3306
 mysql_password: aaaaaa
 
@@ -9,4 +9,4 @@ ssh_password: "vagrant"
 
 if_name: "enp0s8:1"
 app_name: "app1"
-mha_vip: 192.168.20.20/24
+mha_vip: 192.168.1.110/24
