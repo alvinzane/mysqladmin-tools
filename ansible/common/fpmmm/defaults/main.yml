@@ -1,0 +1,16 @@
+---
+fpmmm_package: fpmmm-1.0.1.tar.gz
+
+zabbix_server: 127.0.0.1
+mysql_host: 127.0.0.1
+mysql_port: 3306
+
+# MySQL管理员帐号,用于创建监控帐号
+mysql_admin_user: admin
+mysql_admin_pwd: aaaaaa
+
+mysql_user: admin
+mysql_password: aaaaaa
+
+fpmmm_user: fpmmm_agent
+fpmmm_pwd: fpmmm4pwd

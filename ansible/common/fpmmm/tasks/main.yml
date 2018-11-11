@@ -1,0 +1,79 @@
+---
+- name: Install | Transfer fpmmm install package to remote host to {{ software_install_src_path }}
+  unarchive:
+    src: "{{ software_files_path }}/{{ fpmmm_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "/opt/fpmmm"
+
+- name: Install | Create symbolic links for /opt/fpmmm
+  file: "src={{ software_install_src_path }}/{{ fpmmm_package | regex_replace('.tar.gz','') }} dest=/opt/fpmmm state=link"
+
+- name: Install | Create zabbix user
+  user: name=zabbix shell=/sbin/nologin home=/usr/local/zabbix createhome=no state=present groups=zabbix,mysql
+
+- name: Initialize | Create zabbix-server directory owner.
+  file: path={{ item }} recurse=yes owner=zabbix group=zabbix
+  with_items:
+     - /var/log/fpmmm
+     - /var/cache/fpmmm
+     - /var/run/fpmmm
+
+- name: Initialize | Create tmpfiles.d/fpmmm.conf
+  template:
+   src: ../templates/fpmmm-tmpfiles.conf
+   dest: /usr/lib/tmpfiles.d/fpmmm.conf
+
+- name: Install | Checking /etc/fpmmm
+  stat: path=/etc/fpmmm
+  register: etc_fpmmm
+
+- name: Install | Copy conf file to /etc/fpmmm/fpmmm.conf
+  command: "{{ item }}"
+  when: not etc_fpmmm.stat.exists
+  with_items:
+    - mkdir /etc/fpmmm
+    - cp /opt/fpmmm/tpl/fpmmm.conf.template /etc/fpmmm/fpmmm.conf
+    - chown -R zabbix:zabbix /etc/fpmmm
+
+- name: Setup | Create fpmmm config file
+  template:
+   src: ../templates/fpmmm.conf
+   dest: /etc/fpmmm/fpmmm.conf
+
+- name: Setup | Create php.d/fpmmm.ini
+  template:
+   src: ../templates/fpmmm.php.ini
+   dest: /etc/php.d/fpmmm.ini
+
+- name: Setup | Transfer script to node
+  template:
+    src: templates/user_parameter.conf
+    dest: /etc/zabbix/zabbix_agentd.conf.d/fpmmm.conf
+
+- name: Setup | Transfer script to node
+  template:
+    src: templates/create_user.sql
+    dest: /tmp/create_user.sql
+
+- name: Setup | Create monitor user
+  shell: "mysql -h {{ mysql_host }} -P {{ mysql_port }} -u{{ mysql_admin_user}} -p{{ mysql_admin_pwd }} -f< /tmp/create_user.sql"
+
+- name: Setup | clear temp file tmp/create_user.sql
+  file:
+    dest: tmp/create_user.sql
+    state: absent
+
+- name: Setup | restart zabbix-agent (sytemctl)
+  systemd:
+    name: zabbix-agent
+    state: restarted
+
+- name: Setup | Create contab task
+  cron:
+    name: "fpmmm task 1"
+    job: "sleep 10; /opt/fpmmm/bin/fpmmm --config=/etc/fpmmm/fpmmm.conf >/dev/null"
+
+- name: Setup | Create contab task 2
+  cron:
+    name: "fpmmm task 2"
+    job: "sleep 40; /opt/fpmmm/bin/fpmmm --config=/etc/fpmmm/fpmmm.conf >/dev/null"
