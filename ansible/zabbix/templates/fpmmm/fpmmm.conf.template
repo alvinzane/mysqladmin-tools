@@ -1,0 +1,97 @@
+# Put everything related to fpmmm agent/daemon itself into this section
+[self]
+
+# How long fpmmm should sleep when run as daemon
+Interval      = 60
+PidFile       = /var/run/fpmmm/fpmmm.pid
+
+
+# Put everything in here which belongs to all instances (= hosts)
+[default]
+
+# Type of section:
+# mysqld for a normal MySQL database
+# host for a server
+# Type          = mysqld
+
+# LogLevels are:
+# 1 is logging only errors
+# 2 is logging errors and warnings (this is the default)
+# 3 logs some informations messages as well
+# 4 logs everything (for debugging purposes only)
+
+LogLevel      = 2
+LogFile       = /var/log/fpmmm/fpmmm.log
+# Directory where the cache files should be written to:
+CacheFileBase = /var/cache/fpmmm/fpmmm
+AgentLockFile = /var/run/fpmmm/fpmmm.lock
+
+# If you agent is not located in the same time zone as your server
+# For US something like -6.0 to our MaaS Server
+# For Asia something like +7.0 to our MaaS Server
+# TimeShift     = +0.0
+
+# Information for MySQL connections:
+Username      = fpmmm_agent
+Password      = secret
+MysqlHost     = 127.0.0.1
+MysqlPort     = 3306
+
+# Zabbix Server IP address
+ZabbixServer  = 127.0.0.1
+
+# If section is disabled
+Disabled      = false
+
+# Possible modules for databases are:
+# aria galera innodb master myisam mysql process security slave
+
+# Possible modules for servers are:
+# fpmmm server drbd
+
+# Other modules are:
+# memcached
+
+# Usual modules are
+Modules       = innodb master myisam mysql process security
+
+# Special parameter which is used for module process (MySQL PID file!)
+PidFile       = /var/lib/mysql/mysqld.pid
+
+
+# If you want to use Monitoring as a Service:
+
+# MaaS          = on
+# Hash          = <enter hash value we provide you>
+# Methodes are: direct, https, email. Currently only http works
+# Methode       = https
+# Url           = https://support.fromdual.com/maas/receiver.php
+
+
+# Here you could enter the hostname of your machine (uname -n)
+[db_host]          # This MUST match Hostname in Zabbix!
+
+Type          = host
+Modules       = fpmmm server
+
+
+# All MySQL databases here
+# Try to avoid section names with spaces!
+
+# Here you could add a random name of your MySQL/MariaDB instance
+[mysqld]          # This MUST match Hostname in Zabbix!
+
+Type          = mysqld
+
+MysqlPort     = 3306
+Modules       = process mysql myisam innodb master slave security
+PidFile       = /var/run/mysqld/mysqld.pid
+
+
+[memcached]          # This MUST match Hostname in Zabbix!
+
+Type          = memcached
+Modules       = memcached
+
+MemcachedHost = 127.0.0.1
+MemcachedPort = 11211

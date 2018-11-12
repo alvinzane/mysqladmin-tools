@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Should be located in /etc/init.d
+
+. /lib/lsb/init-functions
+
+# User should be either root or the user mysql is running under
+user=mysql
+
+log_daemon_msg "zabbix_agentd $1"
+if [ "$1" = 'start' ] ; then
+  su -c "/usr/local/sbin/zabbix_agentd" $user
+elif [ "$1" = 'stop' ] ; then
+  su -c "killall -g zabbix_agentd" $user
+elif [ "$1" = '' ] ; then
+  log_daemon_msg "No command. Allowed is start or stop."
+else
+  log_daemon_msg "Unknown command $1"
+fi
+log_end_msg $?

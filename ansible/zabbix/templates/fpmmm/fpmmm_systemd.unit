@@ -1,0 +1,45 @@
+#
+# /etc/systemd/system/fpmmm.service (.tar.gz)
+# /usr/lib/systemd/system/fpmmm.service (.rpm)
+#
+
+# cp /opt/fpmmm/tpl/fpmmm_systemd.unit /etc/systemd/system/fpmmm.service
+# sudo chmod 664 /etc/systemd/system/fpmmm.service
+# sudo systemctl daemon-reload
+# systemctl enable fpmmm
+# systemctl start fpmmm
+
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+
+[Unit]
+
+Description=FromDual Performance Monitor for MySQL and MariaDB (fpmmm) Agent
+Documentation=https://www.fromdual.com/fpmmm-installation-guide
+After=network.target
+# Before=none
+# Requires=none
+# Wants=none
+# Conflicts=none
+
+
+[Service]
+
+# User=fpmmm
+# Group=fpmmm
+Type=forking
+PIDFile=/var/run/fpmmm/fpmmm.pid
+Restart=always
+
+# ExecStartPre=none
+ExecStart=/opt/fpmmm/bin/fpmmm --config=/etc/fpmmm.conf --daemon
+# ExecStartPost=none
+ExecStop=/bin/kill -TERM $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
+
+
+[Install]
+
+Alias=mpm
+WantedBy=multi-user.target
+# RequiredBy=none
+# Also=none

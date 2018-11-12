@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# /etc/init.d/fpmmm
+
+# chkconfig: 345 55 35
+# description: Start and stop fpmmm
+
+### BEGIN INIT INFO
+# Provides:          fpmmm
+# Required-Start:    $network $remote_fs
+# Required-Stop:     $network $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start fpmmm daemon
+# Description:       Start and Stop fpmmm daemon
+### END INIT INFO
+
+lsb_functions="/lib/lsb/init-functions"
+if [ -f $lsb_functions ] ; then
+  . $lsb_functions
+elif [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+  . /etc/rc.d/init.d/functions
+else
+  exit 1
+fi
+
+NAME=fpmmm
+BASEDIR=/opt/fpmmm
+DAEMON=$BASEDIR/bin/$NAME
+# This should be read from the fpmmm.conf [self] section
+# PIDFILE=/var/run/fpmmm/fpmmm.pid
+LOCKDIR=/var/run/fpmmm
+CACHEDIR=/var/cache/fpmmm
+LOGDIR=/var/log/fpmmm
+
+# User should be either fpmmm, mysql or root or the user mysql is running under
+USER=
+# If no user is provided we try to guess
+if [ "$USER" == '' ] ; then
+
+	USER=$(cut -d: -f1 /etc/passwd | grep '^fpmmm$')
+	if [ "$USER" == '' ] ; then
+		USER=$(cut -d: -f1 /etc/passwd | grep '^mysql$')
+		if [ "$USER" == '' ] ; then
+			USER='root'
+		fi
+	fi
+fi
+
+test -x $DAEMON || exit 5
+
+stop()
+{
+	# Better to use PIDFILE instead!
+	PID=$(pgrep -n -f bin/$NAME)
+	if [ $? -eq 0 ] ; then
+		kill -TERM $PID
+		status=0
+		log_success_msg "$NAME killed."
+	else
+		status=3
+		log_failure_msg "$NAME is NOT running."
+	fi
+	return $status
+}
+
+start()
+{
+	log_success_msg "Starting $NAME"
+	mkdir -p $LOGDIR
+	chown -R $USER: $LOGDIR
+	mkdir -p $CACHEDIR
+	chown -R $USER: $CACHEDIR
+	mkdir -p $LOCKDIR
+	chown -R $USER: $LOCKDIR
+	start_daemon "/bin/su -c \"$BASEDIR/bin/$NAME --daemon\" $USER"
+	# on Ubuntu 14.04 something like this seems to work...
+	# cmd="$BASEDIR/bin/$NAME --daemon"
+	# /bin/su -c "${cmd}" $USER
+	return $?
+}
+
+
+case "$1" in
+	start)
+		start
+		status=$?
+		;;
+	stop)
+		stop
+		status=$?
+		;;
+	status)
+		PID=$(pgrep -n -f bin/$NAME)
+		if [ $? -eq 0 ] ; then
+			su -c "kill -0 $PID" $USER
+			if [ $? -eq 0 ] ; then
+				status=0
+				log_success_msg "$NAME is running."
+			else
+				status=3
+				log_failure_msg "$NAME is NOT running."
+			fi
+		else
+			status=3
+			log_failure_msg "$NAME is NOT running."
+		fi
+		;;
+	restart)
+		stop
+		status=$?
+		if [ $status -eq 0 ] ; then
+			start
+			status=$?
+		fi
+		;;
+	reload)
+		# Better to use PIDFILE instead!
+		PID=$(pgrep -n -f bin/$NAME)
+		if [ $? -eq 0 ] ; then
+			su -c "kill -HUP $PID" $USER
+			status=0
+			log_success_msg "$NAME reload sent."
+		fi
+		;;
+	*)
+		status=1
+		log_warning_msg "Usage: $0 {start|stop|reload|status|restart}"
+		;;
+esac
+
+log_success_msg $status
+exit $status
+
