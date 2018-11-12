@@ -5,7 +5,7 @@
 ## hosts
 ```
 [zabbix_server]
-192.168.1.104
+192.168.1.105
 
 [zabbix_agent]
 192.168.1.101

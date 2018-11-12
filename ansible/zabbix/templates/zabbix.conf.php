@@ -3,16 +3,16 @@
 global $DB;
 
 $DB['TYPE']     = 'MYSQL';
-$DB['SERVER']   = '192.168.1.100';
-$DB['PORT']     = '3306';
-$DB['DATABASE'] = 'zabbix34';
-$DB['USER']     = 'zabbix';
-$DB['PASSWORD'] = 'zabbixx';
+$DB['SERVER']   = '{{ DBHost }}';
+$DB['PORT']     = '{{ DBPort }}';
+$DB['DATABASE'] = '{{ DBName }}';
+$DB['USER']     = '{{ DBUser }}';
+$DB['PASSWORD'] = '{{ DBPassword }}';
 
 // Schema name. Used for IBM DB2 and PostgreSQL.
 $DB['SCHEMA'] = '';
 
-$ZBX_SERVER      = '192.168.1.104';
+$ZBX_SERVER      = '{{ ansible_host }}';
 $ZBX_SERVER_PORT = '10051';
 $ZBX_SERVER_NAME = 'Zabbix server';
 
