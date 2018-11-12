@@ -89,7 +89,7 @@
     # 修改主机地址
     vi hosts
     [node]
-    192.168.20.101
+    192.168.1.101
 
 	# 默认安装: 3306 实例
 	ansible-playbook -i hosts site.yml

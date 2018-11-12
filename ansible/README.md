@@ -22,10 +22,10 @@ MySQL ansible roles 是提供给MySQL DBA及学习爱好者的一个基于ansibl
 
     vi /etc/ansible/hosts
     [dev_hosts]
-    192.168.20.100
-    192.168.20.101
-    192.168.20.102
-    192.168.20.103
+    192.168.1.100
+    192.168.1.101
+    192.168.1.102
+    192.168.1.103
 
     # 设置 SSH 公钥认证,
     ssh-keygen -t rsa

@@ -4,9 +4,9 @@
 ```
 | Hosts      | IP            | 角色                |
 | ---------- | ------------- | ------------------- |
-| master     | 192.168.20.101| Master              |
-| slave1     | 192.168.20.102| Slave-Master        |
-| slave2     | 192.168.20.103| Slave               |
+| master     | 192.168.1.101| Master              |
+| slave1     | 192.168.1.102| Slave-Master        |
+| slave2     | 192.168.1.103| Slave               |
 ```
 
 ## 用法:

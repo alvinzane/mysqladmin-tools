@@ -1,7 +1,7 @@
 mysql_repl_user: repl
 mysql_repl_password: repl@1234
 
-keepalived_vip: 192.168.20.200
+keepalived_vip: 192.168.1.200
 keepalived_vr_id: 82
 
 monitor_user: monitor

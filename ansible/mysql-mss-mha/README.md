@@ -4,11 +4,11 @@
 ```
 | Hosts      | IP            | 角色                            |
 | ---------- | ------------- | ------------------------------- |
-| MHA-Manager| 192.168.20.100| Monitor host                    |
-| VIP        | 192.168.20.10 | VIP                             |
-| master     | 192.168.20.101| Master and MHA-Node             |
-| slave1     | 192.168.20.102| Slave  and MHA-Node             |
-| slave2     | 192.168.20.103| Slave  and MHA-Node             |
+| MHA-Manager| 192.168.1.100| Monitor host                    |
+| VIP        | 192.168.1.10 | VIP                             |
+| master     | 192.168.1.101| Master and MHA-Node             |
+| slave1     | 192.168.1.102| Slave  and MHA-Node             |
+| slave2     | 192.168.1.103| Slave  and MHA-Node             |
 ```
 ## 用法:
 
@@ -35,8 +35,8 @@
 
 ## 参考raw安装
 
-    sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.20.103
-    sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.20.201
+    sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.1.103
+    sshpass -p 'vagrant' ssh-copy-id  -o StrictHostKeyChecking=no 192.168.1.201
 
 ## MHA 脚本
 ```
@@ -46,8 +46,8 @@ masterha_check_repl --conf=/etc/masterha/app1.cnf
 masterha_check_status --conf=/etc/masterha/app1.cnf
 
 # 手动绑定vip
-/sbin/ifconfig enp0s8:1 192.168.20.10/24
-/sbin/ifconfig enp0s8:2 192.168.20.20/24
+/sbin/ifconfig enp0s8:1 192.168.1.10/24
+/sbin/ifconfig enp0s8:2 192.168.1.20/24
 /sbin/ifconfig enp0s8:1 down
 
 # 开启MHA Manager监控
@@ -55,8 +55,8 @@ nohup masterha_manager --conf=/etc/masterha/app1.cnf --remove_dead_master_conf -
 
 # 手动切换
 # https://github.com/yoshinorim/mha4mysql-manager/wiki/masterha_master_switch
-masterha_master_switch  --master_state=alive --conf=/etc/masterha/app2.cnf --new_master_host=192.168.20.102 --new_master_port=3307
-masterha_master_switch --master_state=dead --conf=/etc/masterha/app1.cnf --dead_master_host=192.168.20.101 --dead_master_port=3306 --new_master_host=192.168.20.102 --new_master_port=3306 --ignore_last_failover
+masterha_master_switch  --master_state=alive --conf=/etc/masterha/app2.cnf --new_master_host=192.168.1.102 --new_master_port=3307
+masterha_master_switch --master_state=dead --conf=/etc/masterha/app1.cnf --dead_master_host=192.168.1.101 --dead_master_port=3306 --new_master_host=192.168.1.102 --new_master_port=3306 --ignore_last_failover
 
 ```
 
