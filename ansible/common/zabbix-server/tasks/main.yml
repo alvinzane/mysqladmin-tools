@@ -5,7 +5,7 @@
 - block:
   - import_tasks: install_dependents.yml
   - import_tasks: install_zabbix_server_using_{{ install_method }}.yml
-#  - import_tasks: init_mysql.yml
   when: not install_result.stat.exists
 
+- import_tasks: init_mysql.yml
 - import_tasks: init_service.yml
