@@ -6,5 +6,5 @@
     - ../common/proxysql/defaults/main.yml
     - var/main.yml
   roles:
-#    - {role: proxysql, install_method: "rpm", rep_type: "mgr", mysql_port: 7706}
-    - {role: proxysql, install_method: "rpm", rep_type: "pxc", mysql_port: 5506}
+    - {role: proxysql, install_method: "rpm", rep_type: "mgr", mysql_port: 7706}
+#    - {role: proxysql, install_method: "rpm", rep_type: "pxc", mysql_port: 5506}

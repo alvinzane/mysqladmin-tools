@@ -2,7 +2,7 @@
 mysql_monitor_user: monitor
 mysql_monitor_pwd: monitorpwd
 
-mysql_app_user: app
+mysql_app_user: "app{{ mysql_port }}"
 mysql_app_pwd: aaaaaa
 
 mysql_port: 7706
