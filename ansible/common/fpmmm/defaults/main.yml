@@ -1,7 +1,6 @@
 ---
 fpmmm_package: fpmmm-1.0.1.tar.gz
 
-zabbix_server: 127.0.0.1
 mysql_host: 127.0.0.1
 mysql_port: 3306
 
