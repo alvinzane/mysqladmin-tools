@@ -1,4 +1,4 @@
 [mysql-servers]
 192.168.1.101
 192.168.1.102 slave=True master_ip=192.168.1.101
-192.168.1.103 slave=True master_ip=192.168.1.101
+192.168.1.103 slave=True master_ip=192.168.1.102
