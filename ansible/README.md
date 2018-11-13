@@ -96,13 +96,13 @@ zabbix-3.4.14.tar.gz
     cd /vagrant/mysqladmin-tools/ansible/sites/mysql-standalone
     ansible-playbook -i hosts site.yml
 
-[MySQL单机版安装](../../tree/master/ansible/sites/mysql-standalone)
+[MySQL单机版安装](../../../tree/master/ansible/sites/mysql-standalone)
 
 ### 高级使用,集群环境安装
- - [MySQL Group Replication集群安装](../../tree/master/ansible/sites/mysql-mgr)
- - [Galera PXC集群安装](../../tree/master/ansible/sites/mysql-mgr)
- - [MySQL 双主 + keepalived](../../tree/master/ansible/sites/mysql-mm-keepalived)
- - [MySQL 一主多从 + MHA](../../tree/master/ansible/sites/mysql-mss-mha)
- - [zabbix + MySQL集群监控](../../tree/master/ansible/sites/zabbix)
- - [proxysql + MySQL集群代理](../../tree/master/ansible/sites/proxysql)
+ - [MySQL Group Replication集群安装](../../../tree/master/ansible/sites/mysql-mgr)
+ - [Galera PXC集群安装](../../../tree/master/ansible/sites/mysql-mgr)
+ - [MySQL 双主 + keepalived](../../../tree/master/ansible/sites/mysql-mm-keepalived)
+ - [MySQL 一主多从 + MHA](../../../tree/master/ansible/sites/mysql-mss-mha)
+ - [zabbix + MySQL集群监控](../../../tree/master/ansible/sites/zabbix)
+ - [proxysql + MySQL集群代理](../../../tree/master/ansible/sites/proxysql)
  - 更多定制等你来实现.
