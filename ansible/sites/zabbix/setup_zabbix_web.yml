@@ -3,7 +3,7 @@
   hosts: zabbix_server
   remote_user: root
   vars_files:
-    - ../common/zabbix-server/defaults/main.yml
+    - ../../common/zabbix-server/defaults/main.yml
     - var/main.yml
   tasks:
     - name: Initialize | Transfer zabbix.conf to remote host
