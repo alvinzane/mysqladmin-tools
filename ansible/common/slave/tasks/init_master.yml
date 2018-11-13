@@ -6,6 +6,7 @@
 
 - name: Replication | Master | Create replication user on master
   shell: mysql -hlocalhost -uroot -p{{ mysql_password }} -S {{ mysql_sock }} < /tmp/mysql_master_create_replication_user.sql
+  ignore_errors: True
 
 - name: Replication | Master |  Clear temp file tmp/master_slaves.sql
   file:

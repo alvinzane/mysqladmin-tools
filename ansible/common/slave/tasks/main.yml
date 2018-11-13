@@ -1,10 +1,14 @@
 ---
 # 配置从库,每个节点都创建复制帐号,保证切换时主从不会出错
 - import_tasks: init_dependents.yml
+
+- import_tasks: reset_master.yml
+  when: reset_master == True
+
 - import_tasks: init_master.yml
 
 - import_tasks: init_slave_gtid.yml
-  when:  slave is defined and gtid == True
+  when: slave is defined and gtid == True
 
 - import_tasks: init_slave_position.yml
-  when:  slave is defined and gtid == False
+  when: slave is defined and gtid == False
