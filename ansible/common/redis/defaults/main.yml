@@ -1,0 +1,46 @@
+---
+
+software_files_path: "/vagrant/downloads"
+software_install_path: "/usr/local"
+
+redis_version: "3.2.11"
+
+redis_file: "redis-{{ redis_version }}.tar.gz"
+redis_file_path: "{{ software_files_path }}/{{ redis_file }}"
+redis_file_url: "http://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
+
+redis_data_path: "/data/redis"
+# redis_port: 6379
+redis_daemon: "redis{{ redis_port | default('') }}"
+redis_dir_path: "{{ redis_data_path }}/{{redis_port | default('6379')}}"
+
+redis_timeout: 0
+redis_user: redis
+
+redis_loglevel: "notice"
+redis_logfile: "{{ redis_dir_path }}/redis-server.log"
+redis_pidfile: "{{ redis_dir_path }}/redis.pid"
+
+redis_databases: 16
+
+redis_rdbcompression: "yes"
+redis_dbfilename: dump.rdb
+redis_dbdir: "{{ redis_dir_path }}/data"
+
+redis_maxmemory: "1000mb"
+
+redis_requirepass: ''
+redis_slave: false
+redis_cluster: false
+redis_cluster_replicas: ''
+# redis_cluster_replicas: '1 127.0.0.1:6481 127.0.0.1:6482 127.0.0.1:6483 127.0.0.1:6484 127.0.0.1:6485 127.0.0.1:6486'
+# 1 表示 自动为每一个master节点分配一个slave节点, 上面有6个节点,程序会按照一定规则生成 3个master(主)3个slave(从)
+redis_masterauth: ''
+redis_master_host: ''
+redis_master_port: ''
+
+redis_sentinel_port: ''
+redis_sentinel_quorum: '2'
+redis_sentinel_daemon: "redis-sentinel{{ redis_sentinel_port | default('') }}"
+
+redis_rename_command: true
