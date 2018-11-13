@@ -64,7 +64,7 @@ ansible/files/Vagrantfile
 ```
 
 ```
-以下是我测试清单:
+默认安装包清单:
 # ll /vagrant/downloads
 fpmmm-1.0.1.tar.gz
 keepalived-1.4.3.tar.gz
@@ -72,8 +72,6 @@ mariadb-10.3.9-linux-x86_64.tar.gz
 mha4mysql-manager-0.58-0.el7.centos.noarch.rpm
 mha4mysql-node-0.58-0.el7.centos.noarch.rpm
 mydumper-0.9.5-2.el7.x86_64.rpm
-mysql-5.5.47.tar.gz
-mysql-5.7.10.tar.gz
 mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
 mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz
 Percona-Server-5.7.23-23-Linux.x86_64.ssl101.tar.gz
@@ -81,9 +79,6 @@ percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm
 Percona-XtraDB-Cluster-5.7.22-rel22-29.26.1.Linux.x86_64.ssl101.tar.gz
 proxysql-1.4.12-1-centos7.x86_64.rpm
 proxysql-rc1_2.0.0-1-centos7.x86_64.rpm
-Python-3.6.5.tgz
-Python-3.6.6.tgz
-redis-5.0.0.tar.gz
 zabbix-3.4.14.tar.gz
 ```
 
@@ -106,3 +101,5 @@ zabbix-3.4.14.tar.gz
  - [zabbix + MySQL集群监控](../../../tree/master/ansible/sites/zabbix)
  - [proxysql + MySQL集群代理](../../../tree/master/ansible/sites/proxysql)
  - 更多定制等你来实现.
+
+ 交流QQ群:141534961
