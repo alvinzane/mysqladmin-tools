@@ -1,0 +1,18 @@
+---
+- name: Install | Transfer Python3 install package to remote host to {{ software_install_src_path }}
+  unarchive:
+    src: "{{ software_files_path }}/{{ python3_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ python3_package | regex_replace('.tar.xz','') }}"
+
+- name: Install | Make install Python3
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ python3_package | regex_replace('.tar.xz','') }} creates={{ software_install_src_path }}"
+  with_items:
+    - "./configure --prefix={{ python3_install_dir }}"
+    - "make && make install"
+
+- name: Install | Create symbolic links for zabbix_get,zabbix_sender
+  file: "src=/usr/local/python3/bin/{{ item }} dest=/usr/bin/{{ item }} state=link"
+  with_items:
+    - "{{ python3_version }}"
+    - "pip3"

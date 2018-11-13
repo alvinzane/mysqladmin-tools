@@ -1,0 +1,9 @@
+---
+- name: Python3 | Install requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - xz
+    - openssl-static
+    - zlib-devel
+    - ncurses-devel
+    - openssl-devel

@@ -1,0 +1,8 @@
+---
+- name: Python3 | Check if Python3 local file is already configured.
+  stat: path={{ python3_install_dir }}
+  register: install_result
+- block:
+  - import_tasks: install_dependents.yml
+  - import_tasks: install_python3_using_src.yml
+  when: not install_result.stat.exists

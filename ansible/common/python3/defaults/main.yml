@@ -1,0 +1,10 @@
+---
+install_method: "src"
+
+software_files_path: "/vagrant/downloads"
+software_install_path: "/usr/local"
+software_install_src_path: "/usr/local/src"
+
+python3_package: "Python-3.6.5.tar.xz"
+python3_version: "python3.6"
+python3_install_dir: "{{ software_install_path }}/Python3"
