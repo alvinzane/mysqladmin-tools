@@ -4,7 +4,7 @@
   gather_facts: no
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
   roles:
     - { role: mysql}

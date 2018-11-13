@@ -9,7 +9,7 @@
     general_log_file: mysql0.log
     clear_general_log_file: True
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
 
   tasks:

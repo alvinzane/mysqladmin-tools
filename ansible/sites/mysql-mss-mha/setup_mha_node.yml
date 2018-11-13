@@ -3,7 +3,7 @@
   hosts: mha-node
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
   tasks:
     - name: Setup | Install requirements sshpass

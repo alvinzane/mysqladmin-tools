@@ -4,7 +4,7 @@
   hosts: node1
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
 
   roles:
@@ -15,7 +15,7 @@
   hosts: node2
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
 
   roles:
@@ -26,7 +26,7 @@
   hosts: all
   remote_user: root
   vars_files:
-    - ../common/mysql/defaults/main.yml
+    - ../../common/mysql/defaults/main.yml
     - var/main.yml
 
   roles:
