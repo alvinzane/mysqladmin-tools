@@ -2,11 +2,6 @@
 
 支持MySQL 5.7,8.0,Percona Server for MySQL 5.7
 
-### 测试环境
-
-    ansible `2.2.1.0`
-    os `Centos 7.2 X64`
-
 ### MySQL 全局默认配置文件,不建议更改:
     # ansible/common/mysql/defaults/main.yml
 
@@ -54,8 +49,11 @@ mysql_port: 3306
 # root 密码
 mysql_password: aaaaaa
 
-mysql_version: "8.0.11"
-mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+#mysql_version: "8.0.11"
+#mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+
+mysql_version: "5.7.20"
+mysql_package: "mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz"
 mysql_datahome: "/data/mysql"
 
 mysql_plugins:
@@ -120,8 +118,8 @@ mysql_plugins:
 	# 安装多实例
 	# vi site.yml
 	  roles:
-    - { role: mysql , mysql_port: 3306 }
-    - { role: mysql , mysql_port: 3307 }
+        - { role: mysql , mysql_port: 3306 }
+        - { role: mysql , mysql_port: 3307 }
 
 
 ### MySQL 启动方式

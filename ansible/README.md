@@ -5,55 +5,73 @@
 
 提供给MySQL DBA及学习爱好者的一个基于ansible的快速环境搭建工具集.
 
+### 测试环境
+```
+Ansible: `2.2.1.0`
+OS: `Centos 7.2 X64`
+```
+
 ## Windows 环境配置
 
 ### 安装virtualbox:
-    官方网址:
-    https://www.virtualbox.org/wiki/Downloads
+```
+官方网址:
+https://www.virtualbox.org/wiki/Downloads
+
+推荐版本:
+VirtualBox-5.1.38-122592-Win.exe
+```
 
 ### 安装vagrant:
-    官方网址:
-    https://www.vagrantup.com/downloads.html
-    配置文件参考:
-    mysqladmin-tools/ansible/files/Vagrantfile
+```
+官方网址:
+https://www.vagrantup.com/downloads.html
+配置文件参考:
+mysqladmin-tools/ansible/files/Vagrantfile
+```
 
 ### 安装配置ansible
-    vagrant up
-    vagrant ssh ansible_node
-    yum -y install ansible sshpass
+```
+vagrant up
+vagrant ssh ansible_node
+yum -y install ansible sshpass
 
-    vi /etc/ansible/hosts
-    [dev_hosts]
-    192.168.1.100
-    192.168.1.101
-    192.168.1.102
-    192.168.1.103
+vi /etc/ansible/hosts
+[dev_hosts]
+192.168.1.100
+192.168.1.101
+192.168.1.102
+192.168.1.103
 
-    # 设置 SSH 公钥认证,
-    ssh-keygen -t rsa
-    # 方式一:
-    ansible -i hosts all -u root -m shell -a "mkdir /root/.ssh" --ask-pass -c paramiko
-    ansible -i hosts all -u root -m copy -a "src=/root/.ssh/id_rsa.pub dest=/tmp/id_rsa.pub" --ask-pass -c paramiko
-    ansible -i hosts all -u root -m shell -a "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys" --ask-pass -c paramiko
+# 设置 SSH 公钥认证,
+ssh-keygen -t rsa
+# 方式一:
+ansible -i hosts all -u root -m shell -a "mkdir /root/.ssh" --ask-pass -c paramiko
+ansible -i hosts all -u root -m copy -a "src=/root/.ssh/id_rsa.pub dest=/tmp/id_rsa.pub" --ask-pass -c paramiko
+ansible -i hosts all -u root -m shell -a "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys" --ask-pass -c paramiko
 
-    # 方式二:
-    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.101
-    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.102
-    sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.103
+# 方式二:
+sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.101
+sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.102
+sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no 192.168.1.103
 
-    # 验证方法
-    ansible -i hosts all -m ping
+# 验证方法
+ansible -i hosts all -m ping
+```
 
 ## 安装mysqladmin-tools
-    为了方便使用,请使用vagrant将项目止录挂载到 /vagrant/mysqladmin-tools 中.
-    git clone https://github.com/alvinzane/mysqladmin-tools.git
+```
+# 为了方便使用,请使用vagrant将项目止录挂载到 /vagrant/mysqladmin-tools 中.
+git clone https://github.com/alvinzane/mysqladmin-tools.git
+```
 
 ### 配置ansible role path
-
-    # 将common roles 路径加到 roles_path中
-    grep roles_path /etc/ansible/ansible.cfg
-    roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/vagrant/mysqladmin-tools/ansible/common
-    filter_plugins = /vagrant/mysqladmin-tools/ansible/common/mysql/filter_plugins
+```
+# 将common roles 路径加到 roles_path中
+grep roles_path /etc/ansible/ansible.cfg
+roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/vagrant/mysqladmin-tools/ansible/common
+filter_plugins = /vagrant/mysqladmin-tools/ansible/common/mysql/filter_plugins
+```
 
 ### 安装包文件目录
 由于MySQL二进制安装包过大,不适合放在项目中,所需的软件安装包请先自动下载好,建议使用vagrant将本机的下载目录挂载到虚拟机的/vagrant/downloads目录.
@@ -85,15 +103,24 @@ zabbix-3.4.14.tar.gz
 ## 使用mysqladmin-tools
 本项目采用ansible roles来重用common下公共role,sites下的各种环境是对roles的重用,安装时只需修改相应的hosts及var文件即可.
 
-### 入门使用:mysql-standalone 单机版MySQL安装
-    vagrant ssh ansible_node
-    sudo su -
-    cd /vagrant/mysqladmin-tools/ansible/sites/mysql-standalone
-    ansible-playbook -i hosts site.yml
+### 入门使用: mysql-standalone 单机版MySQL安装
+使用之前,你应该先了解一下ansible roles:
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+
+Getting start:
+```
+cd path_to_your_vagrant
+vagrant up
+vagrant ssh ansible_node
+sudo su -
+cd /vagrant/mysqladmin-tools/ansible/sites/mysql-standalone
+ansible-playbook -i hosts site.yml
+ ```
 
 [MySQL单机版安装](../../../tree/master/ansible/sites/mysql-standalone)
 
-### 高级使用,集群环境安装
+### 高级使用: 集群环境安装
  - [MySQL Group Replication集群安装](../../../tree/master/ansible/sites/mysql-mgr)
  - [Galera PXC集群安装](../../../tree/master/ansible/sites/mysql-pxc)
  - [MySQL 双主 + keepalived](../../../tree/master/ansible/sites/mysql-mm-keepalived)
