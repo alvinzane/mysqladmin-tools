@@ -1,4 +1,5 @@
 ---
+# author: lework
 
 - name: sentinel | Ensure Redis sentinel is configured.
   template:

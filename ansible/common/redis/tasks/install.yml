@@ -1,4 +1,5 @@
 ---
+# author: lework
 
 - name: install | Check if redis local file is already configured.
   stat: path={{ redis_file_path }}
