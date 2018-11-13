@@ -19,6 +19,28 @@
 
     var/main.yml
 
-## 启动mysql:
+## 启动MGR:
+```
+# first node:
+systemctl start mysql7706
+mysql -S /tmp/mysql7706.sock -p
+CHANGE MASTER TO MASTER_USER='repl', MASTER_PASSWORD='repl@1234' FOR CHANNEL 'group_replication_recovery';
+SET GLOBAL group_replication_bootstrap_group = ON;
+START GROUP_REPLICATION;
+SET GLOBAL group_replication_bootstrap_group = off;
 
-	ansible all -i hosts -m shell -a "/data/mysql/start_mysql.sh 3309"
+# other node:
+systemctl start mysql7706
+mysql -S /tmp/mysql7706.sock -p
+CHANGE MASTER TO MASTER_USER='repl', MASTER_PASSWORD='repl@1234' FOR CHANNEL 'group_replication_recovery';
+START GROUP_REPLICATION;
+```
+
+## 状态查看
+```
+# 状态
+mysql -S /tmp/mysql7706.sock -paaaaaa -e "select * from sys.gr_member_routing_candidate_status"
+
+# 成员
+mysql -S /tmp/mysql7706.sock -paaaaaa -e "select * from performance_schema.replication_group_members"
+```

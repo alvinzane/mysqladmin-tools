@@ -44,12 +44,17 @@
         - "create_replication_user.sql"
         - "start_first_node.sql"
         - "start_other_node.sql"
+        - "addition_to_sys.sql"
 
     - name: Setup | Create replication user
       shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/create_replication_user.sql"
 
     - name: Setup | Start first node
       shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/start_first_node.sql"
+      when:  bootstrap is defined
+
+    - name: Setup | Start first node
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < /tmp/addition_to_sys.sql"
       when:  bootstrap is defined
 
     - name: Setup | Start other node
@@ -64,3 +69,4 @@
 #        - "create_replication_user.sql"
 #        - "start_first_node.sql"
 #        - "start_other_node.sql"
+#        - "addition_to_sys.sql"
