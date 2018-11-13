@@ -1,0 +1,11 @@
+ - mysql-mgr [MySQL Group Replication集群安装]
+ - mysql-mm-keepalived [MySQL 双主 + keepalived]
+ - mysql-mss-mha [MySQL 一主多从 + MHA]
+ - mysql-multi-tier-slave-gtid [MySQL 一主多从GITD版]
+ - mysql-multi-tier-slave-position [MySQL 一主多从position版]
+ - mysql-pxc [Galera PXC集群安装]
+ - mysql-standalone [Galera 单机版]
+ - mysql-toolkits [MySQL 常用工具集,如:percona-toolkit,xtrabackup,sysbench]
+ - proxysql [ProxySQL 代理]
+ - zabbix [zabbix 监控]
+ - 更多定制等你来实现.

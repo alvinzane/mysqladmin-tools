@@ -100,7 +100,7 @@ zabbix-3.4.14.tar.gz
 
 ### 高级使用,集群环境安装
  - [MySQL Group Replication集群安装](../../../tree/master/ansible/sites/mysql-mgr)
- - [Galera PXC集群安装](../../../tree/master/ansible/sites/mysql-mgr)
+ - [Galera PXC集群安装](../../../tree/master/ansible/sites/mysql-pxc)
  - [MySQL 双主 + keepalived](../../../tree/master/ansible/sites/mysql-mm-keepalived)
  - [MySQL 一主多从 + MHA](../../../tree/master/ansible/sites/mysql-mss-mha)
  - [zabbix + MySQL集群监控](../../../tree/master/ansible/sites/zabbix)
