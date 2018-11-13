@@ -1,0 +1,27 @@
+---
+- name: Install redis cluster node1
+  hosts: node1
+  vars:
+   - redis_cluster: true
+   - redis_requirepass: '123456'
+  roles:
+   - { role: redis, redis_port: 7000}
+   - { role: redis, redis_port: 7003}
+
+- name: Install redis cluster node2
+  hosts: node2
+  vars:
+   - redis_cluster: true
+   - redis_requirepass: '123456'
+  roles:
+   - { role: redis, redis_port: 7001}
+   - { role: redis, redis_port: 7004}
+
+- name: Install redis cluster node3
+  hosts: node3
+  vars:
+   - redis_cluster: true
+   - redis_requirepass: '123456'
+  roles:
+   - { role: redis, redis_port: 7002}
+   - { role: redis, redis_port: 7005, redis_cluster_replicas: '1 192.168.1.101:7000 192.168.1.102:7001 192.168.1.103:7002 192.168.1.101:7003 192.168.1.102:7004 192.168.1.103:7005'}

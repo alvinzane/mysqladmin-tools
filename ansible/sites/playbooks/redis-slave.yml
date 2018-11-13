@@ -1,0 +1,11 @@
+---
+- name: Install redis slave
+  hosts: node1
+  remote_user: root
+  vars:
+    - redis_master_host: '127.0.0.1'
+    - redis_master_port: '6380'
+  roles:
+    - { role: redis, redis_port: 6380 }
+    - { role: redis, redis_port: 6381, redis_slave: true }
+    - { role: redis, redis_port: 6382, redis_slave: true }

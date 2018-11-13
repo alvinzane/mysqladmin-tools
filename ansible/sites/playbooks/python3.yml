@@ -1,0 +1,7 @@
+---
+- name: Install python3
+  hosts: node1
+  remote_user: root
+  roles:
+    - python3
+
