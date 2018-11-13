@@ -1,7 +1,7 @@
 [server default]
 ssh_user=root
-manager_workdir=/var/log/masterha/{{ app_name }}.log
-manager_log=/var/log/masterha/{{ app_name }}/manager.log
+manager_workdir=/var/log/masterha/{{ app_name }}
+manager_log=/var/log/masterha/manager_{{ app_name }}.log
 
 user=admin
 password={{ mysql_password }}

@@ -51,12 +51,16 @@ masterha_check_status --conf=/etc/masterha/app1.cnf
 /sbin/ifconfig enp0s8:1 down
 
 # 开启MHA Manager监控
-nohup masterha_manager --conf=/etc/masterha/app1.cnf --remove_dead_master_conf --ignore_last_failover < /dev/null > /var/log/masterha/app1/manager.log 2>&1 &
+masterha_manager --conf=/etc/masterha/app1.cnf --remove_dead_master_conf --ignore_last_failover &
+nohup masterha_manager --conf=/etc/masterha/app1.cnf --remove_dead_master_conf --ignore_last_failover < /dev/null > /var/log/masterha/manager_app1.log 2>&1 &
 
 # 手动切换
 # https://github.com/yoshinorim/mha4mysql-manager/wiki/masterha_master_switch
-masterha_master_switch  --master_state=alive --conf=/etc/masterha/app2.cnf --new_master_host=192.168.1.102 --new_master_port=3307
-masterha_master_switch --master_state=dead --conf=/etc/masterha/app1.cnf --dead_master_host=192.168.1.101 --dead_master_port=3306 --new_master_host=192.168.1.102 --new_master_port=3306 --ignore_last_failover
+masterha_master_switch  --master_state=alive --conf=/etc/masterha/app1.cnf --new_master_host=192.168.1.102 --new_master_port=3307
+masterha_master_switch --master_state=dead --conf=/etc/masterha/app1.cnf --dead_master_host=192.168.1.101 --dead_master_port=3307 --new_master_host=192.168.1.102 --new_master_port=3307 --ignore_last_failover
 
 ```
 
+## 注意事项
+ - mha failover后,会自动把master节点从配置文件中删除,集群修复后,需要人工修改配置文件.
+ - 手动故障切换后,需要人工修改配置文件,移出指定节点.

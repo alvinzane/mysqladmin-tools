@@ -1,0 +1,10 @@
+---
+# 强行还原复制环境,注意:仅测试用
+- name: Install MySQL servers
+  hosts: mha-node
+  remote_user: root
+  vars_files:
+    - ../../common/mysql/defaults/main.yml
+    - var/main.yml
+  roles:
+    - {role: slave, reset_master: True}
