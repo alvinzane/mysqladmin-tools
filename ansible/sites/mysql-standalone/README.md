@@ -1,4 +1,11 @@
-## MySQL 双主 + keepalived 环境安装
+## MySQL 单机版安装
+
+支持MySQL 5.7,8.0,Percona Server for MySQL 5.7
+
+### 测试环境
+
+    ansible `2.2.1.0`
+    os `Centos 7.2 X64`
 
 ### MySQL 全局默认配置文件,不建议更改:
     # ansible/common/mysql/defaults/main.yml
@@ -32,13 +39,29 @@
     mysql_innodb_buffer_pool_size: "32M"
 
 
-### MySQL roles配置文件,可自行配置,安装时优先生效:
-    # ansible/common/mysql/defaults/main.yml
+### 安装变量(配置)文件说明:
 
-    # MySQL 实例端口
-    mysql_port: 3306
-    # root 密码
-    mysql_password: aaaaaa
+建议跟据自己需求进行修改文件:
+```
+  - ansible/common/mysql/defaults/main.yml          # 本局默认配置,不建议修改
+  - mysql-standalone/var/main.yml                   # 独立安装模块的配置,可自行修改
+```
+
+
+```
+# MySQL 实例端口
+mysql_port: 3306
+# root 密码
+mysql_password: aaaaaa
+
+mysql_version: "8.0.11"
+mysql_package: "mysql-8.0.11-linux-glibc2.12-x86_64.tar.gz"
+mysql_datahome: "/data/mysql"
+
+mysql_plugins:
+ - { name: "rpl_semi_sync_master", so: "semisync_master.so" }
+ - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }
+ ```
 
 ### MySQL 多实例目录结构
     /data/mysql
