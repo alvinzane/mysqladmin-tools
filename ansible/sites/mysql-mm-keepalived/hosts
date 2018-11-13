@@ -1,0 +1,5 @@
+[node1]
+192.168.1.101 slave=True master_ip=192.168.1.102
+
+[node2]
+192.168.1.102 slave=True master_ip=192.168.1.101

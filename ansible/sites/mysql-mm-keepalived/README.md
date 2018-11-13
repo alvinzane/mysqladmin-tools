@@ -31,4 +31,5 @@
     tailf /var/log/messages
 
     # vip
+    ssh 192.168.1.200
     mysql -S /tmp/mysql3306.sock -p
