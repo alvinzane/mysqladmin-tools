@@ -5,4 +5,4 @@
 
 同时也包含一些自动化测试及运维脚本．
 
-[查看文档](mysqladmin-tools/tree/master/ansible)
+[查看文档](tree/master/ansible)
