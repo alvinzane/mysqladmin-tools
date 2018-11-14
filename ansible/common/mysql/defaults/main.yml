@@ -28,7 +28,7 @@ mysql_datadir: "{{ mysql_portdir }}/data"
 mysql_sock: "/tmp/mysql{{ mysql_port }}.sock"
 
 # 是否开机启动
-mysql_start_up_on_boot: False
+startup_on_boot: False
 
 # 多实例service name,用于 systemctl start mysql_servicename
 mysql_servicename : "mysql{{ mysql_port }}"

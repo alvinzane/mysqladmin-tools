@@ -7,7 +7,7 @@
      dest: /usr/lib/systemd/system/{{ mysql_servicename }}.service
 
   - name: Initialize | config mysql{{ mysql_port }}.service start up on boot
-    when: ansible_distribution_major_version == "7"
+    when: startup_on_boot == True
     systemd:
      name: "{{ mysql_servicename }}"
      enabled: yes
