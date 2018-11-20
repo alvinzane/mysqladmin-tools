@@ -1,2 +1,8 @@
-# https://www.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/
-https://www.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-5.7.22-29.26/binary/tarball/Percona-XtraDB-Cluster-5.7.22-rel22-29.26.1.Linux.x86_64.ssl101.tar.gz
+# https://download.virtualbox.org/virtualbox/5.1.38/VirtualBox-5.1.38-122592-Win.exe
+wget https://www.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-5.7.22-29.26/binary/tarball/Percona-XtraDB-Cluster-5.7.22-rel22-29.26.1.Linux.x86_64.ssl101.tar.gz
+wget https://superb-dca2.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.14/zabbix-3.4.14.tar.gz
+wget https://github-production-release-asset-2e65be.s3.amazonaws.com/27358084/49d2ce80-b5f4-11e8-8be4-acb2db0abbf8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20181106%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181106T055043Z&X-Amz-Expires=300&X-Amz-Signature=9731929fa342744c4476aaa0c7b4e6768473ab697552db4166fe8c377b6d7430&X-Amz-SignedHeaders=host&actor_id=12639472&response-content-disposition=attachment%3B%20filename%3Dproxysql-rc1_2.0.0-1-centos7.x86_64.rpm&response-content-type=application%2Foctet-stream
+wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.13-linux-glibc2.12-x86_64.tar.xz
+wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
+wget http://www.keepalived.org/software/keepalived-1.4.3.tar.gz
+wget https://www.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.23-23/binary/tarball/Percona-Server-5.7.23-23-Linux.x86_64.ssl101.tar.gz
