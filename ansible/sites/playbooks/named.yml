@@ -1,0 +1,6 @@
+---
+- name: Install named
+  hosts: node1
+  remote_user: root
+  roles:
+    - { role: named, dns_name: mysqldba.com}

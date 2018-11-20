@@ -1,0 +1,19 @@
+$TTL 1D
+@       IN      SOA     main.{{dns_name}}. admin.{{dns_name}}. (
+                20170507
+                1H
+                10M
+                5D
+                1D )
+        IN      NS      db1
+        IN      NS      db2
+        IN      NS      db3
+        IN      MX 10   mx1
+        IN      MX 20   mx2
+db1     IN      A       192.168.1.101
+db2     IN      A       192.168.1.102
+db3     IN      A       192.168.1.103
+mx1     IN      A       192.168.1.101
+mx2     IN      A       192.168.1.102
+www     IN      A       192.168.1.100
+ftp     IN      CNAME   www

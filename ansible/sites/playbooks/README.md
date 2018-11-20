@@ -12,10 +12,6 @@ redis-cli -h 192.168.1.102 -p 6380 -a 123456  slaveof 192.168.1.101 6380
 redis-cli -h 192.168.1.103 -p 6380 -a 123456  slaveof 192.168.1.101 6380
 redis-cli -h 192.168.1.101 -p 6380 -a 123456  INFO replication
 
-redis-cli -h 192.168.1.101 -p 6380 -a 123456  CONFIG SET protected-mode no
-redis-cli -h 192.168.1.102 -p 6380 -a 123456  CONFIG SET protected-mode no
-redis-cli -h 192.168.1.103 -p 6380 -a 123456  CONFIG SET protected-mode no
-
 # 日志
 tail -f /data/redis/6380/redis-sentinel.logs
 
@@ -31,7 +27,15 @@ dig @192.168.1.100 -p 8600 r-6380-redis.service.consul
 
 ```
 
-## DNS
+## named
 ```
+参考资料:
 http://blog.51cto.com/sweetpotato/1598225
+
+# 安装
+ansible-playbook -i host named.yml
+
+# 测试
+dig @192.168.1.101 www.mysqldba.com  # 内网主机都可以
+ping www.mysqldba.com                # 需要指定 dns 服务器,named server上已经暴力修改 /etc/resolv.conf,可以直接测试
 ```

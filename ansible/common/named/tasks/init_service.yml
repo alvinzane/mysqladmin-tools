@@ -1,0 +1,47 @@
+---
+- name: Initialize | Create configuration file named.conf.
+  template:
+    src: ../templates/{{ item }}
+    dest: /etc/{{ item }}
+    owner: root
+    group: named
+    mode: 0640
+    backup: True
+  with_items:
+    - named.conf
+    - named.rfc1912.zones
+
+- name: Initialize | Create configuration file named.conf.
+  template:
+    src: ../templates/example.com.zone
+    dest: /var/named/{{ dns_name }}.zone
+    owner: root
+    group: named
+    mode: 0640
+    backup: True
+
+- name: Initialize | Create configuration file consul.conf.
+  template:
+    src: ../templates/consul.conf
+    dest: /etc/named/consul.conf
+    owner: root
+    group: named
+    mode: 0640
+
+- name: Initialize | Create configuration file resolv.conf.
+  template:
+    src: ../templates/resolv.conf
+    dest: /etc/resolv.conf
+    backup: True
+
+# 解决resolve.conf 被 NetworkManager 重改的尴尬,提示:仅用于测试环境, chattr -i /etc/resolv.conf 可还原权限
+- name: Initialize | Fixate power of resolv.conf.
+  shell: chattr +i /etc/resolv.conf
+
+- name: Initialize | start named
+  systemd:
+   name: named
+   state: started
+
+- name: Initialize | Wait for consul start.
+  wait_for: port=53 delay=1 timeout=15

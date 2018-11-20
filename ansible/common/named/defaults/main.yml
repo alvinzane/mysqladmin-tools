@@ -1,0 +1,9 @@
+---
+install_method: "repo"
+
+software_files_path: "/vagrant/downloads"
+software_install_path: "/usr/local/bin/"
+
+dns_name: example.com
+consul_server: 192.168.1.100
+consul_port: 8600

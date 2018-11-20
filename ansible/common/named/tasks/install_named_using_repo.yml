@@ -1,0 +1,6 @@
+---
+- name: named | Install named using yum
+  yum: name={{ item }} state=present
+  with_items:
+    - "bind"
+    - "bind-utils"
