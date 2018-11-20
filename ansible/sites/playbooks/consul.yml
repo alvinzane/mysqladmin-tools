@@ -1,0 +1,13 @@
+---
+- name: Install consul server
+  hosts: consul_server
+  remote_user: root
+  roles:
+    - { role: consul, consul_mode: server }
+
+- name: Install consul client
+  hosts: consul_client
+  remote_user: root
+  roles:
+    - { role: consul, consul_mode: client }
+

@@ -1,0 +1,8 @@
+---
+- name: Install tokudb
+  hosts: node5
+  remote_user: root
+  vars_files:
+      - ../../common/tokudb/defaults/main.yml
+  roles:
+    - { role: tokudb, mysql_port: 5508}

@@ -1,12 +1,24 @@
 ---
-- name: Install redis sentinel
-  hosts: node2
+- name: Install redis master
+  hosts: redis_master
   remote_user: root
   vars:
-   - redis_master_host: '127.0.0.1'
-   - redis_master_port: '6383'
+    - redis_master_host: '192.168.1.101'
+    - redis_master_port: '6380'
+    - redis_requirepass: '123456'
+    - redis_masterauth: '123456'
+    - redis_sentinel_quorum: 2
   roles:
-   - { role: redis, redis_port: 6383, redis_sentinel_port: 26383}
-   - { role: redis, redis_port: 6384, redis_sentinel_port: 26384, redis_slave: true}
-   - { role: redis, redis_port: 6385, redis_sentinel_port: 26385, redis_slave: true}
+    - { role: redis, redis_port: 6380, redis_sentinel_port: 26380 }
 
+- name: Install redis master
+  hosts: redis_slave
+  remote_user: root
+  vars:
+    - redis_master_host: '192.168.1.101'
+    - redis_master_port: '6380'
+    - redis_requirepass: '123456'
+    - redis_masterauth: '123456'
+    - redis_sentinel_quorum: 2
+  roles:
+    - { role: redis, redis_port: 6380, redis_sentinel_port: 26380, redis_slave: true }
