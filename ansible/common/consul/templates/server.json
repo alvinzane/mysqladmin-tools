@@ -1,0 +1,10 @@
+{
+  "data_dir": "/data/consul",
+  "datacenter": "dc1",
+  "log_level": "INFO",
+  "server": true,
+  "bootstrap_expect": 1,
+  "bind_addr": "{{ ansible_host }}",
+  "client_addr": "{{ ansible_host }}",
+  "ui":true
+}

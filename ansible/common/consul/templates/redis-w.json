@@ -1,0 +1,18 @@
+{
+  "services": [
+    {
+      "name": "w-6380-redis",
+      "tags": [
+        "master-6380"
+      ],
+      "address": "{{ ansible_host }}",
+      "port": 6380,
+      "checks": [
+        {
+          "args": ["/data/consul/shell/check_redis_master.sh", "6380", "123456"],
+          "interval": "10s"
+        }
+      ]
+    }
+  ]
+}

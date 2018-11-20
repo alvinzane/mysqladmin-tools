@@ -1,0 +1,9 @@
+---
+- name: consul | Check if consul local file is already configured.
+  stat: path={{ consul_install_dir }}
+  register: install_result
+- block:
+  - import_tasks: install_consul_using_src.yml
+  when: not install_result.stat.exists
+
+- import_tasks: init_service.yml

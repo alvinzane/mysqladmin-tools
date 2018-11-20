@@ -1,0 +1,33 @@
+---
+- name: Initialize service | Create consul configuration file.
+  template:
+    src: ../templates/{{ consul_mode }}.json
+    dest: /etc/consul.d/{{ consul_mode }}.json
+
+- name: Initialize service | Create consul configuration file.
+  when: consul_mode == 'client'
+  template:
+    src: ../templates/{{ item }}
+    dest: /etc/consul.d/{{ item }}
+  with_items:
+    - redis-r.json
+    - redis-w.json
+
+- name: Initialize service | Create consul configuration file.
+  when: consul_mode == 'client'
+  template:
+    src: ../templates/{{ item }}
+    dest: /data/consul/shell/{{ item }}
+    mode: 0755
+  with_items:
+    - check_mysql_master.sh
+    - check_mysql_slave.sh
+    - check_redis_master.sh
+    - check_redis_slave.sh
+    - check_port.sh
+
+- name: Initialize | Start service
+  shell: consul agent -config-dir=/etc/consul.d > /data/consul/consul.log &
+
+- name: Initialize | Wait for consul start.
+  wait_for: host={{ ansible_host }} port=8301 delay=1 timeout=15

@@ -1,0 +1,10 @@
+---
+install_method: "src"
+
+software_files_path: "/vagrant/downloads"
+software_install_path: "/usr/local/bin/"
+
+consul_package: "consul_1.3.1_linux_amd64.zip"
+consul_install_dir: "/usr/local/bin/consul"
+
+consul_mode: "server"

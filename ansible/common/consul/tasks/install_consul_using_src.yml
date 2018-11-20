@@ -1,0 +1,12 @@
+---
+- name: Install | Transfer consul install package to remote host
+  unarchive:
+    src: "{{ software_files_path }}/{{ consul_package }}"
+    dest: "{{ software_install_path }}"
+    creates: "{{ consul_install_dir }}"
+
+- name: Initialize | Create consul directory owner.
+  file: path={{ item }} recurse=yes
+  with_items:
+     - /etc/consul.d/
+     - /data/consul/shell

@@ -1,0 +1,9 @@
+{
+  "data_dir": "/data/consul",
+  "enable_script_checks": true,
+  "bind_addr": "{{ ansible_host }}",
+  "retry_join": ["{{ groups['consul_server'][0] }}"],
+  "retry_interval": "30s",
+  "rejoin_after_leave": true,
+  "start_join": ["{{ groups['consul_server'][0] }}"]
+}
