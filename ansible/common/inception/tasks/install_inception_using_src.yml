@@ -1,0 +1,15 @@
+---
+- name: Install | Transfer inception install package to remote host
+  unarchive:
+    src: "{{ software_files_path }}/{{ inception_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ inception_package | regex_replace('.zip','') }}"
+
+- name: Install | Make install inception chdir={{ software_install_src_path }}/{{ inception_package | regex_replace('.zip','') }}
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ inception_package | regex_replace('.zip','') }} creates={{ inception_install_dir }}"
+  with_items:
+    - "{{ inception_source_configure_command }}"
+    - "make && make install"
+
+- name: Install | Create symbolic links for inception
+  file: "src={{ inception_install_dir }}/bin/Inception dest=/usr/bin/inception state=link"

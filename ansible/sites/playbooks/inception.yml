@@ -1,0 +1,6 @@
+---
+- name: Install inception server
+  hosts: node4
+  remote_user: root
+  roles:
+    - { role: inception }

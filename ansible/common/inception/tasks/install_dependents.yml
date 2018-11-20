@@ -1,0 +1,6 @@
+---
+- name: Inception | Install requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - ncurses-devel
+    - openssl-devel

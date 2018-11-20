@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: devel
+  - role: unarchive
+  - { role: bison, bison_package: "bison-2.6.tar.xz" }

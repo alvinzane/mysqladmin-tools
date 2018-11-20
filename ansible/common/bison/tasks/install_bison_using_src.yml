@@ -1,0 +1,18 @@
+---
+- name: Install | Transfer bison install package to remote host
+  unarchive:
+    src: "{{ software_files_path }}/{{ bison_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ bison_package | regex_replace('.tar.xz','') }}"
+
+- name: Install | Make install bison
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ bison_package | regex_replace('.tar.xz','') }} creates={{ bison_install_dir }}"
+  with_items:
+    - "./configure"
+    - "make && make install"
+
+- name: Install | Create symbolic links for bison
+  file: "src=/usr/local/{{ item }} dest=/usr/{{ item }} state=link"
+  with_items:
+    - "bin/bison"
+    - "share/bison"

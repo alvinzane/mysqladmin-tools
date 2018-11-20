@@ -39,3 +39,15 @@ ansible-playbook -i host named.yml
 dig @192.168.1.101 www.mysqldba.com  # 内网主机都可以
 ping www.mysqldba.com                # 需要指定 dns 服务器,named server上已经暴力修改 /etc/resolv.conf,可以直接测试
 ```
+
+## inception
+```
+# 安装
+ansible-playbook -i host inception.yml
+
+# 启动
+nohup inception --defaults-file=/etc/inception/inc.cnf &
+
+# 测试
+mysql -uroot -h127.0.0.1 -P6669 -e "inception get variables"
+```

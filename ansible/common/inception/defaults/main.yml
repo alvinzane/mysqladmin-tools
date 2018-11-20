@@ -1,0 +1,20 @@
+---
+install_method: "src"
+
+software_files_path: "/vagrant/downloads"
+software_install_src_path: "/usr/local/src"
+software_install_path: "/usr/local"
+
+inception_package: "inception-master.zip"
+inception_install_dir: "{{ software_install_path }}/inception"
+
+inception_source_configure_command: >
+  cmake
+  -DWITH_DEBUG=OFF
+  -DCMAKE_INSTALL_PREFIX={{inception_install_dir}}
+  -DMYSQL_DATADIR={{inception_install_dir}}/data
+  -DWITH_SSL=bundled
+  -DCMAKE_BUILD_TYPE=RELEASE
+  -DWITH_ZLIB=bundled
+  -DMY_MAINTAINER_CXX_WARNINGS="-Wall -Wextra -Wunused -Wno-dev -Wwrite-strings -Wno-strict-aliasing  -Wno-unused-parameter -Woverloaded-virtual"
+  -DMY_MAINTAINER_C_WARNINGS="-Wall -Wextra -Wno-dev -Wunused -Wwrite-strings -Wno-strict-aliasing -Wdeclaration-after-statement"

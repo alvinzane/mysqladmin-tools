@@ -1,0 +1,4 @@
+---
+- import_tasks: install_dependents.yml
+- import_tasks: install_inception_using_src.yml
+- import_tasks: init_service.yml
