@@ -1,5 +1,8 @@
 ---
 - name: Install | Create zabbix user
+  user: name=zabbix shell=/sbin/nologin home=/usr/local/zabbix createhome=no state=present
+
+- name: Install | Adding zabbix user to mysql group
   user: name=zabbix shell=/sbin/nologin home=/usr/local/zabbix createhome=no state=present groups=zabbix,mysql
 
 - name: Initialize | Create zabbix-server directory owner.
