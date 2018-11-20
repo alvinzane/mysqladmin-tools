@@ -1,0 +1,48 @@
+---
+#### MySQL 全局默认配置文件 ####
+
+# MySQL 二进制包目录
+software_files_path: "/vagrant/downloads"
+# MySQL 安装目录
+software_install_path: "/usr/local"
+
+mysql_version: "5.7.23"
+mysql_package: "Percona-Server-5.7.23-23-Linux.x86_64.ssl101.tar.gz"
+
+# MySQL 分支,默认官司版本,可选:[mysql, pxc, percona]
+mysql_branch: "percona"
+
+mysql_dirname: "{{ mysql_branch }}-{{ mysql_version }}"
+mysql_basedir: "{{ software_install_path }}/{{ mysql_branch }}"
+
+# 端口号
+mysql_port: "5507"
+mysql_user: "mysql"
+# root 密码
+mysql_password: "aaaaaa"
+# MySQL全局 Data home
+mysql_datahome: "/data/mysql"
+# MySQL实例 Data home,使用端口号
+mysql_portdir: "{{ mysql_datahome }}/{{ mysql_port }}"
+mysql_datadir: "{{ mysql_portdir }}/data"
+mysql_sock: "/tmp/mysql{{ mysql_port }}.sock"
+
+# 是否开机启动
+startup_on_boot: False
+
+# 多实例service name,用于 systemctl start mysql_servicename
+mysql_servicename : "mysql{{ mysql_port }}"
+mysql_innodb_buffer_pool_size: "32M"
+master_info_repository: "FILE"
+# 半同步复制
+semi_replication: False
+# 组复制
+group_replication: False
+
+# GTID
+gtid: True
+tokudb: True
+
+mysql_plugins:
+ - { name: "rpl_semi_sync_master", so: "semisync_master.so" }
+ - { name: "rpl_semi_sync_slave", so: "semisync_slave.so" }

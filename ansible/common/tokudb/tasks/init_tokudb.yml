@@ -1,0 +1,34 @@
+---
+- name: Setup | Shutdown transparent_hugepage.
+  shell: "echo never > {{ item }}"
+  with_items:
+    - '/sys/kernel/mm/transparent_hugepage/enabled'
+    - '/sys/kernel/mm/transparent_hugepage/defrag'
+
+- name: Setup | Set transparent_hugepage is never to /etc/rc.local.
+  lineinfile: dest=/etc/rc.local line='echo never > {{ item }}'
+  with_items:
+    - '/sys/kernel/mm/transparent_hugepage/enabled'
+    - '/sys/kernel/mm/transparent_hugepage/defrag'
+
+ # 修改my.cnf配置文件, 去掉tokudb的注释
+- name: Setup | Configure my.cnf for tokudb
+  replace:
+    path: "{{ mysql_portdir }}/my.cnf"
+    regexp: "(#)(tokudb_.*)"
+    replace: '\2'
+
+- name: Setup | Install tokudb plugin
+  shell: "{{ mysql_basedir }}/bin/ps_tokudb_admin -S {{ mysql_sock }} -uroot -p{{ mysql_password }} --enable"
+
+- name: Setup | Stop mysql{{ mysql_port }} (sytemctl)
+  systemd:
+   name: "{{ mysql_servicename }}"
+   state: stopped
+
+- name: Setup | Start mysql
+  shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf &"
+  when:  bootstrap is not defined
+
+- name: Initialize | Wait for mysql start.
+  wait_for: port={{ mysql_port }} delay=5 timeout=30
