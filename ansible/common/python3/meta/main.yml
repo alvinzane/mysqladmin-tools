@@ -2,3 +2,4 @@
 dependencies:
   - role: devel
   - role: epel
+  - role: unarchive
