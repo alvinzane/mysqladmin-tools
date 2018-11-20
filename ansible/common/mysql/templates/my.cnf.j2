@@ -4,12 +4,21 @@ port            = {{ mysql_port }}
 socket          = {{ mysql_sock }}
 default-character-set = utf8mb4
 
+[mysqld_safe]
+open-files-limit = 8192
+log-error = error.log
+pid-file  = {{ mysql_portdir }}/mysqld.pid
+{% if tokudb == True %}
+malloc-lib = /usr/lib64/libjemalloc.so.1
+{% endif %}
+
 [mysqld]
 user            = {{ mysql_user }}
 port            = {{ mysql_port }}
 socket          = {{ mysql_sock }}
 basedir         = {{ mysql_basedir }}
 datadir         = {{ mysql_datadir }}
+tmpdir          = {{ mysql_portdir }}/tmp
 
 ###### server ####################
 server-id = {{ mysql_port }}{{ inventory_hostname | last_part}}
@@ -163,6 +172,18 @@ innodb_autoinc_lock_mode = 2
 #wsrep_sst_auth = {{ wsrep_sst_auth_user }}:{{ wsrep_sst_auth_pwd }}
 {% endif %}
 
+{% if tokudb == True %}
+#tokudb_commit_sync     = ON
+#tokudb_cache_size      = 128M
+#tokudb_directio        = ON
+#tokudb_commit_sync     = OFF
+#tokudb_row_format      = tokudb_fast
+#tokudb_read_block_size = 128K
+#tokudb_read_buf_size   = 128K
+#tokudb_write_status_frequency = 1
+#tokudb_read_status_frequency  = 1
+{% endif %}
+
 [mysqldump]
 quick
 max_allowed_packet = 24M
@@ -179,8 +200,3 @@ write_buffer = 8M
 
 [mysqlhotcopy]
 interactive-timeout
-
-[mysqld_safe]
-open-files-limit = 8192
-log-error = error.log
-pid-file = {{ mysql_portdir }}/mysqld.pid

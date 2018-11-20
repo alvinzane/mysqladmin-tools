@@ -34,6 +34,16 @@
     owner: mysql
     group: mysql
 
+# 解决 /usr/local/percona/bin/mysql_config 里面的路径问题
+ - name: Install | Make link {{ mysql_basedir }} to /usr/local/Percona-Server-xxx.yyy-23-Linux.x86_64.ssl101/
+   when: mysql_branch == 'percona'
+   file:
+    src: '{{ mysql_basedir }}'
+    dest: "{{ software_install_path }}/{{ mysql_package | regex_replace('.tar.gz','') }}"
+    state: link
+    owner: mysql
+    group: mysql
+
 #导出mysql的库文件
  - name: Install | Export MySQL share object (*.os)
    template:

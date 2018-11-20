@@ -9,7 +9,7 @@ software_install_path: "/usr/local"
 mysql_version: "5.7.20"
 mysql_package: "mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz"
 
-# MySQL 分支,默认官司版本,可选:[mysql, pxc]
+# MySQL 分支,默认官司版本,可选:[mysql, pxc, percona]
 mysql_branch: "mysql"
 
 mysql_dirname: "{{ mysql_branch }}-{{ mysql_version }}"
@@ -41,6 +41,8 @@ group_replication: False
 
 # GTID
 gtid: True
+
+tokudb: False
 
 mysql_plugins:
  - { name: "rpl_semi_sync_master", so: "semisync_master.so" }

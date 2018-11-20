@@ -1,6 +1,6 @@
 ---
 #  二进制包安装MySQL
-- name: Install Stat | Check if MySQL file is already installed.
+- name: Install Stat | Check if MySQL package [{{ mysql_basedir }}] is already installed.
   stat: path={{ mysql_basedir }}
   register: mysql_install_result
 - block:
@@ -9,7 +9,7 @@
   when: not mysql_install_result.stat.exists
 
 # 检查MySQL实例子目录是否已存在,并初始化目录&服务&密码
-- name: Install Stat | Check if MySQL Datadir is already exists.
+- name: Install Stat | Check if MySQL Datadir [{{ mysql_portdir }}] is already exists.
   stat: path={{ mysql_portdir }}
   register: mysql_datadir_result
 - block:
