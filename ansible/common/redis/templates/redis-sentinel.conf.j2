@@ -1,4 +1,6 @@
 daemonize yes
+bind {{ ansible_host }}
+dir {{ redis_dbdir }}
 port {{ redis_sentinel_port }}
 loglevel notice
 logfile "{{ redis_dir_path }}/redis-sentinel.logs"
@@ -7,6 +9,6 @@ sentinel monitor mymaster {{ redis_master_host }} {{ redis_master_port }} {{ red
 {% if redis_masterauth %}
 sentinel auth-pass mymaster {{ redis_masterauth }}
 {% endif %}
-sentinel down-after-milliseconds mymaster 30000
-sentinel parallel-syncs mymaster 1 
-sentinel failover-timeout mymaster 90000
+sentinel down-after-milliseconds mymaster 3000
+sentinel parallel-syncs mymaster 1
+sentinel failover-timeout mymaster 60000

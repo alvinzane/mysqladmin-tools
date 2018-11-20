@@ -2,9 +2,10 @@ daemonize yes
 pidfile {{ redis_pidfile }}
 bind 0.0.0.0
 port {{ redis_port | default('6379')}}
+dir {{ redis_dbdir }}
 tcp-backlog 511
 timeout {{ redis_timeout }}
-tcp-keepalive 0
+tcp-keepalive 300
 loglevel {{ redis_loglevel }}
 logfile "{{ redis_logfile }}"
 databases {{ redis_databases }}
@@ -12,7 +13,6 @@ stop-writes-on-bgsave-error yes
 rdbcompression {{ redis_rdbcompression }}
 rdbchecksum yes
 dbfilename {{ redis_dbfilename }}
-dir {{ redis_dbdir }}
 slave-serve-stale-data yes
 slave-read-only yes
 repl-diskless-sync no

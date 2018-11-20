@@ -1,16 +1,16 @@
 ---
 # author: lework
 
-software_files_path: "/opt/software"
+software_files_path: "/vagrant/downloads"
 software_install_path: "/usr/local"
 
-redis_version: "3.2.11"
+redis_version: "4.0.11"
 
 redis_file: "redis-{{ redis_version }}.tar.gz"
 redis_file_path: "{{ software_files_path }}/{{ redis_file }}"
 redis_file_url: "http://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
 
-redis_data_path: "/redis_data"
+redis_data_path: "/data/redis"
 # redis_port: 6379
 redis_daemon: "redis{{ redis_port | default('') }}"
 redis_dir_path: "{{ redis_data_path }}/{{redis_port | default('6379')}}"
