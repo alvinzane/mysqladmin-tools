@@ -23,6 +23,7 @@ zabbix_server_source_configure_command: >
 mysql_admin_user: admin
 mysql_admin_pwd: aaaaaa
 
+DBEngine: InnoDB
 DBHost: 127.0.0.1
 DBName: zabbix
 DBUser: zabbix

@@ -12,5 +12,8 @@
     dest: tmp/create_database.sql
     state: absent
 
-- name: Install MySQL | Import mysql schema
-  shell: "cat schema.sql images.sql data.sql| mysql -h{{ DBHost }} -P{{DBPort}} -u{{ mysql_admin_user }} -p{{ mysql_admin_pwd }} {{ DBName }} chdir={{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}/database/mysql"
+- name: Install MySQL | Import zabbix schema
+  shell: "sed 's/InnoDB/{{DBEngine}}/' schema.sql | mysql -h{{ DBHost }} -P{{DBPort}} -u{{ mysql_admin_user }} -p{{ mysql_admin_pwd }} {{ DBName }} chdir={{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}/database/mysql"
+
+- name: Install MySQL | Import zabbix data
+  shell: "cat images.sql data.sql| mysql -h{{ DBHost }} -P{{DBPort}} -u{{ mysql_admin_user }} -p{{ mysql_admin_pwd }} {{ DBName }} chdir={{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}/database/mysql"
