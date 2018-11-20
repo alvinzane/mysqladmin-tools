@@ -6,7 +6,7 @@ while [ ! -s ${pid_file} ]; do
     if [ ${times} -ge 15 ]; then
       echo ""
       echo "MySQL startup timed out."
-      break
+      exit 2
     fi
     sleep 1;
     echo -e ".\c";

@@ -18,7 +18,10 @@ if [ "$running" = "0" ]; then
     $cmd &
 
     # 检测pid文件,修改权限
-    {{ mysql_datahome }}/chmod_mysql_pid.sh {{ mysql_portdir }}/mysqld.pid
+    {{ mysql_datahome }}/chmod_mysql_pid.sh {{ mysql_datahome }}/$port/mysqld.pid
+    if [ $? ]; then
+        exit 2
+    fi
     echo "MySQL $port is done."
 else
    echo "MySQL $port is already running."
