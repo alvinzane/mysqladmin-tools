@@ -9,7 +9,8 @@
  - Galera Percona XtraDB Cluster
  - MySQL Group Replication
  - ProxySQL
- - Zabbix + fpmmm
+ - Zabbix + TokuDB + fpmmm
+ - Redis + Consul
 
 [查看文档](../../tree/master/ansible)
 
