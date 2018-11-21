@@ -13,7 +13,7 @@ SOCKET=/tmp/mysql3306.sock
 DB=dbtest1
 
 # 日志目录
-LOG_DIR=/vagrant/mysqladmin-tools/ansible/mysql-toolkits/script/logs
+LOG_DIR=/vagrant/mysqladmin-tools/ansible/sites/mysql-toolkits/script/logs
 # 默认测试模式
 SCRIPT_NAME=oltp_read_write
 
