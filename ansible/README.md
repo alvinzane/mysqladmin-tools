@@ -42,6 +42,8 @@ vi /etc/ansible/hosts
 192.168.1.101
 192.168.1.102
 192.168.1.103
+192.168.1.104
+192.168.1.105
 
 # 设置 SSH 公钥认证,
 ssh-keygen -t rsa
@@ -68,6 +70,7 @@ git clone https://github.com/alvinzane/mysqladmin-tools.git
 ### 配置ansible role path
 ```
 # 将common roles 路径加到 roles_path中
+vi +/roles_path/ /etc/ansible/ansible.cfg
 grep roles_path /etc/ansible/ansible.cfg
 roles_path    = /etc/ansible/roles:/usr/share/ansible/roles:/vagrant/mysqladmin-tools/ansible/common
 filter_plugins = /vagrant/mysqladmin-tools/ansible/common/mysql/filter_plugins
