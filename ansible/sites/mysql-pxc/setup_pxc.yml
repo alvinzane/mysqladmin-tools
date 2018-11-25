@@ -21,7 +21,6 @@
 
     # 关闭MySQL
     - name: Setup | stop mysql{{ mysql_port }} (sytemctl)
-      when: ansible_distribution_major_version == "7"
       systemd:
        name: "{{ mysql_servicename }}"
        state: stopped
@@ -49,13 +48,18 @@
 
     # 启动mysql及PXC服务
     # /usr/local/pxc/bin/mysqld_safe --defaults-file=/data/pxc/5507/my.cnf --wsrep-new-cluster &
-    - name: Setup | start first pxc node
+    - name: Setup | Start first pxc node
       shell: "{{ mysql_basedir }}/bin/mysqld_safe --defaults-file={{ mysql_portdir }}/my.cnf --wsrep-new-cluster &"
       when:  bootstrap is defined
 
     # 等待MySQL启动
     - name: Initialize | Wait for mysql start.
       wait_for: port={{ mysql_port }} delay=5 timeout=60
+      when:  bootstrap is defined
+
+    # 配置主结点为写节点
+    - name: Setup | Create clear global read only on first node
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} -e 'set global read_only = 0'"
       when:  bootstrap is defined
 
     # 启动mysql及PXC服务
