@@ -1,0 +1,34 @@
+---
+# author: lework
+
+- name: Ensure docker history packages are removed.
+  yum: "name={{ item }} state=removed"
+  with_items: "{{ docker_old }}"
+
+- name: Ensure docker packages are installed.
+  yum: "name={{ item }} state=installed  update_cache=yes"
+  with_items: "{{ docker_packages }}"
+   
+- name: Install docker repo.
+  shell: "yum-config-manager --add-repo {{ docker_repo }}"
+  
+- name: Modify the docker software source for keda.
+  replace:
+    path: /etc/yum.repos.d/docker-ce.repo
+    regexp: 'download\.docker\.com'
+    replace: "mirrors.ustc.edu.cn/docker-ce"
+
+- name: Create Docker config directory.
+  file: path=/etc/docker state=directory
+
+- name: Configure docker startup parameters.
+  template:
+    src: daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+
+- name: Ensure docker-ce are installed.
+  yum: "name=docker-ce state=installed update_cache=yes  enablerepo=docker-ce-stable"
+
+- name: Ensure docker is started and enabled at boot.
+  systemd: name=docker state=started enabled=yes
+  when: docker_start
