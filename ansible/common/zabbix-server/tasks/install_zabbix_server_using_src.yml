@@ -42,6 +42,19 @@
     - cp -r {{ software_install_src_path }}/{{ zabbix_server_package | regex_replace('.tar.gz','') }}/frontends/php /usr/share/zabbix
     - chown apache:apache /usr/share/zabbix
 
+- name: Install | Copy font file
+  file:
+    src: ../templates/{{ item }}
+    path: /usr/share/zabbix/fonts/{{ item }}
+    owner: zabbix
+    group: zabbix
+  with_items:
+     - msyh.ttf
+     - msyhbd.ttf
+
+# todo /usr/share/zabbix/include/defines.php
+# graphfont => msyh
+
 - name: Install | Create symbolic links for zabbix_get,zabbix_sender
   file: "src=/usr/local/zabbix/sbin/{{ item }} dest=/usr/sbin/{{ item }} state=link"
   with_items:
