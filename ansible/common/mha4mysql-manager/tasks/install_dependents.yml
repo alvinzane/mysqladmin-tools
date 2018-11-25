@@ -1,0 +1,9 @@
+---
+ - name: Install | MySQL pxc requirements
+   yum: name={{ item }} state=present
+   with_items:
+    - "perl-DBD-MySQL"
+    - "perl-Config-Tiny"
+    - "perl-Log-Dispatch"
+    - "perl-Parallel-ForkManager"
+   failed_when: no

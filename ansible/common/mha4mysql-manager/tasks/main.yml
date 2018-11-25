@@ -4,5 +4,7 @@
   register: installed
   ignore_errors: True
 - name: Install {{ mha4mysql_manage_package }}
-  import_tasks: install_via_bin.yml
+  block:
+   - import_tasks: install_dependents.yml
+   - import_tasks: install_via_bin.yml
   when: installed.rc == 1
