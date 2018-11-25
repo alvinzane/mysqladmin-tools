@@ -38,7 +38,7 @@ master_info_repository: "FILE"
 semi_replication: False
 # 组复制
 group_replication: False
-
+read_only: 1
 # GTID
 gtid: True
 
