@@ -1,7 +1,4 @@
 ---
-- name: Initialize | Wait for proxmysql start.
-  wait_for: port=6032 delay=2 timeout=15
-
 - name: Initialize | Transfer script to node
   template:
     src: templates/{{ item }}
