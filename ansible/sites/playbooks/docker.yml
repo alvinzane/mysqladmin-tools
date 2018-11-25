@@ -1,0 +1,7 @@
+---
+- name: Install docker
+  hosts: node5
+  remote_user: root
+  roles:
+    - { role: docker }
+    - { role: docker-compose }
