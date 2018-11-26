@@ -1,0 +1,14 @@
+---
+- name: ssserver | Start ssserver
+  shell: ssserver -c /etc/shadowsocks.json -d start
+
+- name: ssserver | Config to /etc/rc.local
+  lineinfile:
+    dest: /etc/rc.local
+    state: present
+    regexp: '^ssserver'
+    line: 'ssserver -c /etc/shadowsocks.json -d start'
+
+- name: ssserver | Config to /etc/rc.local
+  shell: chmod +x /etc/rc.local
+

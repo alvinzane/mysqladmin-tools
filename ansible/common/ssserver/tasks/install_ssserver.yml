@@ -1,0 +1,8 @@
+---
+- name: ssserver | Master | Create ssserver user on master
+  shell: easy_install pip && pip install shadowsocks
+
+- name: ssserver | Slave-Gtid | Transfer master slave sql to remote host
+  template:
+    src: ../templates/shadowsocks.json
+    dest: /etc/shadowsocks.json
