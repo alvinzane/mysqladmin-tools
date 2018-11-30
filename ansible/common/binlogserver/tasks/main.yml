@@ -1,0 +1,11 @@
+---
+- name: Setup | Copy conf file to /etc/binlog_server_{{mysql_port}}.conf
+  template:
+   src: ../templates/binlog_server.conf
+   dest: /etc/binlog_server_{{mysql_port}}.conf
+
+- name: Setup | Copy conf file to /usr/local/mysql/bin/binlog_server_{{mysql_port}}.sh
+  template:
+   src: ../templates/binlog_server.sh
+   dest: /usr/local/mysql/bin/binlog_server_{{mysql_port}}.sh
+   mode: 0755
