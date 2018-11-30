@@ -1,28 +1,34 @@
 ---
 # https://github.com/akopytov/sysbench#rhelcentos
 # https://github.com/Percona-Lab/sysbench-tpcc
- - name: sysbench | Git clone sysbench src
-   shell: "{{ item }} chdir=/usr/local/src"
-   with_items:
-    - "git clone https://github.com/akopytov/sysbench.git"
+# - name: sysbench | Git clone sysbench src
+#   shell: "{{ item }} chdir=/usr/local/src"
+#   with_items:
+#    - "git clone https://github.com/akopytov/sysbench.git"
 
- # ./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib
- - name: sysbench | Install sysbench via src
-   shell: "{{ item }} chdir=/usr/local/src/sysbench"
-   with_items:
+- name: sysbench | Transfer sysbench install package to remote host
+  unarchive:
+    src: "{{ software_files_path }}/{{ sysbench_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ sysbench_package | regex_replace('.tar.gz','') }}"
+
+# ./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib
+- name: sysbench | Install sysbench via src
+  shell: "{{ item }} chdir=/usr/local/src/{{ sysbench_package | regex_replace('.tar.gz','') }}"
+  with_items:
     - "./autogen.sh"
-    - "./configure --prefix=/usr/local/sysbench"
+    - "./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/local/mysql/include --with-mysql-libs=/usr/local/mysql/lib"
     - "make -j 2 && make install"
 
- - name: sysbench | Install sysbench link
-   shell: "ln -s /usr/local/sysbench/bin/sysbench /bin/sysbench"
+- name: sysbench | Install sysbench link
+  shell: "ln -s /usr/local/sysbench/bin/sysbench /bin/sysbench"
 
- - name: sysbench | Export path env variable
-   lineinfile:
+- name: sysbench | Export path env variable
+  lineinfile:
     path: /etc/ld.so.conf
     line: /usr/local/mysql/lib
     insertafter: EOF
-   notify: reload profile
+  notify: reload profile
 
- - name: sysbench | Reload ldconfig
-   shell: "/sbin/ldconfig -v"
+- name: sysbench | Reload ldconfig
+  shell: "/sbin/ldconfig -v"
