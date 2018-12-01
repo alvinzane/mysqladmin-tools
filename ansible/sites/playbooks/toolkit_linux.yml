@@ -1,0 +1,6 @@
+---
+- name: Install named
+  hosts: node0
+  remote_user: root
+  roles:
+    - { role: toolkit_linux}

@@ -1,0 +1,11 @@
+---
+- name: Install MySQL binlog server
+  hosts: consul_server
+  remote_user: root
+  vars:
+    host: 192.168.1.101
+    port: 3306
+    mysql_repl_user: repl
+    mysql_repl_password: repl@1234
+  roles:
+    - { role: binlogserver}
