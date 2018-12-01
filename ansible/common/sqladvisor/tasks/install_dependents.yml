@@ -1,0 +1,19 @@
+---
+- name: Inception | Install requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - libaio-devel
+    - libffi-devel
+    - glib2
+    - glib2-devel
+
+- name: Inception | Transfer percona-release-0.1-3.noarch.rpm to remote host to /tmp
+  copy:
+    src: "{{ software_files_path }}/percona-release-0.1-3.noarch.rpm"
+    dest: "/tmp/percona-release-0.1-3.noarch.rpm"
+
+- name: Inception | Yum localinstall percona-release-0.1-3.noarch.rpm
+  command: "rpm -ivh percona-release-0.1-3.noarch.rpm chdir=/tmp"
+
+- name: Inception | Install Percona-Server-shared-56
+  command: "yum -y install Percona-Server-shared-56"

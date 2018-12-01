@@ -1,0 +1,23 @@
+---
+install_method: "src"
+
+software_files_path: "/vagrant/downloads"
+software_install_src_path: "/usr/local/src"
+software_install_path: "/usr/local"
+
+sqladvisor_package: "SQLAdvisor-2.0.tar.gz"
+sqladvisor_install_dir: "{{ software_install_path }}/sqladvisor"
+
+sqlparser_source_configure_command: >
+  cmake
+  -DBUILD_CONFIG=mysql_release
+  -DCMAKE_BUILD_TYPE=debug
+  -DCMAKE_INSTALL_PREFIX=/usr/local/sqlparser
+  ./
+
+sqladvisor_source_configure_command: >
+  cmake
+  -DBUILD_CONFIG=mysql_release
+  -DCMAKE_BUILD_TYPE=debug
+  -DCMAKE_INSTALL_PREFIX=/usr/local/sqlparser
+  ./

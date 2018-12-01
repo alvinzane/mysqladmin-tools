@@ -1,0 +1,21 @@
+---
+- name: Install | Transfer sqladvisor install package to remote host
+  unarchive:
+    src: "{{ software_files_path }}/{{ sqladvisor_package }}"
+    dest: "{{ software_install_src_path }}"
+    creates: "{{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}"
+
+- name: Install | Make install sqladvisor chdir={{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}"
+  with_items:
+    - "{{ sqladvisor_source_configure_command }}"
+    - "make && make install"
+
+- name: Install | Make install sqlparser chdir={{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}/sqladvisor"
+  with_items:
+    - "{{ sqlparser_source_configure_command }}"
+    - "make"
+
+- name: Install | Create symbolic links for sqladvisor
+  file: "src={{ software_install_src_path }}/{{ sqladvisor_package | regex_replace('.tar.gz','') }}/sqladvisor/sqladvisor dest=/usr/bin/sqladvisor state=link"
