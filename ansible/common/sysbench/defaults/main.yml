@@ -1,0 +1,10 @@
+---
+install_method: "src"
+
+software_files_path: "/vagrant/downloads"
+software_install_src_path: "/usr/local/src"
+software_install_path: "/usr/local"
+
+sysbench_package: "sysbench-1.0.15.tar.gz"
+
+

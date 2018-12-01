@@ -3,5 +3,5 @@
   register: sysbench_src_installed
   ignore_errors: True
 - name: sysbench | Install sysbench via src
-  import_tasks: install_sysbench_using_src.yml.yml
+  import_tasks: install_sysbench_using_src.yml
   when: not sysbench_src_installed.stat.exists
