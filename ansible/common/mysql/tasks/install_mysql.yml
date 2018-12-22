@@ -4,6 +4,7 @@
 # useradd -g mysql -d /usr/local/mysql -s /sbin/nologin -M -n mysql
  - name: Install | Create mysql user
    user: name=mysql shell=/sbin/nologin home=/usr/local/mysql createhome=no state=present
+   ignore_errors: True
  - name: Install | Make dir /opt/mysql
    file: path=/opt/mysql state=directory owner=mysql group=mysql
 
