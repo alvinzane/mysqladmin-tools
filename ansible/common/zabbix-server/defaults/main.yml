@@ -8,6 +8,8 @@ software_install_src_path: "/usr/local/src"
 zabbix_server_package: "zabbix-3.4.14.tar.gz"
 zabbix_server_install_dir: "{{ software_install_path }}/zabbix"
 
+startup_on_boot: True
+
 zabbix_server_source_configure_command: >
   ./configure
   --prefix={{ zabbix_server_install_dir }}
