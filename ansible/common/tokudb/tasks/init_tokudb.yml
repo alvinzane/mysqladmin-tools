@@ -32,3 +32,7 @@
 
 - name: Initialize | Wait for mysql start.
   wait_for: port={{ mysql_port }} delay=5 timeout=30
+
+  # 需要执行两次
+- name: Setup | Install tokudb plugin
+  shell: "{{ mysql_basedir }}/bin/ps_tokudb_admin -S {{ mysql_sock }} -uroot -p{{ mysql_password }} --enable"
