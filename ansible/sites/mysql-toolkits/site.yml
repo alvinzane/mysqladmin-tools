@@ -5,10 +5,8 @@
   remote_user: root
   vars_files:
     - ../../common/mysql/defaults/main.yml
-    - ../common/proxysql/defaults/main.yml
   roles:
-#    - toolkit_linux
+    - toolkit_linux
     - percona-toolkit
     - xtrabackup
     - sysbench
-    - {role: proxysql, install_method: rpm}
