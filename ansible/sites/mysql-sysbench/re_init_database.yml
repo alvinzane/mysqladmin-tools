@@ -1,0 +1,57 @@
+---
+- name: Re-initialize database
+  hosts: node1
+  remote_user: root
+  vars:
+      mysql_port: "3306"
+      mysql_password: "aaaaaa"
+      mysql_port_dir: "/data/mysql/{{mysql_port}}"
+      mysql_data_dir: "/disk2/mysql/{{mysql_port}}"
+      mysql_basedir: "/usr/local/mysql"
+      mysql_sock: "/tmp/mysql{{ mysql_port }}.sock"
+  vars_prompt:
+    - name: "remove_database"
+      prompt: "Re-initialize,将会删除的MySQL实例的数据目录,请做好备份. 确认要重新初始化数据库吗? yes/no"
+
+  tasks:
+    - name: Confirm | Echo your input
+      debug:
+        msg: "Your choose: {{ remove_database }}"
+
+    - name: Confirm | Ending play when not sure
+      meta: end_play
+      when: remove_database != 'yes'
+
+    - name: Clearup | Shutdown mysqld
+      shell: mysqladmin -S {{mysql_sock}} -uroot -p{{mysql_password}} shutdown
+
+    - name: Clearup | Wait for mysql stop.
+      wait_for: port={{ mysql_port }} delay=1 timeout=30 state=absent
+
+    - name: Clearup | Clear data dir
+      shell: rm -rf {{mysql_data_dir}}/data/*
+
+    - name: Initialize | MySQL initialize db.
+      shell: "{{ mysql_basedir }}/bin/mysqld --defaults-file={{mysql_port_dir}}/my.cnf --initialize-insecure"
+
+    - name: Initialize | start mysql{{ mysql_port }}
+      systemd:
+       name: mysql{{ mysql_port }}
+       state: started
+       daemon_reload: yes
+
+    - name: Initialize | Wait for mysql start.
+      wait_for: port={{ mysql_port }} delay=5 timeout=15
+
+    - name: Setup | Transfer script to node
+      template:
+        src: templates/create_user.sql
+        dest: /tmp/create_user.sql
+
+    - name: Setup | Create mysql user
+      shell: "mysql -S {{mysql_sock}} -uroot < /tmp/create_user.sql"
+
+    - name: Setup | clear temp file tmp/create_user.sql
+      file:
+        dest: tmp/create_user.sql
+        state: absent

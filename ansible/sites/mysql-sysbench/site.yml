@@ -1,0 +1,9 @@
+---
+# MySQL 常用工具安装
+- name: Install MySQL-toolkits
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../../common/mysql/defaults/main.yml
+  roles:
+    - sysbench

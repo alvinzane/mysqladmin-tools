@@ -1,0 +1,25 @@
+---
+- name: Install templates
+  hosts: node1
+  remote_user: root
+  vars:
+      sysbench_script_dir: "/home/sysbench"
+      mysql_port_dir: "/data/mysql/3306"
+  tasks:
+     - name: Install sysbench script
+       file: path={{ sysbench_script_dir }} state=directory
+
+     - name: Install sysbench script
+       template:
+        src: "{{ item }}"
+        dest: "{{ sysbench_script_dir }}/{{ item }}"
+        mode: 0755
+       with_items:
+        - sysbench-oltp.sh
+        - sysbench_mysql_oltp.sh
+        - sysbench_mysql_prepare.sh
+
+     - name: Install my.cnf
+       template:
+        src: "my.cnf"
+        dest: "{{ mysql_port_dir }}/my.cnf"
