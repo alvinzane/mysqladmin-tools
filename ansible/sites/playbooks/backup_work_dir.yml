@@ -1,0 +1,21 @@
+---
+- name: Backup files
+  hosts: backup_server
+  remote_user: root
+  tasks:
+     - name: Backup files
+       synchronize:
+         src: /vagrant/
+         dest: /data/backup/work/
+         recursive: yes
+         rsync_opts:
+            - "--exclude=.git"
+            - "--exclude=__pycache__"
+            - "--exclude=.pyc"
+            - "--exclude=.pyo"
+            - "--exclude=.pyd"
+            - "--exclude=.idea"
+            - "--exclude=log"
+            - "--exclude=logs"
+            - "--exclude=venv"
+            - "--exclude=node_modules"
