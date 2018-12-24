@@ -1,7 +1,7 @@
 ---
 install_method: "repo"
 
-software_files_path: "/vagrant/downloads"
+software_files_path: "/downloads"
 software_install_path: "/usr/local/bin/"
 
 dns_name: example.com

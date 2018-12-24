@@ -5,14 +5,15 @@ zabbix_server_install_dir: "{{ software_install_path }}/zabbix"
 
 # MySQL初始化密码
 mysql_password: aaaaaa
-mysql_port: 3306
+mysql_port: 3307
 
 mysql_admin_user: admin
 mysql_admin_pwd: aaaaaa
 
-DBEngine: TokuDB
+# TokuDB 需要用mysqld_safe 启动
+#DBEngine: TokuDB
 DBHost: 127.0.0.1
 DBName: zabbix
 DBUser: zabbix
 DBPassword: zabbixx
-DBPort: 3306
+DBPort: 3307

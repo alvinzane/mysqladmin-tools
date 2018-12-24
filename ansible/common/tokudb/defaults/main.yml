@@ -2,7 +2,7 @@
 #### MySQL 全局默认配置文件 ####
 
 # MySQL 二进制包目录
-software_files_path: "/vagrant/downloads"
+software_files_path: "/downloads"
 # MySQL 安装目录
 software_install_path: "/usr/local"
 

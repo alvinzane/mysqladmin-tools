@@ -1,7 +1,7 @@
 ---
 install_method: "src"
 
-software_files_path: "/vagrant/downloads"
+software_files_path: "/downloads"
 software_install_path: "/usr/local"
 software_install_src_path: "/usr/local/src"
 
