@@ -1,0 +1,25 @@
+---
+- name: Initialize zabbix partition discovery
+  hosts: zabbix_agent
+  remote_user: root
+  tasks:
+    - name: Initialize | Transfer disk_discovery.conf to remote host
+      copy:
+        src: disk_discovery.conf
+        dest: /etc/zabbix/zabbix_agentd.conf.d/disk_discovery.conf
+
+    - name: Initialize | Create zabbix-agent directory owner.
+      file: path=/etc/zabbix/scripts recurse=yes owner=zabbix group=zabbix
+
+    - name: Initialize | Transfer partition_low_discovery.sh to remote host
+      copy:
+        src: partition_low_discovery.sh
+        dest: /etc/zabbix/scripts/partition_low_discovery.sh
+
+    - name: Initialize  | restart zabbix-agent
+      systemd:
+        name: zabbix-agent
+        state: restarted
+
+    - name: Initialize | Wait for httpd restart.
+      wait_for: port=10050 delay=1 timeout=15

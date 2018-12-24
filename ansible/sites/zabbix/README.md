@@ -102,3 +102,6 @@ systemctl start zabbix-agent
 ```
 mysqldump -uroot -p --databases zabbix  --ignore-table=zabbix.alerts --ignore-table=zabbix.auditlog  --ignore-table=zabbix.events  --ignore-table=zabbix.history  --ignore-table=zabbix.history_log --ignore-table=zabbix.str --ignore-table=zabbix.str_sync  --ignore-table=zabbix.sync  --ignore-table=zabbix.text --ignore-table=zabbix.uint  --ignore-table=zabbix.uint_sync  --ignore-table=zabbix.node_cksum  --ignore-table=zabbix.proxy_dhistory --ignore-table=zabbix.proxy_history --ignore-table=zabbix.service_alarms --ignore-table=zabbix.services_times --ignore-table=zabbix.trends --ignore-table=zabbix.trends_uint > zabbix_config.sql
 ```
+
+## zabbix主动发现并监控磁盘IO
+https://www.guoxiangfu.com/index.php/post/16.html

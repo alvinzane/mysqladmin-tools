@@ -11,7 +11,7 @@ mysql_admin_user: admin
 mysql_admin_pwd: aaaaaa
 
 # TokuDB 需要用mysqld_safe 启动
-#DBEngine: TokuDB
+DBEngine: TokuDB
 DBHost: 127.0.0.1
 DBName: zabbix
 DBUser: zabbix

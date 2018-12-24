@@ -22,6 +22,22 @@
     - name: Initialize | Create apache directory owner.
       file: path=/var/lib/php/ recurse=yes owner=apache group=apache
 
+    - name: Initialize | Copy font file
+      copy:
+        src: msyh.ttf
+        dest: /usr/share/zabbix/fonts/msyh.ttf
+        owner: zabbix
+        group: zabbix
+
+#define('ZBX_GRAPH_FONT_NAME',           'DejaVuSans'); // font file name
+#define('ZBX_GRAPH_FONT_NAME',           'msyh'); // font file name
+    # 修改图片中文字体
+    - name: Initialize | Modify ZBX_GRAPH_FONT_NAME
+      lineinfile:
+        dest: "/usr/share/zabbix/include/defines.inc.php"
+        regexp: "ZBX_GRAPH_FONT_NAME"
+        line: "define('ZBX_GRAPH_FONT_NAME',           'msyh');"
+
     - name: Initialize  | restart httpd (sytemctl)
       systemd:
         name: httpd
