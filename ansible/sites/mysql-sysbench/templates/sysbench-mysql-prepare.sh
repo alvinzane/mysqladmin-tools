@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage:
-# ./sysbench_mysql_prepare.sh 50 50 100000
+# ./sysbench-mysql-prepare.sh 50 50 100000
 # 第一个参数为线程数
 # 第二个参数为表数量
 # 第三个参数为表大小
@@ -34,7 +34,7 @@ do
         ?)
             echo "Usage: `basename $0` [-h host -P port -s socket -u user -p password] THREADS TABLES SIZE DB"
             echo "eg:"
-            echo "./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp  10 50 10000"
+            echo "./sysbench-mysql-oltp.sh -h127.0.0.1 -P6033 -uapp  50 50 10000"
             exit 1
             ;;
     esac

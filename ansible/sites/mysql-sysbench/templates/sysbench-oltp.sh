@@ -33,7 +33,7 @@ do
 
     for thread in `echo "${RUN_NUMBER}"`
     do
-        ${BASEDIR}/sysbench_mysql_oltp.sh ${thread} ${TIME} 2> ${BASEDIR}/sysbench.log
+        ${BASEDIR}/sysbench-mysql-oltp.sh ${thread} ${TIME} 2> ${BASEDIR}/sysbench.log
     sleep ${SLEEP}
     done
 

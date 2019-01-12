@@ -16,8 +16,8 @@
         mode: 0755
        with_items:
         - sysbench-oltp.sh
-        - sysbench_mysql_oltp.sh
-        - sysbench_mysql_prepare.sh
+        - sysbench-mysql-oltp.sh
+        - sysbench-mysql-prepare.sh
 
      - name: Install my.cnf
        template:
