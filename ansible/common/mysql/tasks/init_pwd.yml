@@ -6,7 +6,7 @@
     dest: /tmp/setup.sql
 
 - name: Initialize | reset root password
-  shell: mysql -uroot -S {{ mysql_sock }} < /tmp/setup.sql
+  shell: {{ mysql_basedir }} -uroot -S {{ mysql_sock }} < /tmp/setup.sql
 
 - name: Initialize | clear temp file tmp/setup.sql
   file:
