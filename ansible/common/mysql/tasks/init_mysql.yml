@@ -9,10 +9,10 @@
 
  # 配置文件
  - name: Initialize | Create MySQL configuration file.
-   template: src=my.cnf.j2 dest={{ mysql_portdir }}/my.cnf owner=mysql group=mysql
+   template: src={{ mysql_cnf_tpl }} dest={{ mysql_portdir }}/my.cnf owner=mysql group=mysql
 
  - name: Initialize | MySQL initialize db.
-   shell: "{{ mysql_basedir }}/bin/mysqld --user=mysql --basedir={{ mysql_basedir }} --datadir={{ mysql_datadir }} --initialize-insecure"
+   shell: "{{ initialize_cmd }} chdir={{mysql_basedir}}"
 
  - name: Initialize | MySQL Directory owner.
    file: path={{ mysql_portdir }} recurse=yes owner=mysql group=mysql

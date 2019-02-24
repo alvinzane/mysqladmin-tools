@@ -2,7 +2,11 @@
 SET SQL_LOG_BIN = 0;
 
 -- 修改 root 密码
-alter user user() identified by '{{mysql_password}}';
+-- alter user user() identified by '{{mysql_password}}';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('{{mysql_password}}');
+
+delete from mysql.user where `user`!='root' or host != 'localhost';
+flush privileges;
 
 -- 创建 admin 用户
 create user 'admin'@'%' identified by '{{mysql_password}}';
