@@ -13,6 +13,7 @@
 - name: Install EPEL Repo - Centos/RHEL 7
   command: yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+  ignore_errors: yes
 
 # - name: Install EPEL Repo
 #   yum: name={{ item }} state=present
