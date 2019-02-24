@@ -15,6 +15,7 @@
       copy:
         src: partition_low_discovery.sh
         dest: /etc/zabbix/scripts/partition_low_discovery.sh
+        mode: 0755
 
     - name: Initialize  | restart zabbix-agent
       systemd:
