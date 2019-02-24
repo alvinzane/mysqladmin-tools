@@ -6,7 +6,7 @@
     creates: "{{ software_install_src_path }}/{{ python3_package | regex_replace('.tar.xz','') }}"
 
 - name: Install | Make install Python3
-  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ python3_package | regex_replace('.tar.xz','') }} creates={{ software_install_src_path }}"
+  shell: "{{ item }} chdir={{ software_install_src_path }}/{{ python3_package | regex_replace('.tar.xz','') }} creates={{ python3_install_dir }}"
   with_items:
     - "./configure --prefix={{ python3_install_dir }}"
     - "make && make install"
