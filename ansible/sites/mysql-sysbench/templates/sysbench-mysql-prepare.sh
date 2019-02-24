@@ -9,10 +9,10 @@
 
 # 默认值
 HOST=localhost
-PORT=3306
+PORT=3307
 USER=root
 PASSWORD=aaaaaa
-SOCKET=/tmp/mysql3306.sock
+SOCKET=/tmp/mysql3307.sock
 DB=dbtest1
 TABLES=50
 SIZE=10000

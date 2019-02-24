@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Usage:
-# ./sysbench_mysql_oltp.sh 10 600
+# ./sysbench_mysql_oltp.sh 10 600 oltp_read_only
 
 # 默认值
 HOST=localhost
-PORT=3306
+PORT=3307
 USER=root
 PASSWORD=aaaaaa
-SOCKET=/tmp/mysql3306.sock
+SOCKET=/tmp/mysql3307.sock
 DB=dbtest1
 
 # 日志目录

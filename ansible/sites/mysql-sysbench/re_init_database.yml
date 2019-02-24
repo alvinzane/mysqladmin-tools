@@ -3,7 +3,7 @@
   hosts: node1
   remote_user: root
   vars:
-      mysql_port: "3306"
+      mysql_port: "3307"
       mysql_password: "aaaaaa"
       mysql_port_dir: "/data/mysql/{{mysql_port}}"
       mysql_data_dir: "/disk2/mysql/{{mysql_port}}"
