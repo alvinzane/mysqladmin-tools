@@ -7,6 +7,6 @@
     - ../../common/mysql/defaults/main.yml
   roles:
     - toolkit_linux
-    - percona-toolkit
+#    - percona-toolkit
     - xtrabackup
     - sysbench

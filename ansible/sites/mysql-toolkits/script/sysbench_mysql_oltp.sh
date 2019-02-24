@@ -27,7 +27,7 @@ do
         u) USER=$OPTARG ;;
         S) SOCKET=$OPTARG ;;
         ?)
-            echo "Usage: `basename $0` [-h host -P port -s socket -u user -p password] THREADS TIME SCRIPT_NAME"
+            echo "Usage: `basename $0` [-h host -P port -S socket -u user -p password] THREADS TIME SCRIPT_NAME"
             echo "SCRIPT_NAME:[oltp_read_write oltp_read_only]"
             echo "eg:"
             echo "./sysbench_mysql_oltp.sh -h127.0.0.1 -P6033 -uapp -pxxxxxx 10 600 oltp_read_write"
@@ -95,5 +95,5 @@ CMD_CLEANUP="sysbench $TESTNAME $ARGS $OLTP_ARGS cleanup"
 #echo $CMD_RUN
 #echo $CMD_CLEANUP
 $CMD_PREPARE
-$CMD_RUN | tee -a $LOG_DIR/`date +%Y%m%d`_$HOST_`basename $TESTNAME .lua`_$THREADS_`date +%Y%m%d_%H%M%S`.log
+$CMD_RUN | tee -a $LOG_DIR/`date +%Y%m%d`_${HOST}_`basename $TESTNAME .lua`_${THREADS}_`date +%Y%m%d_%H%M%S`.log
 #$CMD_CLEANUP
