@@ -4,7 +4,8 @@
   remote_user: root
   vars:
       sysbench_script_dir: "/home/sysbench"
-      mysql_port_dir: "/data/mysql/3306"
+      mysql_port: "3307"
+      mysql_port_dir: "/data/mysql/{{mysql_port}}"
   tasks:
      - name: Install sysbench script
        file: path={{ sysbench_script_dir }} state=directory
@@ -19,7 +20,7 @@
         - sysbench-mysql-oltp.sh
         - sysbench-mysql-prepare.sh
 
-     - name: Install my.cnf
-       template:
-        src: "my.cnf"
-        dest: "{{ mysql_port_dir }}/my.cnf"
+#     - name: Install my.cnf
+#       template:
+#        src: "my.cnf"
+#        dest: "{{ mysql_port_dir }}/my.cnf"
