@@ -18,3 +18,12 @@
   - var/main.yml
   roles:
     - mha4mysql-manager
+
+- name: Install binlog server
+  hosts: binlog-server
+  remote_user: root
+  vars_files:
+  - ../../common/mysql/defaults/main.yml
+  - var/main.yml
+  roles:
+    - binlogserver

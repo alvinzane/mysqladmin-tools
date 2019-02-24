@@ -30,3 +30,7 @@ candidate_master=1
 [server3]
 hostname={{ groups['mha-node'][2] }}
 port={{ mysql_port }}
+
+[binlog1]
+hostname={{ groups['binlog-server'][0] }}
+master_binlog_dir=/data/backup/mysql/binlog

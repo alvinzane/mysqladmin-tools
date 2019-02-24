@@ -56,7 +56,7 @@ nohup masterha_manager --conf=/etc/masterha/app1.cnf --remove_dead_master_conf -
 
 # 手动切换
 # https://github.com/yoshinorim/mha4mysql-manager/wiki/masterha_master_switch
-masterha_master_switch  --master_state=alive --conf=/etc/masterha/app1.cnf --new_master_host=192.168.1.102 --new_master_port=3307
+masterha_master_switch  --master_state=alive --conf=/etc/masterha/app1.cnf --new_master_host=192.168.1.102 --new_master_port=3306
 masterha_master_switch --master_state=dead --conf=/etc/masterha/app1.cnf --dead_master_host=192.168.1.101 --dead_master_port=3307 --new_master_host=192.168.1.102 --new_master_port=3307 --ignore_last_failover
 
 ```
