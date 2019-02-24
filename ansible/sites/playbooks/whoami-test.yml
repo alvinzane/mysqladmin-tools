@@ -1,0 +1,11 @@
+---
+- name: Show who am i
+  hosts: ec20
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Show who am i
+      shell: whoami
+      register: result
+    - name: Show debug info
+      debug: var=result.stdout verbosity=0

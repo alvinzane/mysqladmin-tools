@@ -1,7 +1,7 @@
 ---
 - name: Install MySQL standalone
-  hosts: all
-  remote_user: root
+  hosts: ec20
+  become: yes
   vars_files:
     - ../../common/mysql/defaults/main.yml
     - var/main.yml

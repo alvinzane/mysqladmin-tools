@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - role: epel
+#  - role: epel
   - role: prompt
