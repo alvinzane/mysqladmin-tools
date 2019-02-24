@@ -11,6 +11,9 @@
     - '/sys/kernel/mm/transparent_hugepage/enabled'
     - '/sys/kernel/mm/transparent_hugepage/defrag'
 
+- name: Setup | Set transparent_hugepage is never to /etc/rc.local.
+  shell: chmod +x /etc/rc.d/rc.local
+
  # 修改my.cnf配置文件, 去掉tokudb的注释
 - name: Setup | Configure my.cnf for tokudb
   replace:
