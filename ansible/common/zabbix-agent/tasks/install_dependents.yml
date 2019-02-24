@@ -9,5 +9,6 @@
     - libcurl-devel
     - net-snmp-devel
     - libxml2-devel
+    - pcre-devel
     - numactl
     - sysstat
