@@ -1,0 +1,11 @@
+---
+- name: Setup MySQL spider
+  hosts: all
+  remote_user: root
+  vars_files:
+    - ../../common/mysql/defaults/main.yml
+    - var/main.yml
+
+  tasks:
+    - name: Setup | Create replication user
+      shell: "{{ mysql_basedir }}/bin/mysql -S {{ mysql_sock }} -uroot -p{{ mysql_password }} < {{ mysql_basedir }}/share/install_spider.sql"

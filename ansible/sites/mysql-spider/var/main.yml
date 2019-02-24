@@ -1,0 +1,16 @@
+# MySQL 实例端口
+mysql_port: 3306
+# root 密码
+mysql_password: aaaaaa
+mysql_innodb_buffer_pool_size: "1G"
+mysql_version: "10.3.12"
+mysql_package: "mariadb-10.3.12-linux-x86_64.tar.gz"
+mysql_basedir: "{{ software_install_path }}/mariadb"
+mysql_datahome: "/data/mariadb"
+
+mysql_branch: "mariadb"
+mysql_cnf_tpl: "my-mariadb.cnf"
+mysql_backup_user: root
+mysql_backup_password: aaaaaa
+
+initialize_cmd: "{{ mysql_basedir }}/scripts/mysql_install_db --defaults-file={{ mysql_portdir }}/my.cnf"
