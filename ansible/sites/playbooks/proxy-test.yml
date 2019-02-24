@@ -1,0 +1,13 @@
+---
+- name: Show IP addr
+  hosts: node5
+  remote_user: root
+  environment:
+    http_proxy: http://192.168.1.2:1080
+    https_proxy: http://192.168.1.2:1080
+  tasks:
+    - name: Show IP addr
+      shell: curl httpbin.org/ip
+      register: result
+    - name: Show debug info
+      debug: var=result.stdout verbosity=0

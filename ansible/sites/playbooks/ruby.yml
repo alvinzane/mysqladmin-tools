@@ -1,0 +1,8 @@
+---
+- name: Install ruby
+  hosts: node0
+  remote_user: root
+  roles:
+     - { role: ruby}
+
+

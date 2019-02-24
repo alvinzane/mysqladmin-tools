@@ -1,0 +1,26 @@
+---
+- name: Setup MySQL client alias
+  hosts: mysql_server
+  remote_user: root
+  tasks:
+    - name: Adding mysql alias to ~/.bashrc
+      blockinfile:
+        dest: ~/.bashrc
+        marker: '### {mark} Adding mysql alias ###'
+        block: |
+          alias mysql3306='mysql -S /tmp/mysql3306.sock -uroot'
+          alias mysql3307='mysql -S /tmp/mysql3307.sock -uroot'
+
+    - name: Backup ~/.my.cnf
+      shell: file ~/.my.cnf && mv ~/.my.cnf  ~/.bakcup.my.cnf
+      ignore_errors: True
+
+    - name: Setup ~/.my.cnf
+      shell:
+        cmd: |
+          cat > ~/.my.cnf <<EOF
+          [client]
+          password = aaaaaa
+          EOF
+      args:
+        executable: /bin/bash
