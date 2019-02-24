@@ -6,3 +6,4 @@ wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.13-linux-glibc2.12-
 wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
 wget http://www.keepalived.org/software/keepalived-1.4.3.tar.gz
 wget https://www.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.23-23/binary/tarball/Percona-Server-5.7.23-23-Linux.x86_64.ssl101.tar.gz
+wget https://mirrors.shu.edu.cn/mariadb//mariadb-10.3.12/bintar-linux-x86_64/mariadb-10.3.12-linux-x86_64.tar.gz
